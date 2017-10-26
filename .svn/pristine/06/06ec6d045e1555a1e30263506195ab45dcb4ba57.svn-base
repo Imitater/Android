@@ -1,0 +1,414 @@
+package com.ruiyihong.toyshop.activity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.ruiyihong.toyshop.R;
+import com.ruiyihong.toyshop.adapter.EventRvAdapter;
+import com.ruiyihong.toyshop.adapter.EventYouhuiRvAdapter;
+import com.ruiyihong.toyshop.bean.EventBean;
+import com.ruiyihong.toyshop.bean.EventYouhuiBean;
+import com.ruiyihong.toyshop.util.AppConstants;
+import com.ruiyihong.toyshop.util.GsonUtil;
+import com.ruiyihong.toyshop.util.NetUtli;
+import com.ruiyihong.toyshop.util.NetWorkUtil;
+import com.ruiyihong.toyshop.util.OkHttpUtil;
+import com.ruiyihong.toyshop.util.SPUtil;
+import com.ruiyihong.toyshop.util.StringUtil;
+import com.ruiyihong.toyshop.util.ToastHelper;
+import com.ruiyihong.toyshop.view.CommonLoadingView;
+import com.ruiyihong.toyshop.view.FullyGridLayoutManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.List;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+/**
+ * Created by 李晓曼 on 2017/7/28.
+ */
+
+public class EventActivity extends BaseActivity {
+    private static final int EVENT_YOUHUI = 0;
+    private static final int EVENT_GONGYI = 1;
+    private static final int EVENT_OUTDOOR = 2;
+    private static final int EVENT_QINZI = 3;
+    private static final int TIME_DAOJISHI = 4;
+    private static final int NetWorkError=5;
+    private static final int CloseLoadingView=6;
+    private static final int PageLoading=7;
+
+    private static final String BUFFER_EVENT_YOUHUI = "buffer_event_youhui";
+    private static final String BUFFER_EVENT_GONGYI = "buffer_event_gongyi";
+    private static final String BUFFER_EVENT_OUTDOOR = "buffer_event_outdoor";
+    private static final String BUFFER_EVENT_QINZI = "buffer_event_qinzi";
+    @InjectView(R.id.rv_frag_event_youhui)
+    RecyclerView mRvFragEventYouhui;
+    @InjectView(R.id.rv_frag_event_benefit)
+    RecyclerView mRvFragEventBenefit;
+    @InjectView(R.id.rv_frag_event_out)
+    RecyclerView mRvFragEventOut;
+    @InjectView(R.id.rv_frag_event_qinzi)
+    RecyclerView mRvFragEventQinzi;
+    @InjectView(R.id.tv_youhui_time)
+    TextView mTvYouhuiTime;
+    @InjectView(R.id.rl_title)
+    RelativeLayout mRlTitle;
+    @InjectView(R.id.ll_mise)
+    LinearLayout llMise;
+    @InjectView(R.id.rl_benefit)
+    ImageView rlBenefit;
+    @InjectView(R.id.ll_benefit)
+    LinearLayout llBenefit;
+    @InjectView(R.id.rl_out)
+    ImageView rlOut;
+    @InjectView(R.id.ll_out)
+    LinearLayout llOut;
+    @InjectView(R.id.rl_qinzi)
+    ImageView rlQinzi;
+    @InjectView(R.id.ll_qinzi)
+    LinearLayout llQinzi;
+    @InjectView(R.id.tv_more_youhui)
+    TextView mTvMoreYouhui;
+    @InjectView(R.id.common_LoadingView)
+    CommonLoadingView loadingView;
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+
+            switch (msg.what) {
+                case EVENT_YOUHUI:
+                    //优惠活动
+                    initYouhui((String) msg.obj);
+                    break;
+                case EVENT_GONGYI:
+                    //公益活动
+                    initBenefit(mRvFragEventBenefit, (String) msg.obj, R.drawable.event_bg_circle1);
+                    break;
+                case EVENT_OUTDOOR:
+                    //户外活动
+                    initBenefit(mRvFragEventOut, (String) msg.obj, R.drawable.event_bg_circle2);
+                    break;
+                case EVENT_QINZI:
+                    //亲子活动
+                    initBenefit(mRvFragEventQinzi, (String) msg.obj, R.drawable.event_bg_circle1);
+                    break;
+                case TIME_DAOJISHI:
+                    //倒计时
+                    DaoJiShi();
+                    if (dd == 0 && hh == 0 && mm == 0) {
+                        isRun = false;
+                        handler.removeMessages(TIME_DAOJISHI);
+                    }
+                    break;
+                case NetWorkError :    //显示网络错误页面
+                    if(loadingView!=null)
+                        loadingView.loadError();
+                    break;
+                case CloseLoadingView:     //关闭Loading动画
+                    if(loadingView!=null)
+                        loadingView.loadSuccess(false);
+                    break;
+                case PageLoading:       //页面加载中动画
+                    if(loadingView!=null)
+                        loadingView.load();
+                    break;
+            }
+        }
+    };
+    private long dd;
+    private long hh;
+    private long mm;
+    private boolean isRun = true;
+
+    private void DaoJiShi() {
+        //剩余2天 12:50
+        mTvYouhuiTime.setText("剩余" + dd + "天 " + hh + ":" + mm);
+        mm--;
+        if (mm < 0) {
+            mm = 59;
+            hh--;
+            if (hh < 0) {
+                // 倒计时结束
+                hh = 23;
+                dd--;
+                mTvYouhuiTime.setText("活动已结束");
+            }
+        }
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_event;
+    }
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void initData() {
+        if (!NetWorkUtil.isNetWorkAvailable(this)){
+            handler.sendEmptyMessage(NetWorkError);
+            return;
+        }else{
+            handler.sendEmptyMessage(PageLoading);
+        }
+        getBuffer();
+
+        if (NetUtli.isNetworkAvailable(this)) {
+            //网络可用
+            netGet(AppConstants.EVENT_MINE_YOUHUI, EVENT_YOUHUI);
+            netGet(AppConstants.EVENT_MINE_GONGYI, EVENT_GONGYI);
+            netGet(AppConstants.EVENT_MINE_OUTDOOR, EVENT_OUTDOOR);
+            netGet(AppConstants.EVENT_MINE_QINZI, EVENT_QINZI);
+        } else {
+            //网络不可用
+            ToastHelper.getInstance().displayToastShort("请检查网络");
+        }
+    }
+
+    public void netGet(String url, final int type) {
+        try {
+            OkHttpUtil.get(url, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    handler.sendEmptyMessage(NetWorkError);
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String result = OkHttpUtil.getResult(response);
+                    if (!TextUtils.isEmpty(result)) {
+                        Log.i("radish", "result------------------" + result);
+                        CloseLoadingView();
+                        switch (type) {
+                            case EVENT_YOUHUI:
+                                SPUtil.setString(EventActivity.this, BUFFER_EVENT_YOUHUI, result);
+                                break;
+                            case EVENT_GONGYI:
+                                SPUtil.setString(EventActivity.this, BUFFER_EVENT_GONGYI, result);
+                                break;
+                            case EVENT_OUTDOOR:
+                                SPUtil.setString(EventActivity.this, BUFFER_EVENT_OUTDOOR, result);
+                                break;
+                            case EVENT_QINZI:
+                                SPUtil.setString(EventActivity.this, BUFFER_EVENT_QINZI, result);
+                                break;
+                        }
+                        Message msg = Message.obtain();
+                        msg.what = type;
+                        msg.obj = result;
+                        handler.sendMessage(msg);
+                    }
+
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    //关闭LoadingView
+    private void CloseLoadingView() {
+        handler.sendEmptyMessage(CloseLoadingView);
+    }
+    private void initBenefit(RecyclerView rv, String body, int drawable) {
+        EventBean eventBean = GsonUtil.parseJsonWithGson(body, EventBean.class);
+        final List<EventBean.DataBean> list = eventBean.getData();
+
+        //RecycleView设置
+        EventRvAdapter rvAdapter = new EventRvAdapter(this, list, drawable);
+        rv.setLayoutManager(new FullyGridLayoutManager(this, 3));
+        rv.setAdapter(rvAdapter);
+
+        //条目点击事件---->活动详情
+        rvAdapter.setOnItemClickListener(new EventRvAdapter.onRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+
+            }
+        });
+
+        rvAdapter.setLiJiBaoMingClickListener(new EventRvAdapter.onLiJiBaoMingClickListener() {
+            @Override
+            public void onItemClick(View v, final int position) {
+                String starttime = list.get(position).getStarttime();
+                // "yyyy-MM-dd hh:mm:ss"
+                if (StringUtil.compareTime(starttime) != 1) {
+                    ToastHelper.getInstance().displayToastShort("报 名时间已截止");
+                    return;
+                }
+                final String username = SPUtil.getString(EventActivity.this, AppConstants.SP_LOGIN, "");
+                String uname = "";
+                try {
+                    JSONObject object = new JSONObject(username);
+                    uname = object.getString("uname");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (TextUtils.isEmpty(uname)) {
+                    Intent intent = new Intent(EventActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    return;
+                }
+
+                Intent intent = new Intent(EventActivity.this, EventEnterActivity.class);
+                intent.putExtra("type", list.get(position).getBmfs());
+                intent.putExtra("id", list.get(position).getId());
+                startActivity(intent);
+
+            }
+        });
+
+
+    }
+
+    private void initYouhui(String body) {
+        final EventYouhuiBean bean = GsonUtil.parseJsonWithGson(body, EventYouhuiBean.class);
+
+        if (bean == null)
+            return;
+        youhuiTime(bean.getTime());
+        //RecycleView设置
+        EventYouhuiRvAdapter adapter = new EventYouhuiRvAdapter(this, bean.getData());
+        mRvFragEventYouhui.setLayoutManager(new FullyGridLayoutManager(this, 3));
+        mRvFragEventYouhui.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new EventYouhuiRvAdapter.onRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                EventYouhuiBean.DataBean dataBean = bean.getData().get(position);
+                Intent intent = new Intent(EventActivity.this, DetailActivity.class);
+                if (dataBean.getIsbw() == 0) {
+                    //图书
+                    intent.putExtra("type", DetailActivity.BOOK_TYPE);
+                } else {
+                    //玩具
+                    intent.putExtra("type", DetailActivity.TOY_TYPE);
+                }
+                intent.putExtra("id", dataBean.getId());
+                startActivity(intent);
+            }
+        });
+
+
+    }
+
+    private void youhuiTime(String time) {
+        //2017-07-29 00:00:00
+        long[] formatTime = StringUtil.formatDaojishi(time);
+        if (formatTime != null) {
+            dd = formatTime[0];
+            hh = formatTime[1];
+            mm = formatTime[2];
+            mTvYouhuiTime.setText("剩余" + dd + "天 " + hh + ":" + mm);
+
+            new Thread(new Runnable() {
+
+                @Override
+                public void run() {
+                    // TODO Auto-generated method stub
+                    while (isRun) {
+                        try {
+                            Thread.sleep(60000); // sleep 60000ms == 1分钟
+                            Message message = Message.obtain();
+                            message.what = TIME_DAOJISHI;
+                            handler.sendMessage(message);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }).start();
+        } else {
+            //已过期
+            mTvYouhuiTime.setText("活动已结束");
+        }
+    }
+
+
+    @Override
+    protected void initEvent() {
+        mTvMoreYouhui.setOnClickListener(this);
+        loadingView.setOnRefreshPagerListener(new CommonLoadingView.OnRefreshPageListener() {
+             @Override
+             public void Refresh() {
+                  initData();
+             }
+        });
+    }
+
+    @Override
+    protected void processClick(View v) throws IOException {
+        switch (v.getId()) {
+            case R.id.tv_more_youhui:
+                Intent intent = new Intent(this, LimitedTimeActivity.class);
+                startActivity(intent);
+                break;
+        }
+    }
+
+    public void getBuffer() {
+
+        String youhui = SPUtil.getString(this, BUFFER_EVENT_YOUHUI, "");
+        String gongyi = SPUtil.getString(this, BUFFER_EVENT_GONGYI, "");
+        String outdoor = SPUtil.getString(this, BUFFER_EVENT_OUTDOOR, "");
+        String qinzi = SPUtil.getString(this, BUFFER_EVENT_QINZI, "");
+        if (!TextUtils.isEmpty(youhui)) {
+            //优惠活动
+            initYouhui(youhui);
+
+        }
+        if (!TextUtils.isEmpty(gongyi)) {
+            //公益活动
+            initBenefit(mRvFragEventBenefit, gongyi, R.drawable.event_bg_circle1);
+
+        }
+        if (!TextUtils.isEmpty(outdoor)) {
+            //户外活动
+            initBenefit(mRvFragEventOut, outdoor, R.drawable.event_bg_circle2);
+
+        }
+        if (!TextUtils.isEmpty(qinzi)) {
+            //亲子活动
+            initBenefit(mRvFragEventQinzi, qinzi, R.drawable.event_bg_circle1);
+            CloseLoadingView();
+        }
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        isRun = false;
+        handler.removeCallbacksAndMessages(null);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.inject(this);
+    }
+
+}

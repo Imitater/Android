@@ -1,0 +1,105 @@
+package com.ruiyihong.toyshop.activity;
+
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+
+import com.ruiyihong.toyshop.R;
+import com.ruiyihong.toyshop.util.NetWorkUtil;
+import com.ruiyihong.toyshop.view.CommonLoadingView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+
+import java.io.IOException;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
+/**
+ * Created by 李晓曼 on 2017/8/15.
+ */
+
+public class CollectionActivity extends BaseActivity {
+    @InjectView(R.id.rl_title)
+    RelativeLayout mRlTitle;
+    @InjectView(R.id.iv_refresh)
+    ImageView mIvRefresh;
+    @InjectView(R.id.rv_collection)
+    RecyclerView mRvCollection;
+    @InjectView(R.id.smartRefreshLayout)
+    SmartRefreshLayout mSmartRefreshLayout;
+    @InjectView(R.id.common_LoadingView)
+    CommonLoadingView loadingView;
+
+    private static final int NetWorkError=4;
+    private static final int CloseLoadingView=5;
+    private static final int PageLoading=6;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case NetWorkError :    //显示网络错误页面
+                    if(loadingView!=null)
+                        loadingView.loadError();
+                    break;
+                case CloseLoadingView: //关闭Loading动画
+                    if(loadingView!=null)
+                        loadingView.loadSuccess(false);
+                    break;
+                case PageLoading:  //页面加载中动画
+                    if(loadingView!=null)
+                        loadingView.load();
+                    break;
+
+            }
+        }
+    };
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_collection;
+    }
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void initData() {
+
+        if (!NetWorkUtil.isNetWorkAvailable(this)){
+            handler.sendEmptyMessage(NetWorkError);
+            return;
+        }else{
+            handler.sendEmptyMessage(PageLoading);
+        }
+    }
+
+    @Override
+    protected void initEvent() {
+        loadingView.setOnRefreshPagerListener(new CommonLoadingView.OnRefreshPageListener() {
+            @Override
+            public void Refresh() {
+                initData();
+            }
+        });
+    }
+
+    @Override
+    protected void processClick(View v) throws IOException {
+
+    }
+    //关闭LoadingView
+    private void CloseLoadingView() {
+        handler.sendEmptyMessage(CloseLoadingView);
+    }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.inject(this);
+    }
+}

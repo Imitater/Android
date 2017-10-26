@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smartRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/refresh_header"/>
+        <!--商品列表-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_toyshop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+    <!--右下角购物车按钮-->
+    <ImageButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="25dp"
+        android:background="@mipmap/shop_car_pic" />
+    <!--购物车数量-->
+    <TextView
+        android:id="@+id/tv_pop_shopping_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/floatingActionButton"
+        android:layout_alignTop="@id/floatingActionButton"
+        android:layout_gravity="center"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/pop_tips_circle"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@android:color/white"
+        android:textSize="10dip"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+</RelativeLayout>

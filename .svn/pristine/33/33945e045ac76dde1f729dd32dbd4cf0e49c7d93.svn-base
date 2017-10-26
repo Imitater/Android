@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp">
+    <ImageView
+        android:layout_marginTop="4dp"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:background="@drawable/event_bg_circle1"
+        />
+    <TextView
+        android:layout_marginRight="7dp"
+        android:id="@+id/tv_item_quanxian"
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="新刷刷洗刷刷"
+        android:textColor="@color/grad_dark"
+        android:textSize="@dimen/sub_title_size"
+        />
+</LinearLayout>

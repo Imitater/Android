@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ 2017.
+  ~ Huida.Burt
+  ~ CopyRight
+  ~
+  ~
+  ~
+  -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:divider="@drawable/divider"
+    android:background="@drawable/bg_amount_layout"
+    android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/btnDecrease"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:layout_weight="1.2"
+        android:textColor="@color/grad"
+        android:gravity="center"
+        android:text="-"/>
+
+    <TextView
+        android:id="@+id/etAmount"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:minWidth="40dp"
+        android:layout_weight="0.5"
+        android:textColor="@color/grad"
+        android:textSize="@dimen/small_size"
+        android:gravity="center"
+        android:text="1"/>
+
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:minWidth="20dp"
+        android:layout_weight="0.3"
+        android:textColor="@color/grad"
+        android:textSize="@dimen/small_size"
+        android:gravity="center"
+        android:text="件" />
+
+
+
+    <Button
+        android:id="@+id/btnIncrease"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:layout_weight="1.2"
+        android:gravity="center"
+        android:textColor="@color/grad"
+        android:text="+"/>
+
+
+</LinearLayout>

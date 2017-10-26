@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.android.percent.support.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+    <com.zhy.android.percent.support.PercentRelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_heightPercent="36%h"
+        app:layout_widthPercent="100%w"
+        android:background="@mipmap/dialog_duihua_bg"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+        <TextView
+            android:id="@+id/tv_shifouduihuan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="是否兑换？"
+            android:textSize="@dimen/title_size"
+            android:textColor="@color/red_light"
+            android:gravity="center"
+            app:layout_marginTopPercent="21%"
+            />
+
+        <TextView
+            android:id="@+id/tv_duihuan_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="兑换完成后将存入 '我的优惠券'"
+            android:textSize="@dimen/item_size"
+            android:gravity="center"
+            android:layout_marginTop="15dp"
+            android:layout_below="@id/tv_shifouduihuan"
+            />
+
+        <com.zhy.android.percent.support.PercentLinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_heightPercent="17%h"
+            app:layout_widthPercent="100%w"
+            android:layout_below="@id/tv_duihuan_info"
+            android:layout_marginTop="15dp"
+            android:gravity="center">
+            <Button
+                android:id="@+id/btn_jifenduihuan_yes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_widthPercent="14%w"
+                android:background="@drawable/shap_rounded_rectangle_red"
+                android:text="是"
+                android:textSize="@dimen/sub_title_size"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                />
+
+            <Button
+                android:id="@+id/btn_jifenduihuan_no"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_widthPercent="14%w"
+                android:background="@drawable/shap_rounded_rectangle_red"
+                android:text="取消"
+                android:textSize="@dimen/sub_title_size"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dp"
+                />
+        </com.zhy.android.percent.support.PercentLinearLayout>
+    </com.zhy.android.percent.support.PercentRelativeLayout>
+</com.zhy.android.percent.support.PercentRelativeLayout>

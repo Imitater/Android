@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="percent-support-extends-1.0.1">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.android/build-cache/09ebe666a2d1386c7d7b769ae6c126406a594f6a/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/09ebe666a2d1386c7d7b769ae6c126406a594f6a/output/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://D:/Android/gradle/.gradle/caches/modules-2/files-2.1/com.zhy/percent-support-extends/1.0.1/58c496153690c788abf90801b17a6f6e3d51a4d1/percent-support-extends-1.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

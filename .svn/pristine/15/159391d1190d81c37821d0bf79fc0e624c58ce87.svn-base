@@ -1,0 +1,50 @@
+[
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\shoppingchart_selected.png",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable-hdpi\\shoppingchart_selected.png"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\shoppingchart_normal.png",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable-hdpi\\shoppingchart_normal.png"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\search_frame.9.png",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable-hdpi\\search_frame.9.png"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\listview_background.9.png",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable-hdpi\\listview_background.9.png"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\member_selected.png",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable-hdpi\\member_selected.png"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\toyshop_normal.png",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable-hdpi\\toyshop_normal.png"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\home_selected.png",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable-hdpi\\home_selected.png"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\mine_normal.png",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable-hdpi\\mine_normal.png"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\mine_selected.png",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable-hdpi\\mine_selected.png"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\toyshop_selected.png",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable-hdpi\\toyshop_selected.png"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\member_normal.png",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable-hdpi\\member_normal.png"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\home_normal.png",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable-hdpi\\home_normal.png"
+    }
+]

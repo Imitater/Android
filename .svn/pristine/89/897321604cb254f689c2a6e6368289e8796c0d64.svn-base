@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        >
+        <ImageView
+            android:id="@+id/iv_module"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@mipmap/li_jfsc"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_module"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="精选玩具"
+            android:layout_marginTop="5dp"
+            android:textSize="12sp"
+
+            />
+        <!--用来占位置的控件，没有意义-->
+        <TextView
+            android:id="@+id/tv_temp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="10元/天"
+            android:textSize="12sp"
+            android:textColor="@android:color/transparent"
+            android:background="#edebec"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:visibility="invisible"
+            android:gravity="center"
+
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_jp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="新品"
+        android:background="@mipmap/blue_arr"
+        android:visibility="invisible"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:paddingTop="1dp"
+        android:paddingBottom="1dp"
+        android:textSize="12sp"
+        android:textColor="#fff"
+        />
+
+    <TextView
+        android:id="@+id/tv_pay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="10元/天"
+        android:textSize="12sp"
+        android:textColor="@color/tab_selected"
+        android:background="#edebec"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:visibility="visible"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        />
+
+</RelativeLayout>

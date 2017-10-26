@@ -1,0 +1,138 @@
+/*
+ * 2017.
+ * Huida.Burt
+ * CopyRight
+ *
+ *
+ *
+ */
+
+package com.ruiyihong.toyshop.fragment;
+
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+
+import com.ruiyihong.toyshop.R;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
+
+/**
+ * Created by Burt on 2017/8/17 0017.
+ */
+
+public class PayFragment extends DialogFragment {
+
+    @InjectView(R.id.tv_cancel_pay)
+    TextView tvCancelPay;
+    @InjectView(R.id.ck_yu_e_pay)
+    RadioButton ckYuEPay;
+    @InjectView(R.id.ck_wx_pay)
+    RadioButton ckWxPay;
+    @InjectView(R.id.ck_zfb_pay)
+    RadioButton ckZfbPay;
+    @InjectView(R.id.bt_now_pay)
+    Button btNowPay;
+    @InjectView(R.id.tv_total_Money)
+    TextView tvTotalMoney;
+    @InjectView(R.id.Rg_pay_category)
+    RadioGroup RgPayCategory;
+
+    private static onPayStatusListener listener;
+    private final int totalPrice;
+    private final String orderNumber;
+    private final int vipStatus;
+
+
+
+    public PayFragment(String hao, int total, int vip) {
+        orderNumber = hao;
+        totalPrice = total;
+        vipStatus = vip;
+    }
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = new Dialog(getActivity(), R.style.BottomDialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // 设置Content前设定
+        dialog.setCanceledOnTouchOutside(false); // 外部点击取消
+        // 设置宽度为屏宽, 靠近屏幕底部。
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams lp = window.getAttributes();
+        lp.gravity = Gravity.BOTTOM; // 紧贴底部
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT; // 宽度持平
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        window.setAttributes(lp);
+        return dialog;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.layout_pay, null);
+        ButterKnife.inject(this, v);
+        tvTotalMoney.setText("￥" + totalPrice);
+        RgPayCategory.check(R.id.ck_yu_e_pay);
+        return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
+    }
+//
+    @OnClick({R.id.tv_cancel_pay, R.id.ck_yu_e_pay, R.id.ck_wx_pay, R.id.ck_zfb_pay, R.id.bt_now_pay})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_cancel_pay:
+                if (listener != null)
+                    listener.onCancel();
+                break;
+            case R.id.ck_yu_e_pay:
+
+                break;
+            case R.id.ck_wx_pay:
+
+                break;
+            case R.id.ck_zfb_pay:
+
+                break;
+            case R.id.bt_now_pay:
+                if (listener != null)
+                    listener.onSuccess();
+                break;
+        }
+    }
+
+    public static void setOnPayStatusListener(onPayStatusListener listeners) {
+        listener = listeners;
+    }
+
+    public interface onPayStatusListener {
+        void onSuccess();
+
+        void onCancel();
+
+        void onFailuer();
+    }
+}

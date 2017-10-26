@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ryh="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:paddingLeft="10dp"
+    android:paddingBottom="10dp"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_marginTop="5dp"
+        android:id="@+id/iv_detail_info1_rv_item"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@mipmap/product_info1_icon"
+         />
+    <TextView
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/tv_detail_info1_rv_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="@dimen/small_size"
+        android:text="宝宝良好的手触摸和眼睛协调能力，有利于身体一般平衡和协调。弧形底座的设计有利于宝宝抓握，也能避免不慎摔倒而造成的危险。"/>
+</LinearLayout>

@@ -1,0 +1,81 @@
+package com.ruiyihong.toyshop.adapter;
+
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.ruiyihong.toyshop.R;
+import com.ruiyihong.toyshop.bean.find.FindHotTalkingBean;
+import com.ruiyihong.toyshop.util.AppConstants;
+import com.ruiyihong.toyshop.util.LogUtil;
+import com.squareup.picasso.Picasso;
+
+import java.util.List;
+
+/**
+ * Created by 李晓曼 on 2017/8/5.
+ */
+
+public class FindHotTalkRvAdapter extends RecyclerView.Adapter<FindHotTalkRvAdapter.MyViewHolder> {
+
+    private final Context context;
+    private final List<FindHotTalkingBean.DataBean> list;
+    private OnItemClickListener itemListener;
+
+    public FindHotTalkRvAdapter(Context context, List<FindHotTalkingBean.DataBean> list){
+        this.context = context;
+        this.list = list;
+    }
+    @Override
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new MyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_find_hot_talking,null));
+    }
+
+    @Override
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (itemListener != null){
+                    itemListener.onClickListener(view,position);
+                }
+            }
+        });
+        holder.tv_item.setText(list.get(position).getTitle());
+        String img = AppConstants.FIND_HOT_TALKING_IAMGE_BASE+list.get(position).getImg();
+        Picasso.with(context).load(img).placeholder(R.mipmap.good_default).error(R.mipmap.good_default).into(holder.iv_item);
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return 6;
+    }
+
+    class MyViewHolder extends RecyclerView.ViewHolder{
+
+        private final ImageView iv_item;
+        private final TextView tv_item;
+
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            iv_item = itemView.findViewById(R.id.iv_hot_talk);
+            tv_item = itemView.findViewById(R.id.tv_hot_talk);
+        }
+    }
+
+    public void setOnItemClickListener(OnItemClickListener itemListener){
+        this.itemListener = itemListener;
+    }
+
+
+    public interface OnItemClickListener{
+        void onClickListener(View v,int position);
+    }
+}

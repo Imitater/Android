@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="title_hetght">50dp</dimen>
+    <dimen name="youhuitiao_width">300dp</dimen>
+
+    <dimen name="big_size">28sp</dimen>
+    <dimen name="title_size">18sp</dimen>
+    <dimen name="sub_title_size">16sp</dimen>
+    <dimen name="sub_title_size15">15sp</dimen>
+    <dimen name="item_size">14sp</dimen>
+    <dimen name="small_size">11sp</dimen>
+    <dimen name="smaller_size">9sp</dimen>
+    <dimen name="smallest_size">5sp</dimen>
+    <dimen name="vip_line">7sp</dimen>
+
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="dp6">6dp</dimen>
+</resources>

@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+        <RelativeLayout style="@style/title_style">
+
+            <TextView
+                android:id="@+id/tv_add_title"
+                style="@style/title_textview_style"
+                android:text="发现" />
+        </RelativeLayout>
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/smartRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include layout="@layout/refresh_header" />
+
+            <com.ruiyihong.toyshop.view.MyScrollView
+                android:id="@+id/find_ScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/hor_line"
+                    android:orientation="vertical">
+                    <!--轮播图-->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp">
+
+                        <android.support.v4.view.ViewPager
+                            android:id="@+id/vp_fine"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:background="#fff"/>
+
+                        <LinearLayout
+                            android:id="@+id/ll_find_vp_point"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:padding="10dp"/>
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/Panda_BG"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@mipmap/find_back_icon"
+                            android:gravity="center"
+                            android:paddingLeft="40dp"
+                            android:paddingRight="40dp"
+                            android:text="热门话题"
+                            android:textSize="@dimen/sub_title_size" />
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/ry_find_hottalk"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="5dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/Panda_BG"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@mipmap/find_back_icon"
+                            android:gravity="center"
+                            android:paddingLeft="40dp"
+                            android:paddingRight="40dp"
+                            android:text="玩图圈"
+                            android:textSize="@dimen/sub_title_size" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp">
+
+                            <ImageView
+                                android:id="@+id/find_playicon_top"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@mipmap/find_playicon_top" />
+
+                            <LinearLayout
+                                android:id="@+id/ll_find_playicon_textback"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:orientation="horizontal">
+
+                                <View
+                                    android:layout_width="20dp"
+                                    android:layout_height="wrap_content"
+                                    android:background="@mipmap/find_playicon_left" />
+
+                                <HorizontalScrollView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:paddingBottom="5dp"
+                                    android:paddingTop="5dp"
+                                    android:scrollbars="none">
+
+                                    <LinearLayout
+                                        android:id="@+id/ll_playicon_text"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center_vertical"
+                                        android:orientation="horizontal">
+                                    </LinearLayout>
+                                </HorizontalScrollView>
+
+                                <View
+                                    android:layout_width="20dp"
+                                    android:layout_height="wrap_content"
+                                    android:background="@mipmap/find_playicon_left" />
+                            </LinearLayout>
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignBottom="@id/ll_find_playicon_textback"
+                                android:background="@mipmap/find_playicon_top" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/Panda_BG"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@mipmap/find_back_icon"
+                                android:gravity="center"
+                                android:paddingLeft="40dp"
+                                android:paddingRight="40dp"
+                                android:text="热门推荐"
+                                android:textSize="@dimen/sub_title_size" />
+
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/ry_find_hottuijian"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="20dp"/>
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+
+            </com.ruiyihong.toyshop.view.MyScrollView>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+    </LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/find_float_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:src="@mipmap/find_add_publish"
+        app:backgroundTint="#fbb904"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp"
+        app:rippleColor="#33728dff" />
+
+    <!--Loading动画-->
+    <com.ruiyihong.toyshop.view.CommonLoadingView
+        android:id="@+id/common_LoadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/title_hetght" />
+</RelativeLayout>

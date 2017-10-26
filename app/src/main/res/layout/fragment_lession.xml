@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <RelativeLayout
+        style="@style/title_style">
+        <ImageButton
+            style="@style/back_style" />
+
+        <TextView
+
+            android:text="课程"
+            style="@style/title_textview_style"/>
+    </RelativeLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider_line"/>
+
+    <LinearLayout
+        android:id="@+id/rg_lession"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <TextView
+                android:padding="2dp"
+                android:textSize="@dimen/sub_title_size"
+                android:textColor="@drawable/lession_audio_selector"
+                android:layout_width="wrap_content"
+                android:gravity="center_vertical"
+                android:id="@+id/rb_lession_audio"
+                style="@style/MainRadioButtonStyle"
+                android:drawablePadding="4dp"
+                android:text="在线听书"/>
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:background="@color/grad_light"/>
+
+        <RelativeLayout
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:padding="2dp"
+                android:textSize="@dimen/sub_title_size"
+                android:layout_width="wrap_content"
+                android:gravity="center_vertical"
+                android:id="@+id/rb_lession_baca"
+                style="@style/MainRadioButtonStyle"
+                android:textColor="@drawable/lession_audio_selector"
+                android:drawablePadding="4dp"
+                android:text="BACA课程"/>
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:background="@color/grad_light"/>
+
+        <RelativeLayout
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:padding="2dp"
+                android:textSize="@dimen/sub_title_size"
+                android:layout_width="wrap_content"
+                android:gravity="center_vertical"
+                android:id="@+id/rb_lession_toy"
+                style="@style/MainRadioButtonStyle"
+                android:textColor="@drawable/lession_audio_selector"
+                android:drawablePadding="4dp"
+                android:text="玩具竞技"/>
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:background="@color/grad_light"/>
+
+        <RelativeLayout
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:padding="2dp"
+                android:textSize="@dimen/sub_title_size"
+                android:layout_width="wrap_content"
+                android:gravity="center_vertical"
+                android:id="@+id/rb_lession_video"
+                style="@style/MainRadioButtonStyle"
+                android:textColor="@drawable/lession_audio_selector"
+                android:drawablePadding="4dp"
+                android:text="专家视频"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="2dp">
+
+        <ImageView
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:id="@+id/iv_lession_line_audio"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="2dp"
+            android:background="@color/blue_dark"/>
+
+        <ImageView
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:id="@+id/iv_lession_line_baca"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="2dp"
+            android:background="@color/blue_dark"/>
+
+        <ImageView
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:id="@+id/iv_lession_line_toy"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="2dp"
+            android:background="@color/blue_dark"/>
+
+        <ImageView
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:id="@+id/iv_lession_line_video"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="2dp"
+            android:background="@color/blue_dark"/>
+    </LinearLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_lession"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

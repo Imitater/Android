@@ -1,0 +1,224 @@
+package com.ruiyihong.toyshop.fragment;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.ruiyihong.toyshop.R;
+import com.ruiyihong.toyshop.activity.JifenDuihuanBookActivity;
+import com.ruiyihong.toyshop.activity.JifenDuihuanDjqActivity;
+import com.ruiyihong.toyshop.activity.JifenDuihuanToyActivity;
+import com.ruiyihong.toyshop.adapter.JiFenRvAdapter;
+import com.ruiyihong.toyshop.bean.JifenHotBean;
+import com.ruiyihong.toyshop.util.AppConstants;
+import com.ruiyihong.toyshop.util.GsonUtil;
+import com.ruiyihong.toyshop.util.NetWorkUtil;
+import com.ruiyihong.toyshop.util.OkHttpUtil;
+import com.ruiyihong.toyshop.util.SPUtil;
+import com.ruiyihong.toyshop.view.CircleImageView;
+import com.ruiyihong.toyshop.view.CommonLoadingView;
+import com.ruiyihong.toyshop.view.DividerItemDecoration;
+import com.ruiyihong.toyshop.view.FullyGridLayoutManager;
+import com.ruiyihong.toyshop.view.MyScrollView;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+/**
+ * Created by hegeyang on 2017/8/3 0003 .
+ */
+
+public class JifenShopFragment extends BaseFragment {
+    private static final int MSG_HOT_DJQ = 0;
+    private static final int MSG_HOT_PRODUCT = 1;
+    private static final int NetWorkError=2;
+    private static final int CloseLoadingView=3;
+    private static final int PageLoading=4;
+    private static final String BUFFER_FRAG_JIFEN_DUIHUAN_DJQ_PRODUCT = "buffer_frag_jifen_duihuan_djq_product";
+    @InjectView(R.id.civ_head)
+    CircleImageView mCivHead;
+    @InjectView(R.id.tv_username)
+    TextView mTvUsername;
+    @InjectView(R.id.rv_jifen)
+    RecyclerView mRvJifen;
+    @InjectView(R.id.sv)
+    MyScrollView mSv;
+    @InjectView(R.id.rl_title)
+    RelativeLayout mRlTitle;
+    @InjectView(R.id.tv_duihuan_toy)
+    TextView mTvDuihuanToy;
+    @InjectView(R.id.tv_duihuan_book)
+    TextView mTvDuihuanBook;
+    @InjectView(R.id.tv_duihuan_jinquan)
+    TextView mTvDuihuanJinquan;
+    @InjectView(R.id.rv_jifen_product)
+    RecyclerView mRvJifenProduct;
+    @InjectView(R.id.common_LoadingView)
+    CommonLoadingView loadingView;
+    private Intent intent;
+    private List<JifenHotBean.Data1Bean> dataDjqList;
+    private List<JifenHotBean.Data2Bean> dataProductList;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MSG_HOT_DJQ:
+                    initRvJiFen(mRvJifen, dataDjqList, JiFenRvAdapter.TYPE_DJQ);
+                    break;
+                case MSG_HOT_PRODUCT:
+                    initRvJiFen(mRvJifenProduct, dataProductList, JiFenRvAdapter.TYPE_PRODUCT);
+                    break;
+                case NetWorkError :    //显示网络错误页面
+                    if(loadingView!=null)
+                        loadingView.loadError();
+                    break;
+                case CloseLoadingView: //关闭Loading动画
+                    if(loadingView!=null)
+                        loadingView.loadSuccess(false);
+                    break;
+                case PageLoading:  //页面加载中动画
+                    if(loadingView!=null)
+                        loadingView.load();
+                    break;
+            }
+        }
+    };
+
+    @Override
+    protected View initView() {
+        View view = LayoutInflater.from(mActivity).inflate(R.layout.fragment_jifen, null);
+
+        return view;
+    }
+
+    @Override
+    protected void initData() {
+        if (!NetWorkUtil.isNetWorkAvailable(mActivity)){
+            handler.sendEmptyMessage(NetWorkError);
+            return;
+        }else{
+            handler.sendEmptyMessage(PageLoading);
+        }
+        mRlTitle.setFocusableInTouchMode(true);
+        mRlTitle.requestFocus();
+        String buffer = SPUtil.getString(mActivity, BUFFER_FRAG_JIFEN_DUIHUAN_DJQ_PRODUCT, "");
+        Log.i("radish", "buffer------------------" + buffer);
+        if (!TextUtils.isEmpty(buffer)) {
+            CloseLoadingView();
+            JifenHotBean hotBean = GsonUtil.parseJsonWithGson(buffer, JifenHotBean.class);
+            dataDjqList = hotBean.getData1();
+            dataProductList = hotBean.getData2();
+            initRvJiFen(mRvJifen, dataDjqList, JiFenRvAdapter.TYPE_DJQ);
+            initRvJiFen(mRvJifenProduct, dataProductList, JiFenRvAdapter.TYPE_PRODUCT);
+        }
+        postNet(AppConstants.JIFEN_DUIHUAN_HOT_DJQ, new HashMap<String, Object>(), MSG_HOT_DJQ);
+        postNet(AppConstants.JIFEN_DUIHUAN_HOT_PRODUCT, new HashMap<String, Object>(), MSG_HOT_PRODUCT);
+    }
+
+    private void postNet(String url, final Map<String, Object> map, final int type) {
+        try {
+            OkHttpUtil.postJson(url, map, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String result = OkHttpUtil.getResult(response);
+                    if (!TextUtils.isEmpty(result)) {
+                        CloseLoadingView();
+                        JifenHotBean bean = GsonUtil.parseJsonWithGson(result, JifenHotBean.class);
+                        SPUtil.setString(mActivity, BUFFER_FRAG_JIFEN_DUIHUAN_DJQ_PRODUCT, result);
+                        switch (type) {
+                            case MSG_HOT_DJQ:
+                                dataDjqList = bean.getData1();
+                                break;
+                            case MSG_HOT_PRODUCT:
+                                dataProductList = bean.getData2();
+                                break;
+                        }
+                        handler.sendEmptyMessage(type);
+                    }
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+            handler.sendEmptyMessage(NetWorkError);
+
+        }
+    }
+
+    //关闭LoadingView
+    private void CloseLoadingView() {
+        handler.sendEmptyMessage(CloseLoadingView);
+    }
+
+    private void initRvJiFen(RecyclerView rv, List list, int type) {
+        rv.setLayoutManager(new FullyGridLayoutManager(mActivity, 3));
+        rv.addItemDecoration(new DividerItemDecoration(mActivity, DividerItemDecoration.BOTH_SET, 1, getResources().getColor(R.color.divider_rv_line)));
+        rv.setAdapter(new JiFenRvAdapter(mActivity, list, type));
+    }
+
+    @Override
+    protected void initEvent() {
+        mTvDuihuanToy.setOnClickListener(this);
+        mTvDuihuanBook.setOnClickListener(this);
+        mTvDuihuanJinquan.setOnClickListener(this);
+        loadingView.setOnRefreshPagerListener(new CommonLoadingView.OnRefreshPageListener() {
+            @Override
+            public void Refresh() {
+                initData();
+            }
+        });
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.tv_duihuan_toy:
+                intent = new Intent(mActivity, JifenDuihuanToyActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.tv_duihuan_book:
+                this.intent = new Intent(mActivity, JifenDuihuanBookActivity.class);
+                startActivity(this.intent);
+                break;
+            case R.id.tv_duihuan_jinquan:
+                this.intent = new Intent(mActivity, JifenDuihuanDjqActivity.class);
+                startActivity(this.intent);
+                break;
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.inject(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
+    }
+}

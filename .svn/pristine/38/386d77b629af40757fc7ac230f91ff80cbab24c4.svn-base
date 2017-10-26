@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <RelativeLayout
+        style="@style/title_style">
+        <TextView
+            style="@style/title_textview_style"
+            android:text="会员办理"/>
+        <ImageButton
+            style="@style/back_style"/>
+    </RelativeLayout>
+    <ScrollView
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:background="#fcf8d2"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:background="@mipmap/vip_buy_head"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"/>
+            <android.support.v7.widget.RecyclerView
+                android:background="#fcf8d2"
+                android:id="@+id/ry_vip_buy_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"></android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

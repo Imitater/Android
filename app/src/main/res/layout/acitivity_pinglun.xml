@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hor_line"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <RelativeLayout style="@style/title_style">
+
+        <ImageButton
+            android:id="@+id/back_pinglun"
+            style="@style/back_style" />
+
+        <TextView
+            android:id="@+id/tv_pinglun_title"
+            style="@style/title_textview_style"
+            android:text="发表评论" />
+
+        <TextView
+            android:id="@+id/tv_pinglun_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:text="发布"
+            android:textSize="@dimen/sub_title_size" />
+    </RelativeLayout>
+
+    <com.ruiyihong.toyshop.view.MyScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_order_pinglun"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:background="@color/Panda_BG"
+                android:orientation="vertical"
+                android:paddingBottom="15dp"
+                android:paddingLeft="25dp"
+                android:paddingTop="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="体验评分"
+                    android:textColor="@color/blue_dark"
+                    android:textSize="@dimen/item_size" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="18dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="物流评价"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+                    <com.ruiyihong.toyshop.view.RatingBar
+                        android:id="@+id/rt_pinglun_miaoshu1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:clickable="false"
+                        android:stepSize="1"
+                        app:starCount="5"
+                        app:starEmpty="@drawable/rating_empty"
+                        app:starFill="@drawable/rating_full"
+                        app:starImageSize="17dp"
+                        app:starPadding="18dp"
+                        app:starStep="1" />
+
+                    <TextView
+                        android:id="@+id/tv_pinglun_miaoshu1_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="12dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="18dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="服务评价"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+                    <com.ruiyihong.toyshop.view.RatingBar
+                        android:id="@+id/rt_pinglun_miaoshu2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:clickable="false"
+                        android:stepSize="1"
+                        app:starCount="5"
+                        app:starEmpty="@drawable/rating_empty"
+                        app:starFill="@drawable/rating_full"
+                        app:starImageSize="17dp"
+                        app:starPadding="18dp"
+                        app:starStep="1" />
+
+                    <TextView
+                        android:id="@+id/tv_pinglun_miaoshu2_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="12dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="18dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="描述评价"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+                    <com.ruiyihong.toyshop.view.RatingBar
+                        android:id="@+id/rt_pinglun_miaoshu3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:clickable="false"
+                        android:stepSize="1"
+                        app:starCount="5"
+                        app:starEmpty="@drawable/rating_empty"
+                        app:starFill="@drawable/rating_full"
+                        app:starImageSize="17dp"
+                        app:starPadding="18dp"
+                        app:starStep="1" />
+
+                    <TextView
+                        android:id="@+id/tv_pinglun_miaoshu3_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="12dp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </com.ruiyihong.toyshop.view.MyScrollView>
+
+</LinearLayout>

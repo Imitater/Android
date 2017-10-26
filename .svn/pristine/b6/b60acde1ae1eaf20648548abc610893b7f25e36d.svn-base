@@ -1,0 +1,613 @@
+package com.ruiyihong.toyshop.activity;
+
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
+import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.google.gson.Gson;
+import com.ruiyihong.toyshop.R;
+import com.ruiyihong.toyshop.bean.UserBean;
+import com.ruiyihong.toyshop.bean.VipDataBean;
+import com.ruiyihong.toyshop.util.AppConstants;
+import com.ruiyihong.toyshop.util.LogUtil;
+import com.ruiyihong.toyshop.util.OkHttpUtil;
+import com.ruiyihong.toyshop.util.SPUtil;
+import com.ruiyihong.toyshop.util.ToastHelper;
+import com.ruiyihong.toyshop.view.CircleImageView;
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+/**
+ * Created by hegeyang on 2017/7/14 0014 .
+ */
+
+public class PersonInfoActivity extends BaseActivity {
+	@InjectView(R.id.back_person)
+	ImageButton ibPersoninfoBack;
+	@InjectView(R.id.iv_nan_check)
+	ImageView ivNanCheck;
+	@InjectView(R.id.iv_personinfo_nan)
+	CircleImageView ivPersoninfoNan;
+	@InjectView(R.id.iv_nv_check)
+	ImageView ivNvCheck;
+	@InjectView(R.id.iv_personinfo_nv)
+	CircleImageView ivPersoninfoNv;
+	@InjectView(R.id.tv_personal_skip)
+	TextView tvPersonSkip;
+	@InjectView(R.id.tv_person_birthday)
+	TextView tvPersonBirthday;
+	@InjectView(R.id.et_person_nickname)
+	EditText etPersonNickName;
+	@InjectView(R.id.tv_person_submit)
+	TextView tvPersonSubmit;
+	@InjectView(R.id.iv_person_head_image)
+	CircleImageView ivPersonHeadImage;
+	public static final String REGIST_KEY = "regist";
+	public static final String lOGIN_KEY = "login";
+
+
+	private static final int CODE_GALLERY_REQUEST = 0xa0;
+	private static final int CODE_CAMERA_REQUEST = 0xa1;
+	private static final int CODE_RESULT_REQUEST = 0xa2;
+	private static final String IMAGE_FILE_NAME = "temp_head_image.png";
+	@InjectView(R.id.textView7)
+	TextView textView7;
+	@InjectView(R.id.tv_personal_vip_level2)
+	TextView tvPersonalVipLevel2;
+	@InjectView(R.id.tv_personal_vip_level3)
+	TextView tvPersonalVipLevel3;
+	@InjectView(R.id.tv_personal_vip_money)
+	TextView tvPersonalVipMoney;
+	@InjectView(R.id.tv_personal_vip_member_level)
+	TextView tvPersonalVipMemberLevel;
+	@InjectView(R.id.ll_person_lastmoney)
+	LinearLayout llPersonLastmoney;
+	@InjectView(R.id.tv_personal_vip_level4)
+	TextView tvPersonalVipLevel4;
+	@InjectView(R.id.tv_personal_vip_day)
+	TextView tvPersonalVipDay;
+	@InjectView(R.id.ll_person_lastday)
+	LinearLayout llPersonLastday;
+	private String path = Environment.getExternalStorageDirectory().getPath() + File.separator + "ruiyihong" + File.separator + "icon";
+	private File cropfile;
+	private static int output_X = 250;
+	private static int output_Y = 250;
+	private int sex = 0;
+	private UserBean userBean;
+	private boolean is_changed = false;
+	private String bDate;
+	private android.app.AlertDialog dialog;
+	private ProgressDialog progressDialog;
+	private Handler handler = new Handler(){
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what){
+				case 0:
+					parseVipData((String)msg.obj);
+					break;
+			}
+		}
+	};
+
+	private void parseVipData(String vipData) {
+		Gson gson = new Gson();
+		VipDataBean vipDataBean = gson.fromJson(vipData, VipDataBean.class);
+		String vkind = vipDataBean.vkind;
+		if(TextUtils.isEmpty(vkind)){
+			llPersonLastday.setVisibility(View.GONE);
+			llPersonLastmoney.setVisibility(View.GONE);
+		}else if(vkind.equals("次卡")){
+			llPersonLastday.setVisibility(View.INVISIBLE);
+			llPersonLastmoney.setVisibility(View.VISIBLE);
+			tvPersonalVipMoney.setText(vipDataBean.urest+"");
+		}else{
+			llPersonLastday.setVisibility(View.VISIBLE);
+			llPersonLastmoney.setVisibility(View.INVISIBLE);
+			tvPersonalVipLevel4.setText(vkind);
+			tvPersonalVipDay.setText(vipDataBean.dayrest+"");
+		}
+		tvPersonalVipMemberLevel.setText(vipDataBean.uclass+"会员");
+	}
+
+	@Override
+	protected int getLayoutId() {
+		return R.layout.activity_personinfo;
+	}
+
+	@Override
+	protected void initView() {
+		tvPersonSubmit.setFocusable(true);
+		tvPersonSubmit.setFocusableInTouchMode(true);
+		tvPersonSubmit.requestFocus();
+	}
+
+	@Override
+	protected void initData() {
+		String type = getIntent().getStringExtra("type");
+		if (type.equals(REGIST_KEY)) {
+			tvPersonSkip.setVisibility(View.VISIBLE);
+		} else {
+			tvPersonSkip.setVisibility(View.INVISIBLE);
+		}
+		String data = SPUtil.getString(this, AppConstants.SP_LOGIN, "");
+		if (!TextUtils.isEmpty(data)) {
+			getVipType();
+			parse(data);
+		}
+	}
+
+	private void getVipType() {
+		String url = AppConstants.SERVE_URL+"index/vipclass/membinfo";
+		HashMap<String, String> params = new HashMap<>();
+		params.put("uid",SPUtil.getUid(this)[0]);
+		try {
+			OkHttpUtil.postString(url, params, new Callback() {
+				@Override
+				public void onFailure(Call call, IOException e) {
+
+				}
+
+				@Override
+				public void onResponse(Call call, Response response) throws IOException {
+					String result = OkHttpUtil.getResult(response);
+					if (result!=null){
+						Message obtain = Message.obtain();
+						obtain.what = 0;
+						obtain.obj = result;
+						handler.sendMessage(obtain);
+					}
+				}
+			});
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void parse(String data) {
+		Gson gson = new Gson();
+		userBean = gson.fromJson(data, UserBean.class);
+		Picasso.with(this).load(AppConstants.IMG_BASE_URL + userBean.yhimg).placeholder(R.mipmap.personinfo_head_icon).fit().into(ivPersonHeadImage);
+		etPersonNickName.setText(userBean.yhniche);
+		tvPersonBirthday.setText(userBean.birth);
+		switchSex(userBean.bsex);
+	}
+
+	@Override
+	protected void initEvent() {
+		ivPersoninfoNan.setOnClickListener(this);
+		ivPersoninfoNv.setOnClickListener(this);
+		tvPersonSkip.setOnClickListener(this);
+		tvPersonSubmit.setOnClickListener(this);
+		ibPersoninfoBack.setOnClickListener(this);
+		tvPersonBirthday.setOnClickListener(this);
+		ivPersonHeadImage.setOnClickListener(this);
+	}
+
+	@Override
+	protected void processClick(View v) {
+		switch (v.getId()) {
+			case R.id.iv_personinfo_nan:
+				sex = 0;
+				switchSex(0);
+				is_changed = true;
+				break;
+			case R.id.iv_personinfo_nv:
+				sex = 1;
+				switchSex(1);
+				is_changed = true;
+				break;
+			case R.id.tv_personal_skip:
+				finish();
+				break;
+			case R.id.tv_person_submit:
+				//提交
+				try {
+					submit();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				break;
+			case R.id.back_person:
+				if (is_changed) {
+					isChange();
+				} else {
+					finish();
+				}
+				break;
+			case R.id.tv_person_birthday:
+				setBirtyday();
+				if (dialog != null) {
+					dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+						@Override
+						public void onDismiss(DialogInterface dialogInterface) {
+							SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+							try {
+								Date parse = dateFormat.parse(bDate);
+								Date date = new Date();
+								int temp = parse.compareTo(date);
+								if (temp == 1) {
+									ToastHelper.getInstance().displayToastShort("宝宝生日不能大于今天");
+								} else {
+									tvPersonBirthday.setText(bDate);
+								}
+							} catch (ParseException e) {
+								e.printStackTrace();
+							}
+						}
+					});
+				}
+				break;
+			case R.id.iv_person_head_image:
+				showIconDialog();
+				break;
+		}
+	}
+
+	private void showIconDialog() {
+		View v = LayoutInflater.from(this).inflate(R.layout.select_icon_dialog, null);
+		dialog = new android.app.AlertDialog.
+				Builder(this).create();
+		TextView tv_select_tack = v.findViewById(R.id.tv_select_tack);
+		TextView tv_select_photo = v.findViewById(R.id.tv_select_photo);
+		tv_select_tack.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				choseHeadImageFromCameraCapture();
+				dialog.dismiss();
+			}
+		});
+		tv_select_photo.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				choseHeadImageFromGallery();
+				dialog.dismiss();
+			}
+		});
+		dialog.setView(v);
+		dialog.show();
+	}
+
+	private void choseHeadImageFromGallery() {
+		Intent intentFromGallery = new Intent();
+		// 设置文件类型
+		intentFromGallery.setType("image/*");
+		intentFromGallery.setAction(Intent.ACTION_PICK);
+		startActivityForResult(intentFromGallery, CODE_GALLERY_REQUEST);
+	}
+
+	private void choseHeadImageFromCameraCapture() {
+		Intent intentFromCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+		// 判断存储卡是否可用，存储照片文件
+		if (hasSdcard()) {
+			File file = new File(path);
+			if (!file.exists()) {
+				file.mkdirs();
+			}
+			intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT, Uri
+					.fromFile(new File(path, "/" + IMAGE_FILE_NAME)));
+			startActivityForResult(intentFromCapture, CODE_CAMERA_REQUEST);
+
+		}
+	}
+
+	public static boolean hasSdcard() {
+		String state = Environment.getExternalStorageState();
+		if (state.equals(Environment.MEDIA_MOUNTED)) {
+			// 有存储的SDCard
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	protected void onActivityResult(int requestCode, int resultCode,
+	                                Intent intent) {
+
+		// 用户没有进行有效的设置操作，返回
+		if (resultCode == RESULT_CANCELED) {
+			//Toast.makeText(Updata_meActivity.this, "取消了", Toast.LENGTH_LONG).show();
+			return;
+		}
+
+		switch (requestCode) {
+			case CODE_GALLERY_REQUEST:
+				cropRawPhoto(intent.getData());
+				break;
+
+			case CODE_CAMERA_REQUEST:
+				if (hasSdcard()) {
+					File file = new File(path);
+					if (!file.exists()) {
+						file.mkdirs();
+					}
+					File tempFile = new File(
+							path,
+							"/" + IMAGE_FILE_NAME);
+					cropRawPhoto(Uri.fromFile(tempFile));
+
+				} else {
+					ToastHelper.getInstance().displayToastShort("没有SDCard");
+				}
+
+				break;
+
+			case CODE_RESULT_REQUEST:
+				Bitmap bitmap = BitmapFactory.decodeFile(cropfile.getPath());
+				ivPersonHeadImage.setImageBitmap(bitmap);
+				//submitHeadIcon();
+				break;
+		}
+
+		super.onActivityResult(requestCode, resultCode, intent);
+	}
+
+
+	public void cropRawPhoto(Uri uri) {
+
+		Intent intent = new Intent("com.android.camera.action.CROP");
+		intent.setDataAndType(uri, "image/*");
+
+		// 设置裁剪
+		intent.putExtra("crop", "true");
+
+		// aspectX , aspectY :宽高的比例
+		intent.putExtra("aspectX", 1);
+		intent.putExtra("aspectY", 1);
+
+		// outputX , outputY : 裁剪图片宽高
+		intent.putExtra("outputX", output_X);
+		intent.putExtra("outputY", output_Y);
+		intent.putExtra("return-data", true);
+		File file = new File(path);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+		cropfile = new File(file.getPath(), System.currentTimeMillis() + ".png");
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cropfile));
+		startActivityForResult(intent, CODE_RESULT_REQUEST);
+	}
+
+	private void setBirtyday() {
+		View v = LayoutInflater.from(this).inflate(R.layout.time_picker, null);
+		dialog = new android.app.AlertDialog.
+				Builder(this).create();
+
+
+		final DatePicker datePicker = v.findViewById(R.id.datePicker);
+		TextView tv_picker_finish = v.findViewById(R.id.tv_picker_finish);
+
+		//win.addContentView(v,lp);
+		tv_picker_finish.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				int year = datePicker.getYear();
+				int month = datePicker.getMonth();
+				int day = datePicker.getDayOfMonth();
+				bDate = year + "-" + (month >= 9 ? month + 1 : "0" + (month + 1)) + "-" + (day > 9 ? day : "0" + day);
+				dialog.dismiss();
+			}
+		});
+		dialog.setView(v);
+		dialog.setCancelable(false);
+		dialog.show();
+	}
+
+	private void submit() throws IOException {
+		if (cropfile != null) {
+			String headIconUrl = AppConstants.SERVE_URL + "index/index/xgtou";
+			Map<String, Object> param = new HashMap<>();
+			param.put("uname", userBean.uname);
+			MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+			OkHttpClient client = new OkHttpClient();
+			MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+			builder.addFormDataPart("yhimg", cropfile.getName(), RequestBody.create(MEDIA_TYPE_PNG, cropfile));
+			builder.addFormDataPart("uid", userBean.uid);
+			MultipartBody requestBody = builder.build();
+			Request request = new Request.Builder()
+					.url(headIconUrl)//地址
+					.post(requestBody)//添加请求体
+					.build();
+
+			client.newCall(request).enqueue(new Callback() {
+				@Override
+				public void onFailure(Call call, IOException e) {
+					LogUtil.e("上传照片失败");
+				}
+
+				@Override
+				public void onResponse(Call call, Response response) throws IOException {
+
+					LogUtil.e("上传照片成功：response = " + response.body().string());
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							submitOther();
+						}
+					});
+				}
+			});
+		} else {
+			submitOther();
+		}
+
+
+	}
+
+	private void submitOther() {
+		String nickName = etPersonNickName.getText().toString().trim();
+		final String birthday = tvPersonBirthday.getText().toString().trim();
+		if (TextUtils.isEmpty(nickName)) {
+			ToastHelper.getInstance().displayToastShort("请输入昵称");
+			return;
+		}
+		if (TextUtils.isEmpty(birthday)) {
+			ToastHelper.getInstance().displayToastShort("请选择宝宝出生日期");
+			return;
+		}
+		showWaitDialog();
+		Map<String, String> para = new HashMap<String, String>();
+		para.put("uid", userBean.uid);
+		para.put("yhniche", nickName);
+		if(is_changed=false){
+			sex = userBean.bsex;
+		}
+		para.put("bsex", sex + "");
+		para.put("birth", birthday);
+
+		LogUtil.e("宝宝性别" + sex);
+		try {
+			OkHttpUtil.postString(AppConstants.BUSER_URL, para, new Callback() {
+				@Override
+				public void onFailure(Call call, IOException e) {
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							progressDialog.dismiss();
+							ToastHelper.getInstance().displayToastShort("修改失败,请重新提交");
+						}
+					});
+				}
+
+				@Override
+				public void onResponse(Call call, Response response) throws IOException {
+					String result = OkHttpUtil.getResult(response);
+					if (result != null) {
+						Gson gson = new Gson();
+						final UserBean bUserBean = gson.fromJson(result, UserBean.class);
+						if (bUserBean.status == -1) {
+							runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+									progressDialog.dismiss();
+									ToastHelper.getInstance().displayToastShort("修改失败,请重新提交");
+								}
+							});
+							return;
+						}else if(bUserBean.status == 0){
+							runOnUiThread(new Runnable() {
+								@Override
+								public void run() {
+									progressDialog.dismiss();
+									ToastHelper.getInstance().displayToastShort("修改成功");
+									PersonInfoActivity.this.finish();
+								}
+							});
+							return;
+						}
+						LogUtil.e("xiugaijieguo" + result);
+						userBean.births = bUserBean.births;
+						userBean.birth = bUserBean.birth;
+						userBean.bsex = bUserBean.bsex;
+						userBean.yhniche = bUserBean.yhniche;
+						userBean.yhimg = bUserBean.yhimg;
+						String s = gson.toJson(userBean);
+						SPUtil.setString(PersonInfoActivity.this, AppConstants.SP_LOGIN, s);
+						runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								progressDialog.dismiss();
+								ToastHelper.getInstance().displayToastShort("修改成功");
+								PersonInfoActivity.this.finish();
+							}
+						});
+					}
+				}
+			});
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void showWaitDialog() {
+		progressDialog = new ProgressDialog(this);
+		progressDialog.setProgressStyle(R.style.MaterialDialog);
+		progressDialog.setMessage("正在提交");
+		progressDialog.setCancelable(false);
+		progressDialog.show();
+	}
+
+	private void switchSex(int i) {
+		if (i == 0) {
+			ivNanCheck.setVisibility(View.VISIBLE);
+			ivNvCheck.setVisibility(View.INVISIBLE);
+		} else if (i == 1) {
+			ivNanCheck.setVisibility(View.INVISIBLE);
+			ivNvCheck.setVisibility(View.VISIBLE);
+		}
+	}
+
+	@Override
+	public void onBackPressed() {
+
+		if (is_changed) {
+			isChange();
+		} else {
+			finish();
+		}
+	}
+
+	private void isChange() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("返回");
+		builder.setMessage("有未提交的修改，确定要返回吗？");
+		builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialogInterface, int i) {
+				finish();
+			}
+		});
+		builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialogInterface, int i) {
+
+			}
+		});
+		final AlertDialog dialog = builder.create();
+		dialog.setCancelable(false);
+		dialog.show();
+	}
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		// TODO: add setContentView(...) invocation
+		ButterKnife.inject(this);
+	}
+}

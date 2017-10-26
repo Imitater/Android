@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+                android:background="@color/hor_line"
+              android:layout_height="match_parent">
+<LinearLayout
+    android:background="@color/hor_line"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        style="@style/title_style">
+
+        <TextView
+            android:id="@+id/tv_add_title"
+            style="@style/title_textview_style"
+            android:text="新建收货地址"/>
+
+        <ImageButton
+            android:id="@+id/back_add_adres"
+            style="@style/back_style"/>
+        <TextView
+            android:id="@+id/tv_add_save"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@id/tv_add_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="保存"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_marginTop="1dp"
+        android:background="@color/Panda_BG"
+        android:paddingLeft="10dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="@dimen/item_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="收货人："/>
+        <EditText
+            android:background="@color/white"
+            android:id="@+id/et_add_name"
+            android:paddingLeft="5dp"
+            android:hint="收货姓名"
+            android:textSize="@dimen/item_size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <RadioGroup
+        android:background="@color/Panda_BG"
+        android:id="@+id/rg_add_address"
+        android:orientation="horizontal"
+        android:layout_marginTop="2dp"
+        android:paddingLeft="60dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rb_add_nv"
+            android:text="女士"
+            android:checked="true"
+            android:button="@drawable/checkboxbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <RadioButton
+            android:id="@+id/rb_add_nan"
+            android:layout_marginLeft="25dp"
+            android:text="先生"
+            android:button="@drawable/checkboxbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RadioGroup>
+    <RelativeLayout
+        android:layout_marginTop="2dp"
+        android:background="@color/hor_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:paddingLeft="5dp"
+            android:id="@+id/rl_add_contact"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:background="@mipmap/address_contact"
+                android:layout_width="20dp"
+                android:layout_height="20dp"/>
+            <TextView
+                android:layout_marginLeft="2dp"
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:padding="2dp"
+                android:text="从通讯录添加"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_toLeftOf="@id/rl_add_contact"
+            android:background="@color/Panda_BG"
+            android:paddingLeft="10dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="@dimen/item_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="手机号码："/>
+            <EditText
+                android:inputType="number"
+                android:background="@color/white"
+                android:id="@+id/et_add_number"
+                android:paddingLeft="5dp"
+                android:hint="收货人电话"
+                android:textSize="@dimen/item_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/Linear_address"
+        android:layout_marginTop="2dp"
+        android:background="@color/Panda_BG"
+        android:paddingLeft="10dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textSize="@dimen/item_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="收货地址："/>
+
+        <ImageView
+            android:background="@mipmap/address_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:textColor="@color/divider"
+            android:id="@+id/tv_add_location"
+            android:paddingLeft="5dp"
+            android:text="点击定位地址 或小区"
+            android:textSize="@dimen/item_size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="2dp"
+        android:background="@color/Panda_BG"
+        android:paddingLeft="10dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/et_add_address2"
+            android:background="@color/white"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/item_size"
+            android:hint="具体门牌号（如  5号楼-1501号室）"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginTop="2dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:textColor="@drawable/check_moren_textcolor"
+            android:id="@+id/cb_add_moren"
+            android:button="@null"
+            android:textSize="@dimen/item_size"
+            android:text="设为默认地址"
+            android:drawablePadding="15dp"
+            android:drawableLeft="@drawable/checkboxbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</LinearLayout>
+    <TextView
+        android:id="@+id/tv_add_delete"
+        android:layout_marginBottom="5dp"
+        android:padding="15dp"
+        android:textColor="#e84134"
+        android:background="@color/Panda_BG"
+        android:textSize="@dimen/sub_title_size"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="删除"/>
+
+</RelativeLayout>

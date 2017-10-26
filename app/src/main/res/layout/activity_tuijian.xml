@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ryh="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Panda_BG">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rl_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_title"
+            style="@style/title_style">
+
+            <TextView
+                android:id="@+id/tv_more_title"
+                style="@style/title_textview_style"
+                android:text="强力推荐" />
+
+            <ImageButton
+                style="@style/back_style" />
+        </RelativeLayout>
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:layout_below="@id/rl_title"
+            android:id="@+id/smartRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <include layout="@layout/refresh_header"/>
+            <com.ruiyihong.toyshop.view.MyScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout xmlns:ryh="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <com.ruiyihong.toyshop.view.MyImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        ryh:ir="@mipmap/qltj_image_top" />
+
+                    <com.ruiyihong.toyshop.view.MyImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        ryh:ir="@mipmap/qltj_image_top_qi"
+                        android:background="#fff"/>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_qltj"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    </android.support.v7.widget.RecyclerView>
+
+                </LinearLayout>
+            </com.ruiyihong.toyshop.view.MyScrollView>
+            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+
+        <ImageView
+            android:id="@+id/iv_shop_cart"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/shop_car_pic"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="40dp"
+            android:layout_alignParentBottom="true"/>
+
+        <!--购物车数量-->
+        <TextView
+            android:id="@+id/tv_pop_shopping_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@id/iv_shop_cart"
+            android:layout_alignTop="@+id/iv_shop_cart"
+            android:layout_gravity="center"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/pop_tips_circle"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@android:color/white"
+            android:textSize="10dip"
+            android:textStyle="bold"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+
+    <!--Loading动画-->
+    <com.ruiyihong.toyshop.view.CommonLoadingView
+        android:id="@+id/common_LoadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"/>
+</RelativeLayout>

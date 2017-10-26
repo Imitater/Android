@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- 背景填充颜色值 -->
+    <solid android:color="@color/white" />
+    <stroke android:color="@color/blue_dark" android:width="1dp"/>
+
+    <!-- radius值越大，越趋于圆形 -->
+
+    <padding
+        android:top="3dp"
+        android:bottom="3dp"
+        android:left="6dip"
+        android:right="6dip" />
+</shape>
+
+
+
+
+
+<!--
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape= "oval"
+
+    android:useLevel= "false"
+    >
+
+    &lt;!&ndash; radius值越大，越趋于圆形 &ndash;&gt;
+    <corners android:radius="45dip" />
+    <solid android:color= "@android:color/red" />
+
+    <stroke
+
+        android:width= "2dp"
+
+        android:color= "@color/tab_selected" />
+    <size android:width= "20dp"
+
+        android:height= "20dp" />
+&lt;!&ndash;    <padding
+        android:top="3dp"
+        android:bottom="3dp"
+        android:left="6dip"
+        android:right="6dip" />&ndash;&gt;
+</shape>-->

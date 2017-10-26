@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ 2017.
+  ~ Huida.Burt
+  ~ CopyRight
+  ~
+  ~
+  ~
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ruiyihong.toyshop.activity.ReadContactActivity">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_hetght"
+        android:gravity="center"
+        android:textSize="@dimen/title_size"
+        android:text="通讯录"/>
+
+    <RelativeLayout
+        android:id="@+id/search_contact"
+        android:layout_below="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/et_search_contact"
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/radiu_empty_shopping"/>
+        <TextView
+            android:id="@+id/tv_search_icon"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="搜索"
+            android:drawableLeft="@mipmap/search_fdj"/>
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/list_view"
+        android:scrollbars="none"
+        android:layout_below="@+id/search_contact"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/txt_show_current_letter"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@color/transparent"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="A"
+        android:textColor="@color/tab_selected"
+        android:textSize="50dp"
+        android:visibility="gone" />
+
+    <com.ruiyihong.toyshop.view.read_lxr.SideBar
+        android:id="@+id/side_bar"
+        android:layout_width="28dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/search_contact"
+        />
+    <com.ruiyihong.toyshop.view.CommonLoadingView
+        android:id="@+id/common_LoadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title"
+        android:visibility="gone"/>
+</RelativeLayout>

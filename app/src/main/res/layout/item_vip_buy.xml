@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/vip_buy_title_back"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp">
+        <!-- <ImageView
+             android:id="@+id/iv_bg_vip"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:src="@mipmap/vip_buy_title_back"/>-->
+
+
+        <LinearLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/linearLayout5"
+            android:layout_alignBottom="@+id/tv_vip_buy_types"
+            android:layout_marginLeft="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true">
+            <TextView
+                android:id="@+id/tv_vip_buy_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="300"
+                android:textColor="#fb3f4b"
+                android:textSize="29sp"
+                />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="元"
+                android:textColor="#fb3f4b"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
+        <TextView
+            android:gravity="center"
+            android:textSize="18sp"
+            android:text="次卡"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_vip_buy_types"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="35dp"/>
+
+        <TextView
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="立即购买"
+            android:textSize="18sp"
+            android:layout_alignBaseline="@+id/tv_vip_buy_types"
+            android:layout_alignBottom="@+id/tv_vip_buy_types"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"/>
+
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

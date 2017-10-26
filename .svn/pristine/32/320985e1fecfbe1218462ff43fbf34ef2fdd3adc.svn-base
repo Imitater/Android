@@ -1,0 +1,58 @@
+package com.ruiyihong.toyshop.fragment;
+
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.ruiyihong.toyshop.R;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
+/**
+ * Created by hegeyang on 2017/7/27 0027 .
+ */
+
+public class OrderContentFragment extends BaseFragment {
+	private int type;
+	@InjectView(R.id.tv_order_con_null)
+	TextView tvOrderConNull;
+	@InjectView(R.id.tv_order_con_cho0se)
+	TextView tvOrderConCho0se;
+	@InjectView(R.id.rl_order_con_empty)
+	RelativeLayout rlOrderConEmpty;
+	@InjectView(R.id.rcy_order_con)
+	RecyclerView rcyOrderCon;
+	@SuppressLint("ValidFragment")
+
+	public OrderContentFragment(int type) {
+		this.type = type;
+	}
+
+	@Override
+	protected View initView() {
+		View inflate = View.inflate(mActivity, R.layout.fragment_order_content, null);
+		return inflate;
+	}
+
+	@Override
+	public void initData() {
+
+	}
+
+	@Override
+	protected void initEvent() {
+
+	}
+
+	@Override
+	public void onClick(View view) {
+
+	}
+
+}

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@color/Panda_BG"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="10dp">
+
+        <ImageView
+            android:id="@+id/iv_pinglun_icon"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/find_book2" />
+
+        <RadioGroup
+            android:id="@+id/rg_pinglun"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_pinglun_haoping"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:button="@null"
+                android:drawableLeft="@drawable/haoping_selector"
+                android:drawablePadding="10dp"
+                android:text="好评"
+                android:textColor="@drawable/selector_tab_textcolor"
+                android:textSize="@dimen/item_size" />
+
+            <RadioButton
+                android:id="@+id/rb_pinglun_zhongping"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:button="@null"
+                android:drawableLeft="@drawable/zhongping_selector"
+                android:drawablePadding="10dp"
+                android:text="中评"
+                android:textColor="@drawable/selector_tab_textcolor"
+                android:textSize="@dimen/item_size" />
+
+            <RadioButton
+                android:id="@+id/rb_pinglun_chaping"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:button="@null"
+                android:drawableLeft="@drawable/chaping_selector"
+                android:drawablePadding="10dp"
+                android:text="差评"
+                android:textColor="@drawable/selector_tab_textcolor"
+                android:textSize="@dimen/item_size" />
+        </RadioGroup>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/Panda_BG">
+
+        <EditText
+            android:id="@+id/et_pinpun_content"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            android:gravity="top"
+            android:hint="宝贝满足你的期待吗？说说你的体验，分享给更多的想来租玩具图书的他们吧。"
+            android:lineSpacingExtra="5dp"
+            android:maxHeight="100dp"
+            android:maxLines="5"
+            android:paddingBottom="5dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp"
+            android:textSize="12sp" />
+
+        <GridView
+            android:id="@+id/gv_pinglun_icon_changchuan"
+            android:layout_width="wrap_content"
+            android:layout_height="180dp"
+            android:layout_below="@id/et_pinpun_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:background="@null"
+            android:horizontalSpacing="10dp"
+            android:numColumns="3"
+            android:scrollbars="none"
+            android:verticalSpacing="5dp" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/Panda_BG"
+        android:paddingBottom="10dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="10dp">
+
+        <CheckBox
+            android:id="@+id/cb_pinglun_niming"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@color/transparent"
+            android:button="@null"
+            android:drawableLeft="@drawable/niming_checkbox"
+            android:drawablePadding="10dp"
+            android:text="匿名"
+            android:textSize="@dimen/item_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:text="你写的评论会以匿名的形式展示"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/small_size" />
+    </RelativeLayout>
+</LinearLayout>

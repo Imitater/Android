@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        style="@style/title_style">
+        <TextView
+            android:text="活动详情"
+            style="@style/title_textview_style" />
+        <ImageButton
+            style="@style/back_style" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.ruiyihong.toyshop.view.MyScrollView
+            android:id="@+id/msv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider_line"/>
+                <include layout="@layout/item_rv_more_benefit"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider_line"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_marginRight="5dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="2dp"
+                        android:layout_height="15dp"
+                        android:background="@color/red_flag"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="报名条件"
+                        android:textSize="@dimen/title_size"
+                        android:textColor="@color/black_title"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_benefit_condition"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="3dp"
+                    android:textColor="@color/black_title"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_marginRight="5dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="2dp"
+                        android:layout_height="15dp"
+                        android:background="@color/red_flag"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="活动目标"
+                        android:textSize="@dimen/title_size"
+                        android:textColor="@color/black_title"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_benefit_target"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="3dp"
+                    android:textColor="@color/black_title"/>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+            </LinearLayout>
+        </com.ruiyihong.toyshop.view.MyScrollView>
+        <TextView
+            android:id="@+id/tv_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_submit"
+            android:text="报名"
+            android:gravity="center"
+            android:padding="15dp"
+            android:layout_alignParentBottom="true"/>
+        <!--Loading动画-->
+        <com.ruiyihong.toyshop.view.CommonLoadingView
+            android:visibility="gone"
+            android:id="@+id/common_LoadingView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </RelativeLayout>
+
+</LinearLayout>

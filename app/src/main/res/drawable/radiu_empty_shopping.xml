@@ -1,0 +1,19 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"  >
+
+
+    <solid android:color="@color/tab_selected" />
+
+
+
+    <!-- 四个角的弧度 -->
+    <corners
+        android:bottomLeftRadius="45dp"
+        android:bottomRightRadius="45dp"
+        android:topLeftRadius="45dp"
+        android:topRightRadius="45dp"/>
+    <!-- padding：TextView里面的文字与TextView边界的间隔 -->
+    <padding android:top="4dp"
+        android:bottom="4dp"/>
+
+
+</shape>

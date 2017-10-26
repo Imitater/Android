@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">TB 玩图汇</string>
+
+
+    <string name="shop_name">TB 玩图汇</string>
+
+    <string name="edit">编辑</string>
+
+    <string name="shop_title">购物车(0)</string>
+
+    <string name="count_money">合计：￥0/天</string>
+
+    <string name="count_goods">结算(0)</string>
+
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="title_activity_address">AddressActivity</string>
+    <string name="title_activity_base">BaseActivity</string>
+    <string name="search_address">搜索地址</string>
+</resources>

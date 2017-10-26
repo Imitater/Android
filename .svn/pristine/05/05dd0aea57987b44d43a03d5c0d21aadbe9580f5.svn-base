@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grad_light">
+    <TextView
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="宝宝今天很开心，收到了宝贝，宝宝很喜欢，再也不用担心宝宝玩具不够用了"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/item_size"
+        android:lines="2"/>
+    <com.w4lle.library.NineGridlayout
+        android:layout_margin="10dp"
+        android:id="@+id/gv_find_hottuijian_item"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="3dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="30dp"
+        android:paddingTop="5dp" />
+
+    <RelativeLayout
+        android:layout_margin="10dp"
+        android:id="@+id/rl_video"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+        <ImageView
+            android:id="@+id/video_find_hottuijian_item"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:src="@mipmap/item_image_bg"
+            android:scaleType="centerCrop"
+            />
+        <ImageView
+            android:id="@+id/iv_find_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/play"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+</LinearLayout>

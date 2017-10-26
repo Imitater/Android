@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:background="@color/Panda_BG">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sub_title_size"
+        android:gravity="center"
+        android:text="搜索城市"/>
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="26dp"
+            android:background="@mipmap/search_background"
+            android:layout_centerInParent="true"
+            android:drawableLeft="@mipmap/search_fdj"
+            android:layout_margin="12dp"
+            android:hint="@string/search_address"
+            android:textSize="13sp"
+            android:drawablePadding="5dp"/>
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="666dp"
+        android:background="@color/white"/>
+
+</LinearLayout>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/vip_ll">
+    <ImageView
+        android:id="@+id/iv_bg_vip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/vip_bj"/>
+
+    <TextView
+        android:id="@+id/tv_zhuce"
+        style="@style/vip_register"/>
+</RelativeLayout>

@@ -1,0 +1,35 @@
+// Generated code from Butter Knife. Do not modify!
+package com.ruiyihong.toyshop.activity;
+
+import android.view.View;
+import butterknife.ButterKnife.Finder;
+
+public class MainActivity$$ViewInjector {
+  public static void inject(Finder finder, final com.ruiyihong.toyshop.activity.MainActivity target, Object source) {
+    View view;
+    view = finder.findRequiredView(source, 2131427424, "field 'mFlMain'");
+    target.mFlMain = (android.widget.FrameLayout) view;
+    view = finder.findRequiredView(source, 2131427426, "field 'mRbHome'");
+    target.mRbHome = (android.widget.RadioButton) view;
+    view = finder.findRequiredView(source, 2131427427, "field 'mRbToyshop'");
+    target.mRbToyshop = (android.widget.RadioButton) view;
+    view = finder.findRequiredView(source, 2131427428, "field 'mRbMember'");
+    target.mRbMember = (android.widget.RadioButton) view;
+    view = finder.findRequiredView(source, 2131427429, "field 'mRbShoppingCart'");
+    target.mRbShoppingCart = (android.widget.RadioButton) view;
+    view = finder.findRequiredView(source, 2131427430, "field 'mRbMine'");
+    target.mRbMine = (android.widget.RadioButton) view;
+    view = finder.findRequiredView(source, 2131427425, "field 'mRgMain'");
+    target.mRgMain = (android.widget.RadioGroup) view;
+  }
+
+  public static void reset(com.ruiyihong.toyshop.activity.MainActivity target) {
+    target.mFlMain = null;
+    target.mRbHome = null;
+    target.mRbToyshop = null;
+    target.mRbMember = null;
+    target.mRbShoppingCart = null;
+    target.mRbMine = null;
+    target.mRgMain = null;
+  }
+}

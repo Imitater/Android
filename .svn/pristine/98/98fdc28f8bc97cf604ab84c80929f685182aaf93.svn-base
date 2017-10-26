@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.github.bumptech.glide\glide\3.7.0\9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4\glide-3.7.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.0"
+        sha1="9e9eeaf9948ee4d6c3ab354e8dc14368f16994a4">
+        <dex dex="C:\AndroidWorkSpace\toy\app\build\intermediates\transforms\dex\debug\folders\1000\10\glide-3.7.0_1f3ddf859a86296da03fddcf50d19f29d652df81\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\AndroidWorkSpace\toy\app\libs\BaiduLBS_Android.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="1e366e13f15d7256c59b37eaffadab1df049c745">
+        <dex dex="C:\AndroidWorkSpace\toy\app\build\intermediates\pre-dexed\debug\BaiduLBS_Android_937425af8b025f92710012e2f112345c82fe8de0.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\a37dbe35df97ca9c0a3788d8d73caef06eb7e0e8\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.0"
+        sha1="77a3708405f2f35445d7533217d93b8b10bec62f">
+        <dex dex="C:\AndroidWorkSpace\toy\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_f3af24909ea925cda2241a7f582d0d8726a728dc\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\AndroidWorkSpace\toy\app\libs\open_sdk_r5793.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.0"
+        sha1="54bf962bc0730052daa0a92b1c2599c147be3f88">
+        <dex dex="C:\AndroidWorkSpace\toy\app\build\intermediates\transforms\dex\debug\folders\1000\2\open_sdk_r5793_f59623762621456a5dc28c7f125164bc9c9f032f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\AndroidWorkSpace\toy\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.0"
+        sha1="559bbb03628feaa475e0ea259fd425f78fb39dd8">
+        <dex dex="C:\AndroidWorkSpace\toy\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_346939afdedab9763bc16f975b24144e5813fdbd\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\AndroidWorkSpace\toy\app\libs\BaiduLBS_Android.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.0"
+        sha1="1e366e13f15d7256c59b37eaffadab1df049c745">
+        <dex dex="C:\AndroidWorkSpace\toy\app\build\intermediates\transforms\dex\debug\folders\1000\2\BaiduLBS_Android_937425af8b025f92710012e2f112345c82fe8de0\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Administrator\.android\build-cache\a786a67be2a7acb3d48e60462de6e7f9dbc42e86\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.0"
+        sha1="772452261af8eb9c1df9ae71fb621afe393277da">
+        <dex dex="C:\AndroidWorkSpace\toy\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_d9deccdb65b73369afe23cf040ce16e0d0cff6e5\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\AndroidWorkSpace\toy\app\libs\jpinyin-1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="8f2a0988f56145888ef22eacaf0c01dcdd8fecd4">
+        <dex dex="C:\AndroidWorkSpace\toy\app\build\intermediates\pre-dexed\debug\jpinyin-1.0_b44435890982bc9ecb7a6fe1fce505716d7a2861.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\AndroidWorkSpace\toy\app\libs\open_sdk_r5793.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="54bf962bc0730052daa0a92b1c2599c147be3f88">
+        <dex dex="C:\AndroidWorkSpace\toy\app\build\intermediates\pre-dexed\debug\open_sdk_r5793_f59623762621456a5dc28c7f125164bc9c9f032f.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\AndroidWorkSpace\toy\app\libs\mta-sdk-1.6.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.0"
+        sha1="c184c69f43b1fe46390f7123717c65bd844bccb6">
+        <dex dex="C:\AndroidWorkSpace\toy\app\build\intermediates\transforms\dex\debug\folders\1000\2\mta-sdk-1.6.2_47d75f6ef6cd926d90e9aa8a7db42627c3c27074\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\AndroidWorkSpace\toy\app\libs\jpinyin-1.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.0"
+        sha1="8f2a0988f56145888ef22eacaf0c01dcdd8fecd4">
+        <dex dex="C:\AndroidWorkSpace\toy\app\build\intermediates\transforms\dex\debug\folders\1000\2\jpinyin-1.0_b44435890982bc9ecb7a6fe1fce505716d7a2861\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\AndroidWorkSpace\toy\app\libs\mta-sdk-1.6.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="c184c69f43b1fe46390f7123717c65bd844bccb6">
+        <dex dex="C:\AndroidWorkSpace\toy\app\build\intermediates\pre-dexed\debug\mta-sdk-1.6.2_47d75f6ef6cd926d90e9aa8a7db42627c3c27074.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\AndroidWorkSpace\toy\photoselector\build\intermediates\bundles\default\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="98928eae51f46da7a682e1cc140a4eaa1f93da70">
+        <dex dex="C:\AndroidWorkSpace\toy\app\build\intermediates\pre-dexed\debug\classes_e6a87c49c973a22c9f89ec628ad05366b57d02f5.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\AndroidWorkSpace\toy\app\libs\butterknife-6.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.0"
+        sha1="3a10b25b6820e19102e118711afe6a66c0bae123">
+        <dex dex="C:\AndroidWorkSpace\toy\app\build\intermediates\transforms\dex\debug\folders\1000\2\butterknife-6.0.0_9d3a275a93e2910f3ebcf0d9655658bd3db4d8d0\classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\AndroidWorkSpace\toy\app\libs\butterknife-6.0.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="3a10b25b6820e19102e118711afe6a66c0bae123">
+        <dex dex="C:\AndroidWorkSpace\toy\app\build\intermediates\pre-dexed\debug\butterknife-6.0.0_9d3a275a93e2910f3ebcf0d9655658bd3db4d8d0.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\AndroidWorkSpace\toy\vitamio\build\intermediates\bundles\default\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="26.0.0"
+        sha1="fa01d356cfeaf1a7c30adcb4f011702051dca556">
+        <dex dex="C:\AndroidWorkSpace\toy\app\build\intermediates\pre-dexed\debug\classes_e9941c867711ed59460a7d440b9e6b233b2f8cb5.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\AndroidWorkSpace\toy\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.0"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="C:\AndroidWorkSpace\toy\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_a2bf7c76fc592dfaae467c71484e7705cf1efc21\classes.dex" />
+    </item>
+
+</items>

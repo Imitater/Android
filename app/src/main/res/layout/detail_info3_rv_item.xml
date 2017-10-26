@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ryh="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.ruiyihong.toyshop.view.MyImageView
+        android:id="@+id/iv_detail_info3_rv_item1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ryh:ir="@mipmap/product_info3_pic1"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="宝宝更好的认识世界"
+        android:textSize="@dimen/title_size"
+        android:textColor="@color/white"
+        android:background="@color/tab_selected"/>
+    <com.ruiyihong.toyshop.view.MyImageView
+        android:id="@+id/iv_detail_info3_rv_item2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ryh:ir="@mipmap/product_info3_pic2"/>
+</LinearLayout>

@@ -1,0 +1,234 @@
+[
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\radiu_shape.xml",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable\\radiu_shape.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_shopping_cart_icon.xml",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable\\selector_shopping_cart_icon.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_switch_thumb_material.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_switch_thumb_material.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_check_material.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_btn_check_material.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\notification_icon_background.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\notification_icon_background.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\ic_reduce.png",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable\\ic_reduce.png"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_radio_material.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_btn_radio_material.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_colored_material.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_btn_colored_material.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_ab_back_material.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_ic_ab_back_material.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\shopping_cart.png",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable\\shopping_cart.png"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ratingbar_material.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_ratingbar_material.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_item_background_holo_light.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_item_background_holo_light.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_go_search_api_material.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_ic_go_search_api_material.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\ic_checked.png",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable\\ic_checked.png"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\ic_add.png",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable\\ic_add.png"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_holo_light.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_list_selector_holo_light.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\ic_shop.png",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable\\ic_shop.png"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\ic_uncheck.png",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable\\ic_uncheck.png"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_clear_material.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_ic_clear_material.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_holo_dark.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_list_selector_holo_dark.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_seekbar_thumb_material.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_seekbar_thumb_material.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_vector_test.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_vector_test.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_tab_indicator_material.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_tab_indicator_material.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\notification_tile_bg.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\notification_tile_bg.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_background_transition_holo_dark.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_list_selector_background_transition_holo_dark.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_ic_arrow_drop_right_black_24dp.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_tab_mine.xml",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable\\selector_tab_mine.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\ic_arrow.png",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable\\ic_arrow.png"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_seekbar_tick_mark_material.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_seekbar_tick_mark_material.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_list_selector_background_transition_holo_light.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_list_selector_background_transition_holo_light.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_cab_background_top_material.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_cab_background_top_material.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_dialog_material_background.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_dialog_material_background.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_voice_search_api_material.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_ic_voice_search_api_material.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_edit_text_material.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_edit_text_material.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_spinner_textfield_background_material.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_spinner_textfield_background_material.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_textfield_search_material.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_textfield_search_material.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_search_api_material.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_ic_search_api_material.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_tab_home.xml",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable\\selector_tab_home.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_tab_toyshop.xml",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable\\selector_tab_toyshop.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_tab_shoppingchart.xml",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable\\selector_tab_shoppingchart.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\nomarl_point.xml",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable\\nomarl_point.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_cab_background_internal_bg.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_cab_background_internal_bg.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_item_background_holo_dark.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_item_background_holo_dark.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_tab_textcolor.xml",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable\\selector_tab_textcolor.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\btn_click_black_havebackground.xml",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable\\btn_click_black_havebackground.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_default_mtrl_shape.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_btn_default_mtrl_shape.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ratingbar_indicator_material.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_ratingbar_indicator_material.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_seekbar_track_material.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_seekbar_track_material.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ic_menu_overflow_material.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_ic_menu_overflow_material.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_ratingbar_small_material.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_ratingbar_small_material.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\selector_tab_member.xml",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable\\selector_tab_member.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\notification_bg.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\notification_bg.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\ic_shopping_cart_empty.png",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable\\ic_shopping_cart_empty.png"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\notification_bg_low.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\notification_bg_low.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\btn_click_red_havebackground.xml",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable\\btn_click_red_havebackground.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_text_cursor_material.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_text_cursor_material.xml"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\shopping_cart_nomal.png",
+        "source": "C:\\AndroidWorkSpace\\toy\\app\\src\\main\\res\\drawable\\shopping_cart_nomal.png"
+    },
+    {
+        "merged": "C:\\AndroidWorkSpace\\toy\\app\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_btn_borderless_material.xml",
+        "source": "C:\\Users\\Administrator\\.android\\build-cache\\c4ae4bc943d8ec527eaf55b6c3caf2275340befd\\output\\res\\drawable\\abc_btn_borderless_material.xml"
+    }
+]

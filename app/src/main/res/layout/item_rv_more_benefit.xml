@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/iv_benefit_pic"
+        android:layout_gravity="center"
+        android:layout_width="100dp"
+        android:layout_height="160dp"
+        android:src="@mipmap/book1"/>
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_benefit_name"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="2"
+            android:text="活动名称"
+            android:textColor="@color/black_title"
+            android:textSize="@dimen/title_size"/>
+        <LinearLayout
+            android:layout_marginTop="3dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="限额"
+                android:textSize="@dimen/item_size"
+                android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/tv_benefit_person_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="500"
+                android:textSize="@dimen/item_size"
+                android:textColor="@color/red_tv"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="人"
+                android:textSize="@dimen/item_size"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:drawablePadding="2dp"
+                android:drawableLeft="@mipmap/more_benefit_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="时间:    "
+                android:textSize="@dimen/item_size"
+                android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/tv_benefit_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2017年06月22日 19:30"
+                android:textSize="@dimen/item_size"
+                android:textColor="@color/black"
+                android:lines="1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="2dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:drawablePadding="2dp"
+                android:drawableLeft="@mipmap/more_benefit_person"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="主办方:"
+                android:textSize="@dimen/item_size"
+                android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/tv_benefit_person"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="河北科技师范心理咨询健康调查委员会"
+                android:textSize="@dimen/item_size"
+                android:textColor="@color/black"
+                android:lines="2"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="2dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:drawablePadding="2dp"
+                android:drawableLeft="@mipmap/more_benefit_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="地址:    "
+                android:textSize="@dimen/item_size"
+                android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/tv_benefit_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="河北科技师范学院河北科技师范学院"
+                android:textSize="@dimen/item_size"
+                android:textColor="@color/black"
+                android:lines="2"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

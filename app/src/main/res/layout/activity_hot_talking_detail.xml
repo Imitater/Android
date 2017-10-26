@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ruiyihong.toyshop.activity.HotTalkingDetailActivity">
+    <!--标题栏 -->
+    <RelativeLayout
+        android:id="@+id/settle_title"
+        style="@style/title_style">
+
+        <ImageButton style="@style/back_style" />
+
+        <TextView
+            style="@style/title_textview_style"
+            android:text="热门话题" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/settle_title">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/rl_hot_talk_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_hot_talk_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:background="@mipmap/lunbo_default"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    android:id="@+id/tv_hottalk_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Title"
+                    android:textColor="@color/vipmember_text_color"
+                    android:textSize="23sp" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_hot_talk_detail"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/tv_hottalk_detail_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iv_hot_talk_detail"
+                    android:layout_weight="1"
+                    android:text="Title"
+                    android:textColor="#4e4d4d"
+                    android:textSize="@dimen/title_size" />
+
+                <TextView
+                    android:id="@+id/tv_collect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/selector_find_shoucang"
+                    android:drawablePadding="3dp"
+                    android:gravity="center"
+                    android:text="收藏" />
+
+            </LinearLayout>
+
+            <com.ruiyihong.toyshop.view.ProgressWebView
+                android:id="@+id/wv_hottalk_detail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/ll_detail"
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="7dp"
+                android:contextClickable="true"
+                android:scrollbars="none">
+
+            </com.ruiyihong.toyshop.view.ProgressWebView>
+        </RelativeLayout>
+    </ScrollView>
+
+
+    <!--Loading动画-->
+    <com.ruiyihong.toyshop.view.CommonLoadingView
+        android:id="@+id/common_LoadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:visibility="invisible" />
+</RelativeLayout>

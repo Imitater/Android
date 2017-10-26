@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/event_bg_circle_white">
+        <TextView
+            android:id="@+id/tv_select1"
+            android:paddingTop="15dp"
+            android:paddingBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="加盟"
+            android:layout_marginLeft="25dp"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/item_size"
+            android:textColor="@color/red_tv"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/bg_vip_detail"/>
+        <TextView
+            android:id="@+id/tv_select2"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="城市合伙人"
+            android:layout_marginLeft="25dp"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/item_size"
+            android:textColor="@color/red_tv"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/bg_vip_detail"/>
+        <TextView
+            android:id="@+id/tv_select3"
+            android:paddingTop="10dp"
+            android:paddingBottom="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="其它"
+            android:layout_marginLeft="25dp"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/item_size"
+            android:textColor="@color/red_tv"/>
+</LinearLayout>

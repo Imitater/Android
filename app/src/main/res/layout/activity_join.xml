@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        style="@style/title_style">
+        <TextView
+            style="@style/title_textview_style"
+            android:text="加入我们"/>
+        <ImageButton
+            style="@style/back_style" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/bg_join"
+        android:paddingRight="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="160dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.zhy.android.percent.support.PercentLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="姓 名："
+                    android:textColor="@color/red_tv"
+                    android:textSize="@dimen/item_size"
+                    />
+
+                <EditText
+                    android:id="@+id/et_join_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_widthPercent="75%"
+                    android:padding="5dp"
+                    android:background="@drawable/event_bg_circle_white"
+                    android:hint="输入您的姓名"
+                    android:textSize="@dimen/item_size"/>
+            </com.zhy.android.percent.support.PercentLinearLayout>
+
+            <com.zhy.android.percent.support.PercentLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="电话："
+                    android:textColor="@color/red_tv"
+                    android:textSize="@dimen/item_size" />
+
+                <EditText
+                    android:inputType="phone"
+                    android:id="@+id/et_join_phone"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_widthPercent="75%"
+                    android:padding="5dp"
+                    android:background="@drawable/event_bg_circle_white"
+                    android:hint="输入您的电话"
+                    android:textSize="@dimen/item_size"/>
+            </com.zhy.android.percent.support.PercentLinearLayout>
+
+            <com.zhy.android.percent.support.PercentLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="所在地："
+                    android:textColor="@color/red_tv"
+                    android:textSize="@dimen/item_size" />
+
+                <com.zhy.android.percent.support.PercentLinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_widthPercent="75%"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/et_join_sheng"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_widthPercent="38%"
+                        android:padding="5dp"
+                        android:background="@drawable/event_bg_circle_white"
+                        android:hint="输入省"
+                        android:paddingLeft="15dp"
+                        android:textSize="@dimen/item_size"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="省"
+                        android:textColor="@color/red_tv"
+                        android:textSize="@dimen/item_size" />
+
+                    <EditText
+                        android:id="@+id/et_join_shi"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_widthPercent="38%"
+                        android:padding="5dp"
+                        android:background="@drawable/event_bg_circle_white"
+                        android:hint="输入市"
+                        android:paddingLeft="15dp"
+                        android:textSize="@dimen/item_size"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="市"
+                        android:textColor="@color/red_tv"
+                        android:textSize="@dimen/item_size" />
+                </com.zhy.android.percent.support.PercentLinearLayout>
+
+            </com.zhy.android.percent.support.PercentLinearLayout>
+
+            <com.zhy.android.percent.support.PercentLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="合作意向："
+                    android:textColor="@color/red_tv"
+                    android:textSize="@dimen/item_size" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_cooper_intent"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_widthPercent="75%">
+
+                    <TextView
+                        android:id="@+id/tv_cooper_intent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:background="@drawable/event_bg_circle_white"
+                        android:gravity="center_vertical"
+                        android:hint="请选择"
+                        android:paddingLeft="15dp"
+                        android:textSize="@dimen/item_size"/>
+
+                    <TextView
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:drawableLeft="@mipmap/select_join" />
+                </RelativeLayout>
+            </com.zhy.android.percent.support.PercentLinearLayout>
+
+            <TextView
+                android:id="@+id/tv_join"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/seares_red"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                android:text="提交" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

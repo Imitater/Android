@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+    <LinearLayout
+
+        android:id="@+id/ll_toyshop_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
+
+
+        <TextView
+            android:id="@+id/tv_toyshop_filter_allbrand"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/selector_arr"
+            android:drawablePadding="1dp"
+            android:gravity="center"
+            android:padding="8dp"
+            android:lines="1"
+            android:text="全部品牌"
+            android:textColor="@drawable/selector_tab_toyshop_filter"
+            android:textSize="@dimen/small_size" />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/divider_line" />
+
+        <TextView
+            android:id="@+id/tv_toyshop_filter_allage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/selector_arr"
+            android:drawablePadding="1dp"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="全部年龄"
+            android:lines="1"
+            android:textColor="@drawable/selector_tab_toyshop_filter"
+            android:textSize="@dimen/small_size" />
+
+      <View
+            android:layout_width="1dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/divider_line"
+            android:visibility="gone"/>
+      <TextView
+            android:id="@+id/tv_toyshop_filter_fenlei"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/selector_arr"
+            android:drawablePadding="1dp"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="所有分类"
+            android:lines="1"
+            android:textColor="@drawable/selector_tab_toyshop_filter"
+            android:textSize="@dimen/small_size"
+            android:visibility="gone"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/divider_line" />
+
+        <TextView
+            android:id="@+id/tv_toyshop_filter_pay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/selector_arr"
+            android:drawablePadding="1dp"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="价格排序"
+            android:lines="1"
+            android:textColor="@drawable/selector_tab_toyshop_filter"
+            android:textSize="@dimen/small_size" />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider_line" />
+</LinearLayout>
+

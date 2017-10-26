@@ -1,0 +1,153 @@
+package com.ruiyihong.toyshop.activity;
+
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.google.gson.Gson;
+import com.ruiyihong.toyshop.R;
+import com.ruiyihong.toyshop.adapter.VipPowerRvAdapter;
+import com.ruiyihong.toyshop.bean.VipMemberDetialBean;
+import com.ruiyihong.toyshop.util.AppConstants;
+import com.ruiyihong.toyshop.util.OkHttpUtil;
+import com.ruiyihong.toyshop.view.FullyGridLayoutManager;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+/**
+ * Created by hegeyang on 2017/8/6 0006 .
+ */
+
+public class VipMemberDetial extends BaseActivity {
+
+
+	@InjectView(R.id.rv_vipmember_quanxian)
+	RecyclerView rvVipmemberQuanxian;
+	@InjectView(R.id.tv_vipmember_types)
+	TextView tvVipmemberTypes;
+	@InjectView(R.id.cb_vipmember_read)
+	CheckBox cbVipmemberRead;
+	@InjectView(R.id.cb_wexin)
+	ImageView cbWexin;
+	@InjectView(R.id.rl_vipmember_weixin)
+	RelativeLayout rlVipmemberWeixin;
+	@InjectView(R.id.cb_zfb)
+	ImageView cbZfb;
+	@InjectView(R.id.rl_vipmember_zfb)
+	RelativeLayout rlVipmemberZfb;
+	@InjectView(R.id.tv_vipmember_money)
+	TextView tvVipmemberMoney;
+	@InjectView(R.id.tv_vipmember_jieyue)
+	TextView tvVipmemberJieyue;
+	private int type;
+	private int zfType = 0;
+	private Handler handler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+				case 0:
+					paseData((String) msg.obj);
+					break;
+			}
+		}
+	};
+
+	private void paseData(String data) {
+		Gson gson = new Gson();
+		VipMemberDetialBean vipMemberDetialBean = gson.fromJson(data, VipMemberDetialBean.class);
+		rvVipmemberQuanxian.setLayoutManager(new FullyGridLayoutManager(this, 1));
+		VipMemberDetialBean.DataBean dataBean = vipMemberDetialBean.data.get(0);
+		rvVipmemberQuanxian.setAdapter(new VipPowerRvAdapter(this, dataBean.vquan.split("；")));
+		String[] split = dataBean.vjieyu.split(";");
+		StringBuilder builder = new StringBuilder();
+		builder.append("借阅周期及逾费用\n");
+		for(int i =0;i<split.length;i++){
+			builder.append(split[i]+"\n");
+		}
+		tvVipmemberJieyue.setText(builder);
+		tvVipmemberTypes.setText(dataBean.vperiod);
+		tvVipmemberMoney.setText(dataBean.vprice + "元");
+	}
+
+	@Override
+	protected int getLayoutId() {
+		return R.layout.activity_vipmember_detail;
+	}
+
+	@Override
+	protected void initView() {
+
+	}
+
+	@Override
+	protected void initData() {
+		type = getIntent().getIntExtra("type", -1);
+		getDataFromNet(type);
+	}
+
+	private void getDataFromNet(int type) {
+		String url = AppConstants.SERVE_URL + "index/vipclass/vipxq";
+		HashMap<String, String> params = new HashMap<>();
+		params.put("id", type + "");
+		try {
+			OkHttpUtil.postString(url, params, new Callback() {
+				@Override
+				public void onFailure(Call call, IOException e) {
+
+				}
+
+				@Override
+				public void onResponse(Call call, Response response) throws IOException {
+					String result = OkHttpUtil.getResult(response);
+					if (result != null) {
+						Message obtain = Message.obtain();
+						obtain.what = 0;
+						obtain.obj = result;
+						handler.sendMessage(obtain);
+					}
+				}
+			});
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	protected void initEvent() {
+		rlVipmemberWeixin.setOnClickListener(this);
+		rlVipmemberZfb.setOnClickListener(this);
+	}
+
+	@Override
+	protected void processClick(View v) throws IOException {
+		if (v == rlVipmemberWeixin) {
+			cbWexin.setVisibility(View.VISIBLE);
+			cbZfb.setVisibility(View.INVISIBLE);
+			zfType = 0;
+		} else if (v == rlVipmemberZfb) {
+			cbWexin.setVisibility(View.INVISIBLE);
+			cbZfb.setVisibility(View.VISIBLE);
+			zfType = 1;
+		}
+	}
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		// TODO: add setContentView(...) invocation
+		ButterKnife.inject(this);
+	}
+}

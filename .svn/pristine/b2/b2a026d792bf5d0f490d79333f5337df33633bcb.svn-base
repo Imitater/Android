@@ -1,0 +1,128 @@
+/*
+ * 2017.
+ * Huida.Burt
+ * CopyRight
+ *
+ *
+ *
+ */
+
+package com.ruiyihong.toyshop.util;
+
+/**
+ * Created by Burt on 2017/7/28 0028.
+ */
+
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.icu.text.DateFormat;
+import android.os.Build;
+import android.os.Looper;
+
+import java.util.HashMap;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
+
+/**
+ * Description: 全局异常捕获日志打印
+ */
+
+public class CrashHandler implements Thread.UncaughtExceptionHandler {
+    @Override
+    public void uncaughtException(Thread thread, Throwable throwable) {
+
+    }
+
+    /*private static CrashHandler instance;
+    private Context mContext;
+    private Thread.UncaughtExceptionHandler mDefaultHandler;
+    private HashMap<String,String> infos = new HashMap<String,String>();
+    public static CrashHandler getInstance(){
+        if(instance == null){
+            instance = new CrashHandler();
+        }
+        return instance;
+    }
+
+    public void init(Context context){
+        this.mContext = context;
+        // 获取系统默认的UncaughtException处理类
+        mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
+        // 设置 CrashHandler为系统默认的处理器
+        Thread.setDefaultUncaughtExceptionHandler(this);
+    }
+
+    @Override
+    public void uncaughtException(Thread thread, Throwable ex) {
+        if (!handleException(ex) && mDefaultHandler != null) {
+            // 如果用户没有处理让系统默认的来处理
+            mDefaultHandler.uncaughtException(thread, ex);
+        } else {
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+
+            }finally{
+
+            }
+            // 退出程序
+            android.os.Process.killProcess(android.os.Process.myPid());
+            //非正常退出
+            System.exit(1);
+
+        }
+    }
+
+    *//**
+     * @param ex
+     * @return true
+     *//*
+    private boolean handleException(Throwable ex) {
+        if (ex == null) {
+            return false;
+        }
+        final String str = ex.toString();
+        // Toast来显示提示信息
+        ToastHelper.getInstance().init(mContext);
+        ToastHelper.getInstance()._toast("未知的错误发生了");
+        new Thread() {
+            @Override
+            public void run() {
+
+                Looper.prepare();
+                if(str.contains("IllegalStateException")){
+                }else{
+                }
+                Looper.loop();
+            }
+        }.start();
+        // 收集设备参数信息
+        collectDeviceInfo(mContext);
+        return true;
+    }
+    *//**
+     * 收集设备参数信息
+     * @param ctx
+     *//*
+    public void collectDeviceInfo(Context ctx) {
+        try {
+            PackageManager pm = ctx.getPackageManager();
+            PackageInfo pi = pm.getPackageInfo(ctx.getPackageName(), PackageManager.GET_ACTIVITIES);
+
+            if (pi != null) {
+                String versionName = pi.versionName == null ? "null" : pi.versionName;
+                String versionCode = pi.versionCode + "";
+                infos.put("versionName", versionName);
+                infos.put("versionCode", versionCode);
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            LogUtil.e("an error occured when collect package info"+e.toString());
+        }
+
+            // todo 将奔溃日志写入文件中
+
+    }*/
+}
+
+

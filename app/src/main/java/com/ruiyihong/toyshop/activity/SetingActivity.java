@@ -1,0 +1,245 @@
+package com.ruiyihong.toyshop.activity;
+
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.google.gson.Gson;
+import com.ruiyihong.toyshop.R;
+import com.ruiyihong.toyshop.bean.UpdateVersionBean;
+import com.ruiyihong.toyshop.shoppingcar.ShoppingCartBiz;
+import com.ruiyihong.toyshop.util.AppConstants;
+import com.ruiyihong.toyshop.util.DataCleanManager;
+import com.ruiyihong.toyshop.util.OkHttpUtil;
+import com.ruiyihong.toyshop.util.SPUtil;
+import com.ruiyihong.toyshop.util.ToastHelper;
+import com.ruiyihong.toyshop.util.UpdateService;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import butterknife.InjectView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+/**
+ * Created by hegeyang on 2017/7/15 0015 .
+ */
+
+public class SetingActivity extends BaseActivity {
+
+
+	@InjectView(R.id.back)
+	ImageButton back;
+	@InjectView(R.id.rl_setting_clear)
+	RelativeLayout rlSettingClear;
+	@InjectView(R.id.rl_setting_update)
+	RelativeLayout rlSettingUpdate;
+	@InjectView(R.id.rl_setting_about)
+	RelativeLayout rlSettingAbout;
+	@InjectView(R.id.bt_setting_checkout)
+	Button btSettingCheckout;
+	@InjectView(R.id.tv_setting_cache_size)
+	TextView tvSettingCache;
+	private Handler handler = new Handler(){
+		@Override
+		public void handleMessage(Message msg) {
+			progressDialog.dismiss();
+			ToastHelper.getInstance().displayToastShort("已经是最新版本了");
+		}
+	};
+	private ProgressDialog progressDialog;
+
+	@Override
+	protected int getLayoutId() {
+		return R.layout.activity_seting;
+	}
+
+	@Override
+	protected void initView() {
+		//bt_setting_test
+//			findViewById(R.id.bt_setting_test).setOnClickListener(new View.OnClickListener() {
+//				@Override
+//				public void onClick(View view) {
+//                    Intent intent = new Intent(SetingActivity.this, TestActivity.class);
+//                    startActivity(intent);
+//                }
+//			});
+
+	}
+
+	@Override
+	protected void initData() {
+		String totalCacheSize = null;
+		try {
+			totalCacheSize = DataCleanManager.getTotalCacheSize(this);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		tvSettingCache.setText(totalCacheSize);
+		String login = SPUtil.getString(this, AppConstants.SP_LOGIN, "");
+		if(TextUtils.isEmpty(login)){
+			btSettingCheckout.setVisibility(View.INVISIBLE);
+		}else{
+			btSettingCheckout.setVisibility(View.VISIBLE);
+		}
+	}
+
+	@Override
+	protected void initEvent() {
+		rlSettingUpdate.setOnClickListener(this);
+		btSettingCheckout.setOnClickListener(this);
+		rlSettingClear.setOnClickListener(this);
+        rlSettingAbout.setOnClickListener(this);
+	}
+
+	@Override
+	protected void processClick(View v) {
+		switch (v.getId()){
+			case R.id.bt_setting_checkout:
+				showExitDiaLog();
+				break;
+			case R.id.rl_setting_update:
+				showUpdateDialog();
+				break;
+			case R.id.rl_setting_clear:
+				showClearDialog();
+				break;
+            case R.id.rl_setting_about:
+                showAboutDialog();
+                break;
+		}
+	}
+
+    private void showAboutDialog() {
+		Intent intent = new Intent(this, AboutOurActivity.class);
+		startActivity(intent);
+	}
+
+    private void showClearDialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("清理缓存");
+		builder.setMessage("清空所有图片及内容缓存？");
+		builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialogInterface, int i) {
+				DataCleanManager.cleanApplicationData(SetingActivity.this.getApplicationContext(),"");
+				tvSettingCache.setText("0.0MB");
+			}
+		});
+		builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialogInterface, int i) {
+
+			}
+		});
+		final AlertDialog dialog = builder.create();
+		dialog.show();
+	}
+
+
+	private void showUpdateDialog() {
+		String update = AppConstants.SERVE_URL+"index/version/version";
+		HashMap<String, String> params = new HashMap<>();
+		progressDialog = new ProgressDialog(this);
+		progressDialog.setProgressStyle(R.style.MaterialDialog);
+		progressDialog.setMessage("正在加载");
+		progressDialog.setCancelable(false);
+		progressDialog.show();
+		try {
+			OkHttpUtil.postString(update, params, new Callback() {
+				@Override
+				public void onFailure(Call call, IOException e) {
+
+				}
+
+				@Override
+				public void onResponse(Call call, Response response) throws IOException {
+					String result = OkHttpUtil.getResult(response);
+					if(result!=null){
+						Gson gson = new Gson();
+						final UpdateVersionBean versionBean = gson.fromJson(result, UpdateVersionBean.class);
+						try {
+							PackageManager pm = SetingActivity.this.getPackageManager();
+							PackageInfo pi = pm.getPackageInfo(getPackageName(), PackageManager.GET_ACTIVITIES);
+							String versionName = pi.versionName;
+							int i = versionName.compareTo(versionBean.vision);
+							if(i==0){
+								handler.sendEmptyMessageDelayed(0,500);
+							}else if(i==-1){
+								progressDialog.dismiss();
+								runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
+										showIfUpdate(versionBean);
+									}
+								});
+
+							}
+						} catch (PackageManager.NameNotFoundException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void showIfUpdate(final UpdateVersionBean versionBean) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("检测到有更新");
+		builder.setMessage("是否更新？");
+		builder.setNegativeButton("现在更新", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialogInterface, int i) {
+				Intent service = new Intent(SetingActivity.this,UpdateService.class);
+				service.putExtra("data",AppConstants.VERSION_UPDATE_HEAD+versionBean.url);
+				startService(service);
+			}
+		});
+		builder.setPositiveButton("暂不更新", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialogInterface, int i) {
+
+			}
+		});
+		final AlertDialog dialog = builder.create();
+		dialog.show();
+	}
+
+	private void showExitDiaLog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("是否退出登录？");
+		builder.setNegativeButton("确定退出", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialogInterface, int i) {
+				SPUtil.setString(SetingActivity.this,AppConstants.SP_LOGIN,"");
+				ShoppingCartBiz.delAllGoods(SetingActivity.this);
+				finish();
+			}
+		});
+		builder.setPositiveButton("继续保持", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialogInterface, int i) {
+
+			}
+		});
+		final AlertDialog dialog = builder.create();
+		dialog.show();
+	}
+
+}

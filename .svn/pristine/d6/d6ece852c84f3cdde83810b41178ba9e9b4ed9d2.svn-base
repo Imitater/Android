@@ -1,0 +1,12 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"  >
+
+
+    <solid android:color="@color/tab_selected" />
+
+
+
+    <!-- 四个角的弧度 -->
+    <corners
+        android:radius="1.8dp"/>
+
+</shape>

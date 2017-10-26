@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ 2017.
+  ~ Huida.Burt
+  ~ CopyRight
+  ~
+  ~
+  ~
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.ruiyihong.toyshop.activity.DaiJQActivity">
+    <!--标题栏 -->
+    <RelativeLayout
+        style="@style/title_style">
+        <ImageButton
+            style="@style/back_style"/>
+        <TextView
+            style="@style/title_textview_style"
+            android:text="代金券"/>
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/title_iv"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@mipmap/djq_banner"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycle_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+
+</LinearLayout>

@@ -1,0 +1,281 @@
+package com.ruiyihong.toyshop.activity;
+
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.IdRes;
+import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.GridView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+
+import com.fire.photoselector.activity.PhotoSelectorActivity;
+import com.fire.photoselector.models.PhotoSelectorSetting;
+import com.ruiyihong.toyshop.R;
+import com.ruiyihong.toyshop.adapter.PinglunGvAdapter;
+import com.ruiyihong.toyshop.util.ToastHelper;
+import com.ruiyihong.toyshop.view.RatingBar;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
+/**
+ * Created by hegeyang on 2017/7/27 0027 .
+ */
+
+public class PinglunActivity extends BaseActivity {
+	@InjectView(R.id.tv_pinglun_title)
+	TextView tvPinglunTitle;
+	@InjectView(R.id.iv_pinglun_icon)
+	ImageView ivPinglunIcon;
+	@InjectView(R.id.back_pinglun)
+	ImageButton ibBackPinglun;
+	@InjectView(R.id.rb_pinglun_haoping)
+	RadioButton rbPinglunHaoping;
+	@InjectView(R.id.rb_pinglun_zhongping)
+	RadioButton rbPinglunZhongping;
+	@InjectView(R.id.rb_pinglun_chaping)
+	RadioButton rbPinglunChaping;
+	@InjectView(R.id.rg_pinglun)
+	RadioGroup rgPinglun;
+	@InjectView(R.id.et_pinpun_content)
+	EditText etPinpunContent;
+	@InjectView(R.id.cb_pinglun_niming)
+	CheckBox cbPinglunNiming;
+	@InjectView(R.id.rt_pinglun_miaoshu1)
+	RatingBar rtPinglunMiaoshu1;
+	@InjectView(R.id.tv_pinglun_miaoshu1_text)
+	TextView tvPinglunMiaoshu1Text;
+	@InjectView(R.id.rt_pinglun_miaoshu2)
+	RatingBar rtPinglunMiaoshu2;
+	@InjectView(R.id.rt_pinglun_miaoshu3)
+	RatingBar rtPinglunMiaoshu3;
+	@InjectView(R.id.gv_pinglun_icon_changchuan)
+	GridView gvPinglunShangchuan;
+	@InjectView(R.id.tv_pinglun_miaoshu2_text)
+	TextView tvPinglunMiaoshu2Text;
+	@InjectView(R.id.tv_pinglun_miaoshu3_text)
+	TextView tvPinglunMiaoshu3Text;
+	@InjectView(R.id.tv_pinglun_submit)
+	TextView tvPinglunSubmit;
+	//private List<String> list = new ArrayList<String>();
+	private PinglunGvAdapter pinglunGvAdapter;
+	private static final int REQUEST_SELECT_PHOTO = 100;
+	private ArrayList<String> result = new ArrayList<>();
+	private int pingjia = 1;
+	private String did;
+
+	@Override
+	protected int getLayoutId() {
+		return R.layout.acitivity_pinglun;
+	}
+
+	@Override
+	protected void initView() {
+		did = getIntent().getStringExtra("did");
+		cbPinglunNiming.setChecked(true);
+		rgPinglun.check(R.id.rb_pinglun_haoping);
+		pinglunGvAdapter = new PinglunGvAdapter(this, result);
+		gvPinglunShangchuan.setAdapter(pinglunGvAdapter);
+		pinglunGvAdapter.setList(result);
+		gvPinglunShangchuan.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+				if (i == getDataSize()) {//点击“+”号位置添加图片
+					//list.add(R.drawable.home_content_btn01);
+					//gvAdapter.setList(list);
+					selectPhotos(6, 4);
+				} else {//点击图片删除
+					result.remove(i);
+					pinglunGvAdapter.setList(result);
+				}
+			}
+		});
+	}
+
+	private int getDataSize() {
+		return result == null ? 0 : result.size();
+	}
+
+	@Override
+	protected void initData() {
+
+	}
+
+	@Override
+	protected void initEvent() {
+		rgPinglun.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
+				switch (i){
+					case R.id.rb_pinglun_haoping:
+						pingjia = 1;
+						break;
+					case R.id.rb_pinglun_zhongping:
+						pingjia = 2;
+						break;
+					case R.id.rb_pinglun_chaping:
+						pingjia = 3;
+						break;
+
+				}
+			}
+		});
+		ibBackPinglun.setOnClickListener(this);
+		tvPinglunSubmit.setOnClickListener(this);
+		rtPinglunMiaoshu1.setOnRatingChangeListener(new RatingBar.OnRatingChangeListener() {
+			@Override
+			public void onRatingChange(float ratingCount) {
+				switch ((int) ratingCount) {
+					case 1:
+						tvPinglunMiaoshu1Text.setText("非常差");
+						break;
+					case 2:
+						tvPinglunMiaoshu1Text.setText("差");
+						break;
+					case 3:
+						tvPinglunMiaoshu1Text.setText("一般");
+						break;
+					case 4:
+						tvPinglunMiaoshu1Text.setText("好");
+						break;
+					case 5:
+						tvPinglunMiaoshu1Text.setText("非常好");
+						break;
+				}
+			}
+		});
+		rtPinglunMiaoshu2.setOnRatingChangeListener(new RatingBar.OnRatingChangeListener() {
+			@Override
+			public void onRatingChange(float ratingCount) {
+				switch ((int) ratingCount) {
+					case 1:
+						tvPinglunMiaoshu2Text.setText("非常差");
+						break;
+					case 2:
+						tvPinglunMiaoshu2Text.setText("差");
+						break;
+					case 3:
+						tvPinglunMiaoshu2Text.setText("一般");
+						break;
+					case 4:
+						tvPinglunMiaoshu2Text.setText("好");
+						break;
+					case 5:
+						tvPinglunMiaoshu2Text.setText("非常好");
+						break;
+				}
+			}
+		});
+		rtPinglunMiaoshu3.setOnRatingChangeListener(new RatingBar.OnRatingChangeListener() {
+			@Override
+			public void onRatingChange(float ratingCount) {
+				switch ((int) ratingCount) {
+					case 1:
+						tvPinglunMiaoshu3Text.setText("非常差");
+						break;
+					case 2:
+						tvPinglunMiaoshu3Text.setText("差");
+						break;
+					case 3:
+						tvPinglunMiaoshu3Text.setText("一般");
+						break;
+					case 4:
+						tvPinglunMiaoshu3Text.setText("好");
+						break;
+					case 5:
+						tvPinglunMiaoshu3Text.setText("非常好");
+						break;
+				}
+			}
+		});
+
+	}
+
+	@Override
+	protected void processClick(View v) throws IOException {
+		switch (v.getId()) {
+			case R.id.back_pinglun:
+				showDialog();
+				break;
+			case R.id.tv_pinglun_submit:
+				submit();
+				break;
+		}
+	}
+
+	private void submit() {
+		String content = etPinpunContent.getText().toString().trim();
+		if(TextUtils.isEmpty(content)){
+			ToastHelper.getInstance().displayToastShort("评论内容不能为空!");
+			return;
+		}
+
+	}
+
+	@Override
+	public void onBackPressed() {
+		showDialog();
+	}
+
+	private void showDialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("确认取消发布吗？");
+		builder.setNegativeButton("确定取消", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialogInterface, int i) {
+				finish();
+			}
+		});
+		builder.setPositiveButton("继续发布", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialogInterface, int i) {
+
+			}
+		});
+		final AlertDialog dialog = builder.create();
+		dialog.show();
+	}
+
+	private void selectPhotos(int sum, int columnCount) {
+		PhotoSelectorSetting.MAX_PHOTO_SUM = sum;
+		PhotoSelectorSetting.COLUMN_COUNT = columnCount;
+		Intent intent = new Intent(this, PhotoSelectorActivity.class);
+		intent.putExtra(PhotoSelectorSetting.LAST_MODIFIED_LIST, result);
+		startActivityForResult(intent, REQUEST_SELECT_PHOTO);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (requestCode) {
+			case REQUEST_SELECT_PHOTO:
+				if (resultCode == RESULT_OK) {
+					// result为照片绝对路径集合,isSelectedFullImage标识是否选择原图
+					result = data.getStringArrayListExtra(PhotoSelectorSetting.LAST_MODIFIED_LIST);
+					boolean isSelectedFullImage = data.getBooleanExtra(PhotoSelectorSetting.SELECTED_FULL_IMAGE, false);
+					// TODO: 获取照片后的操作
+					pinglunGvAdapter.setList(result);
+				}
+				break;
+		}
+	}
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		// TODO: add setContentView(...) invocation
+		ButterKnife.inject(this);
+	}
+}

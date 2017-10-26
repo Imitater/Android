@@ -1,0 +1,62 @@
+/*
+ * 2017.
+ * Huida.Burt
+ * CopyRight
+ *
+ *
+ *
+ */
+
+package com.ruiyihong.toyshop.bean;
+
+/**
+ * Created by Burt on 2017/7/11 0011.
+ */
+
+public class HomeJXTCdown {
+
+
+    /**
+     * id : 6
+     * name : 玩具1
+     * shopimg : 20170708\f1868f99c3eb6ef747ec7facd0ece22d.png
+     * shopprice : 567
+     */
+
+    private int id;
+    private String name;
+    private String shopimg;
+    private int shopprice;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getShopimg() {
+        return shopimg;
+    }
+
+    public void setShopimg(String shopimg) {
+        this.shopimg = shopimg;
+    }
+
+    public int getShopprice() {
+        return shopprice;
+    }
+
+    public void setShopprice(int shopprice) {
+        this.shopprice = shopprice;
+    }
+}

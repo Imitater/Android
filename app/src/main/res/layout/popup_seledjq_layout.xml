@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Panda_BG"
+    android:orientation="vertical">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/Panda_BG"
+        android:orientation="vertical">
+
+        <!--标题栏 -->
+        <RelativeLayout
+            android:id="@+id/settle_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_hetght"
+            android:background="@color/Panda_BG">
+
+            <ImageButton style="@style/back_style"
+                android:layout_alignParentLeft="true"/>
+            <TextView
+                style="@style/title_textview_style"
+                android:text="选择代金券" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grad_light" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_djqPicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="5dp"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_chose_djq_ok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="0dp"
+        android:text="确定"
+        android:background="@color/tab_selected"
+        android:textColor="@color/halfblack"
+        android:padding="10dp"
+        android:layout_alignParentBottom="true"
+        />
+</LinearLayout>

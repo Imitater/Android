@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+    <!--123456-->
+
+    <com.ruiyihong.toyshop.view.MyScrollView
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:layout_width="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_pic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/vip_pic"
+                android:scaleType="centerCrop"/>
+
+            <ImageButton
+                android:id="@id/back"
+               android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@mipmap/back_white"
+                android:background="@color/transparent"
+                android:scaleType="fitXY"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
+                android:layout_marginTop="20dp"
+                />
+            <android.support.v7.widget.RecyclerView
+                android:layout_below="@id/iv_pic"
+                android:id="@+id/rv_vip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+            </android.support.v7.widget.RecyclerView>
+        </RelativeLayout>
+    </com.ruiyihong.toyshop.view.MyScrollView>
+</RelativeLayout>
+
+            <!--<RelativeLayout
+                style="@style/vip_ll">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/vip_pt"/>
+                <TextView
+                    style="@style/vip_register"
+                    android:background="@drawable/event_bg_circle3"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                style="@style/vip_ll">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/vip_bj"/>
+
+                <TextView
+                    style="@style/vip_register"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                style="@style/vip_ll">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/vip_yz"/>
+                <TextView
+                    style="@style/vip_register"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                style="@style/vip_ll">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/vip_jz"/>
+                <TextView
+                    style="@style/vip_register"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                style="@style/vip_ll">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/vip_top"/>
+                <TextView
+                    style="@style/vip_register"/>
+            </RelativeLayout>-->
+

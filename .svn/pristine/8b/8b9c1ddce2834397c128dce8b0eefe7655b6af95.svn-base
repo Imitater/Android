@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/rl_video"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+      <io.vov.vitamio.widget.VideoView
+
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/vitamio"/>
+        <include layout="@layout/video_top"/>
+        <include layout="@layout/video_bottom"
+            android:background="@color/black"
+            android:layout_alignBottom="@+id/vitamio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <ProgressBar
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/pb_buffer"/>
+    </RelativeLayout>
+
+    <com.ruiyihong.toyshop.view.MyScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+    <TextView
+        android:id="@+id/tv_video_title"
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="专家讲座"
+        android:lines="1"
+        android:textSize="@dimen/title_size"
+        android:textColor="@color/black"/>
+    <com.ruiyihong.toyshop.view.MoreTextView
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/mtv_video"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:mytextSize="@dimen/small_size"
+        app:mytextColor="@color/grad"
+        app:maxLine="2"
+        />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right">
+        <ImageButton
+            android:id="@+id/ib_shared_shu"
+            android:layout_marginLeft="15dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@mipmap/share1"/>
+        <ImageButton
+            android:layout_marginLeft="15dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@mipmap/collect"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="相关视频"
+                android:textSize="@dimen/item_size"
+                android:textColor="@color/black"
+                android:layout_margin="10dp"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_video_relative"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="相关推荐"
+                android:textSize="@dimen/item_size"
+                android:textColor="@color/black"
+                android:layout_margin="10dp"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_video_tuijian"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+    </com.ruiyihong.toyshop.view.MyScrollView>
+
+</LinearLayout>

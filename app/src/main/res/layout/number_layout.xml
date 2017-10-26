@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ 2017.
+  ~ Huida.Burt
+  ~ CopyRight
+  ~
+  ~
+  ~
+  -->
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_number_item"
+    android:gravity="center"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textColor="@color/tab_selected"
+    android:padding="18dp"
+    android:textSize="@dimen/sub_title_size"
+    android:text="1">
+
+
+</TextView>

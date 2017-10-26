@@ -1,0 +1,213 @@
+package com.ruiyihong.toyshop.bean.find;
+
+import java.util.List;
+
+/**
+ * Created by 81521 on 2017/8/6.
+ * 发现页面热门推荐
+ */
+
+public class FindHotTuijianBean {
+
+
+    private List<ListBean> list;
+    private List<List1Bean> list1;
+
+    public List<ListBean> getList() {
+        return list;
+    }
+
+    public void setList(List<ListBean> list) {
+        this.list = list;
+    }
+
+    public List<List1Bean> getList1() {
+        return list1;
+    }
+
+    public void setList1(List<List1Bean> list1) {
+        this.list1 = list1;
+    }
+
+    public static class ListBean {
+        /**
+         * id : 29
+         * uid : 26
+         * content :
+         * pic : 20170811\214322ab296297fa6c24c9a239fb4cea.mp4;
+         * ispic : 1
+         * isadmin : 0
+         * isshow : 0
+         * dzl : 16
+         * plnum : 3
+         * simg :
+         * time : 2017-08-11 16:10:43
+         * yhniche : 15233018551
+         * yhimg : 20170730\23c40d9b22e6b8b1b6d1160a6786590b.png
+         */
+
+        private int id;
+        private int uid;
+        private String content;
+        private String pic;
+        private int ispic;
+        private int isadmin;
+        private int isshow;
+        private int dzl;
+        private int plnum;
+        private String simg;
+        private String time;
+        private String yhniche;
+        private String yhimg;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public int getUid() {
+            return uid;
+        }
+
+        public void setUid(int uid) {
+            this.uid = uid;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+
+        public String getPic() {
+            return pic;
+        }
+
+        public void setPic(String pic) {
+            this.pic = pic;
+        }
+
+        public int getIspic() {
+            return ispic;
+        }
+
+        public void setIspic(int ispic) {
+            this.ispic = ispic;
+        }
+
+        public int getIsadmin() {
+            return isadmin;
+        }
+
+        public void setIsadmin(int isadmin) {
+            this.isadmin = isadmin;
+        }
+
+        public int getIsshow() {
+            return isshow;
+        }
+
+        public void setIsshow(int isshow) {
+            this.isshow = isshow;
+        }
+
+        public int getDzl() {
+            return dzl;
+        }
+
+        public void setDzl(int dzl) {
+            this.dzl = dzl;
+        }
+
+        public int getPlnum() {
+            return plnum;
+        }
+
+        public void setPlnum(int plnum) {
+            this.plnum = plnum;
+        }
+
+        public String getSimg() {
+            return simg;
+        }
+
+        public void setSimg(String simg) {
+            this.simg = simg;
+        }
+
+        public String getTime() {
+            return time;
+        }
+
+        public void setTime(String time) {
+            this.time = time;
+        }
+
+        public String getYhniche() {
+            return yhniche;
+        }
+
+        public void setYhniche(String yhniche) {
+            this.yhniche = yhniche;
+        }
+
+        public String getYhimg() {
+            return yhimg;
+        }
+
+        public void setYhimg(String yhimg) {
+            this.yhimg = yhimg;
+        }
+    }
+
+    public static class List1Bean {
+        /**
+         * id : 26
+         * tid : 29
+         * uid : 26
+         * time : 1502681047
+         */
+
+        private int id;
+        private int tid;
+        private int uid;
+        private String time;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public int getTid() {
+            return tid;
+        }
+
+        public void setTid(int tid) {
+            this.tid = tid;
+        }
+
+        public int getUid() {
+            return uid;
+        }
+
+        public void setUid(int uid) {
+            this.uid = uid;
+        }
+
+        public String getTime() {
+            return time;
+        }
+
+        public void setTime(String time) {
+            this.time = time;
+        }
+    }
+}

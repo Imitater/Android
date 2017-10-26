@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--发现页面，全屏显示图片的dialogshow动画-->
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <scale
+    android:interpolator="@android:anim/accelerate_interpolator"
+    android:fromXScale="0"
+    android:toXScale="1.0"
+    android:fromYScale="0.0"
+    android:toYScale="1.0"
+    android:pivotX="50%"
+    android:pivotY="50%"
+    android:fillAfter="true"
+    android:duration="400"/>
+    <alpha android:fromAlpha="0.0"
+        android:toAlpha="1.0"
+        android:fillAfter="true"
+        android:duration="400"/>
+    <!--<translate
+        android:fromXDelta="800"
+        android:toXDelta="0"
+        android:duration="400"/>-->
+
+</set>

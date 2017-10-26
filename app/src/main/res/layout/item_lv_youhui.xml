@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/bg_youhui_item"/>
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="30dp"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_item_youhui_money"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="￥50"
+            android:textSize="30sp"
+            android:textColor="@color/red"/>
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="新用户专享优惠"
+                android:textSize="@dimen/item_size"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="总优惠满199可用"
+                android:textSize="@dimen/small_size"/>
+
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="15dp"
+        android:layout_marginLeft="30dp">
+        <TextView
+            android:id="@+id/tv_item_youhui_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="53"
+            android:textSize="@dimen/small_size"
+            android:textColor="@color/red"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="天后过期"
+            android:textSize="@dimen/small_size"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="有效期至"
+            android:textSize="@dimen/small_size" />
+        <TextView
+            android:id="@+id/tv_item_youhui_time_format"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2017-09-01"
+            android:textSize="@dimen/small_size" />
+    </LinearLayout>
+</RelativeLayout>

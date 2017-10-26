@@ -1,0 +1,293 @@
+package com.ruiyihong.toyshop.activity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.ruiyihong.toyshop.R;
+import com.ruiyihong.toyshop.adapter.JifenDuihuanBookRvAdapter;
+import com.ruiyihong.toyshop.bean.JifenDuihuanBean;
+import com.ruiyihong.toyshop.util.AppConstants;
+import com.ruiyihong.toyshop.util.GsonUtil;
+import com.ruiyihong.toyshop.util.NetWorkUtil;
+import com.ruiyihong.toyshop.util.OkHttpUtil;
+import com.ruiyihong.toyshop.util.SPUtil;
+import com.ruiyihong.toyshop.util.ToastHelper;
+import com.ruiyihong.toyshop.view.CommonLoadingView;
+import com.ruiyihong.toyshop.view.FullyGridLayoutManager;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+/**
+ * Created by 李晓曼 on 2017/8/9.
+ * 123
+ */
+
+public class JifenDuihuanBookActivity extends BaseActivity {
+    public final static int TYPE_DUIHUAN_BOOK = 1;
+    private static final int MSG_REFRESH = 2;
+    private static final int MSG_LOAD_MORE = 3;
+    private static final int MSG_FAILURE = 4;
+    private static final int MSG_DATA_NULL = 5;
+    private static final int NetWorkError=6;
+    private static final int CloseLoadingView=7;
+    private static final int PageLoading=8;
+    private static final String BUFFER_JIFEN_DUIHUAN_BOOK = "buffer_jifen_duihuan_book";
+    @InjectView(R.id.tv_title)
+    TextView mTvTitle;
+    @InjectView(R.id.rl_title)
+    RelativeLayout mRlTitle;
+    @InjectView(R.id.rv_jifen_duihuan)
+    RecyclerView mRvJifenDuihuan;
+    @InjectView(R.id.smartRefreshLayout)
+    SmartRefreshLayout mSmartRefreshLayout;
+    @InjectView(R.id.common_LoadingView)
+    CommonLoadingView loadingView;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case TYPE_DUIHUAN_BOOK:
+                    initRvDuihuan();
+                    break;
+                case MSG_REFRESH:
+                    refresh();
+                    break;
+                case MSG_LOAD_MORE:
+                    loadMore();
+                    break;
+                case MSG_FAILURE:
+                    //访问网络失败
+                    netFail((int) msg.obj);
+                    break;
+                case MSG_DATA_NULL:
+                    ToastHelper.getInstance().displayToastShort("暂无更多数据");
+                    mSmartRefreshLayout.finishRefresh(0);
+                    mSmartRefreshLayout.finishLoadmore(0);
+                    break;
+                case NetWorkError :    //显示网络错误页面
+                    if(loadingView!=null)
+                        loadingView.loadError();
+                    break;
+                case CloseLoadingView: //关闭Loading动画
+                    if(loadingView!=null)
+                        loadingView.loadSuccess(false);
+                    break;
+                case PageLoading:  //页面加载中动画
+                    if(loadingView!=null)
+                        loadingView.load();
+                    break;
+            }
+
+        }
+
+
+    };
+    private List<JifenDuihuanBean.DataBean> dataList;
+    private List<JifenDuihuanBean.DataBean> list;
+    private List<JifenDuihuanBean.DataBean> upLoadList;
+    private int page = 1;
+    private JifenDuihuanBookRvAdapter rvAdapter;
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_jifen_duihuan;
+    }
+
+    @Override
+    protected void initView() {
+        mTvTitle.setText("兑换图书");
+    }
+
+    @Override
+    protected void initData() {
+        page = 1;
+        if (!NetWorkUtil.isNetWorkAvailable(this)){
+            handler.sendEmptyMessage(NetWorkError);
+            return;
+        }else{
+            handler.sendEmptyMessage(PageLoading);
+        }
+
+        String buffer = SPUtil.getString(this, BUFFER_JIFEN_DUIHUAN_BOOK, "");
+        if (!TextUtils.isEmpty(buffer)) {
+            CloseLoadingView();
+            JifenDuihuanBean bean = GsonUtil.parseJsonWithGson(buffer, JifenDuihuanBean.class);
+            if (bean != null) {
+                dataList = bean.getData();
+                if (dataList != null && dataList.size() > 0) {
+                    initRvDuihuan();
+                }
+            }
+        }
+        String url = AppConstants.JIFEN_DUIHUAN_BOOK;
+        if (NetWorkUtil.isNetWorkAvailable(this)) {
+            postNet(url, new HashMap<String, Object>(), TYPE_DUIHUAN_BOOK);
+        } else {
+            ToastHelper.getInstance().displayToastShort("请检查网络");
+        }
+    }
+
+    private void postNet(String url, Map<String, Object> map, final int type) {
+        try {
+            OkHttpUtil.postJson(url, map, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Message msg = Message.obtain();
+                    msg.what = MSG_FAILURE;
+                    msg.obj = type;
+                    handler.sendMessage(msg);
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String result = OkHttpUtil.getResult(response);
+                    if (!TextUtils.isEmpty(result)) {
+                        Log.i("radish", type + "-------result------------------" + result);
+                        CloseLoadingView();
+                        JifenDuihuanBean bean = GsonUtil.parseJsonWithGson(result, JifenDuihuanBean.class);
+                        if (bean != null && bean.getData() != null && bean.getData().size() > 0) {
+                            if (type == MSG_LOAD_MORE) {
+                                upLoadList = bean.getData();
+                            } else {
+                                dataList = bean.getData();
+                                SPUtil.setString(JifenDuihuanBookActivity.this, BUFFER_JIFEN_DUIHUAN_BOOK, result);
+                            }
+                            handler.sendEmptyMessage(type);
+                        } else {
+                            handler.sendEmptyMessage(MSG_DATA_NULL);
+                        }
+                    }
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+            handler.sendEmptyMessage(NetWorkError);
+        }
+    }
+    //关闭LoadingView
+    private void CloseLoadingView() {
+        handler.sendEmptyMessage(CloseLoadingView);
+    }
+
+    private void initRvDuihuan() {
+        list = dataList;
+        Log.i("radish", "initlist------------------" + list.size());
+        mRvJifenDuihuan.setLayoutManager(new FullyGridLayoutManager(this, 3));
+        rvAdapter = new JifenDuihuanBookRvAdapter(this, list);
+        mRvJifenDuihuan.setAdapter(rvAdapter);
+        rvAdapter.setOnItemClickListener(new JifenDuihuanBookRvAdapter.OnItemClickListener() {
+            @Override
+            public void itemClick(View v, int position) {
+                JifenDuihuanBean.DataBean dataBean = list.get(position);
+                Intent intent = new Intent(JifenDuihuanBookActivity.this, DetailActivity.class);
+                intent.putExtra("type", DetailActivity.BOOK_TYPE);
+                intent.putExtra("id", dataBean.getId());
+                startActivity(intent);
+
+            }
+        });
+    }
+
+    @Override
+    protected void initEvent() {
+        //下拉刷新监听
+        mSmartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                Log.i("radish", "onRefresh------------------");
+                if (NetWorkUtil.isNetWorkAvailable(JifenDuihuanBookActivity.this)) {
+                    //下拉刷新
+                    Map<String, Object> map = new HashMap();
+                    postNet(AppConstants.JIFEN_DUIHUAN_BOOK, map, MSG_REFRESH);
+                } else {
+                    mSmartRefreshLayout.finishRefresh(0);
+                    ToastHelper.getInstance().displayToastShort("请检查网络");
+                }
+
+            }
+        });
+        //上拉加载监听
+        mSmartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                Log.i("radish", "onLoadmore------------------");
+                if (NetWorkUtil.isNetWorkAvailable(JifenDuihuanBookActivity.this)) {
+                    //上拉加载
+                    Map<String, Object> map = new HashMap();
+                    page++;
+                    map.put("page", page);
+                    postNet(AppConstants.JIFEN_DUIHUAN_BOOK_UPLOAD, map, MSG_LOAD_MORE);
+                } else {
+                    mSmartRefreshLayout.finishLoadmore(0);
+                    ToastHelper.getInstance().displayToastShort("请检查网络");
+                }
+            }
+        });
+
+        loadingView.setOnRefreshPagerListener(new CommonLoadingView.OnRefreshPageListener() {
+            @Override
+            public void Refresh() {
+                initData();
+            }
+        });
+    }
+
+    @Override
+    protected void processClick(View v) throws IOException {
+
+    }
+
+
+    private void refresh() {
+        list = dataList;
+        if (upLoadList != null) {
+            list.addAll(upLoadList);
+        }
+        rvAdapter.setList(list);
+        rvAdapter.notifyDataSetChanged();
+        mSmartRefreshLayout.finishRefresh(0);
+    }
+
+    private void loadMore() {
+        list.addAll(upLoadList);
+        rvAdapter.setList(list);
+        rvAdapter.notifyDataSetChanged();
+        mSmartRefreshLayout.finishLoadmore(0);
+    }
+
+    private void netFail(int type) {
+        //访问网络失败
+        ToastHelper.getInstance().displayToastShort("访问网络失败");
+        if (type == MSG_LOAD_MORE || type == MSG_REFRESH) {
+            mSmartRefreshLayout.finishRefresh(0);
+        }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.inject(this);
+    }
+}

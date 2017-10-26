@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ryh="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"><!--
+        <com.ruiyihong.toyshop.view.MyImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_product_love_rv_item"
+            ryh:ir="@mipmap/product_love_pic" />-->
+        <ImageView
+            android:layout_height="160dp"
+            android:layout_width="match_parent"
+            android:scaleType="center"
+            android:id="@+id/iv_product_love_rv_item"
+            android:background="@mipmap/product_love_pic" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:id="@+id/tv_product_love_rv_item_name"
+            android:text="翘翘船 hape原装德国进口......"
+            android:lines="2"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/red"
+            android:text="30.6元/天"
+            android:id="@+id/tv_product_love_rv_item_rent_price"
+            android:lines="1"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/grad"
+            android:text="吊牌价：5000元"
+            android:id="@+id/tv_product_love_rv_item_price"
+            android:lines="1"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"><!--
+        <com.ruiyihong.toyshop.view.MyImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_product_love_rv_item"
+            ryh:ir="@mipmap/product_love_pic" />-->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/product_love_pic" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:text="翘翘船 hape原装德国进口......"
+            android:lines="2"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/red"
+            android:text="30.6元/天"
+            android:lines="1"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/grad"
+            android:text="吊牌价：5000元"
+            android:lines="1"/>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.ruiyihong.toyshop">
+
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+
+    <!-- QQ登陆需要的权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 百度定位的权限 -->
+    <!-- 这个权限用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 这个权限用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 用于读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- SD卡读取权限，用户写入离线定位数据 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!--支付宝权限-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--支付宝权限-->
+
+    <application
+        android:name=".mApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/rabbit"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/panda"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:replace="icon,label,theme">
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="f4NvQjcSLSiuNORMeP8WnvutT6Sx70Rl" /> <!-- APPkey -->
+        <!-- 43hycCByMQHDWcue8APHOaIYfwI3rava -->
+
+        <activity
+            android:name=".activity.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity android:name=".location.Location" />
+        <!-- QQ登陆需要的Activity -->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent101417461" /> <!-- 开放平台获取的APPID -->
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- 微信登陆的Activity -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".activity.DetailActivity" />
+        <activity android:name=".activity.SplashActivity" />
+        <activity
+            android:name=".activity.WelcomeActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.ChooseCityActivity" />
+
+        <provider
+            android:name=".db.DBContentProvider"
+            android:authorities="com.ruiyihong.toyshop.shoppingcar" />
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+
+        <activity
+            android:name=".activity.LoginActivity"
+            android:launchMode="singleTop" />
+        <activity android:name=".activity.MinePreferentialActivity" />
+        <activity android:name=".activity.MineAddressActivity" />
+        <activity android:name=".activity.PersonInfoActivity" />
+        <activity android:name=".activity.SetingActivity" />
+        <activity android:name=".activity.ToyShopActivity" />
+        <activity android:name=".activity.SearchActivity" />
+        <activity android:name=".activity.VitamioActivity" />
+        <activity
+            android:name=".activity.VideoActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|keyboard|keyboardHidden|navigation" />
+        <activity android:name=".activity.AudioActivity" />
+        <activity android:name=".activity.VipActivity" />
+        <activity android:name=".activity.DetailSuitActivity" />
+        <activity android:name=".activity.AddAdressActivity" />
+        <activity android:name=".activity.VipDetailActivity" />
+        <activity android:name=".activity.ReadContactActivity" />
+        <activity android:name=".activity.OrderActivity" />
+        <activity android:name=".activity.ShoppingCarActivity" />
+        <activity android:name=".activity.PinglunActivity" />
+        <activity android:name=".activity.EventActivity" />
+        <activity android:name=".activity.LessonActivity" />
+        <activity android:name=".activity.FogetPasActivity" />
+        <activity android:name=".activity.EnterVideoActivity" />
+        <activity android:name=".activity.MoreToyActivity" />
+        <activity android:name=".activity.MoreTuijianActivity" />
+        <activity android:name=".activity.DaiJQActivity" />
+        <activity android:name=".activity.SettleActivity" />
+        <activity
+            android:name=".activity.VideoEditActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.EventEnterActivity" />
+        <activity android:name=".activity.PublishActivity" />
+        <activity android:name=".activity.VipMemberBuyActivity" />
+        <activity android:name=".activity.VipMemberDetial" />
+        <activity android:name=".activity.VipQuanyiActivity" />
+        <activity android:name=".videoshootActivity.ShootBaseActivity" />
+        <activity android:name=".videoshootActivity.ShootMainActivity" />
+        <activity android:name=".activity.AboutOurActivity" />
+        <activity android:name=".activity.LimitedTimeActivity" />
+        <activity android:name=".activity.JifenDuihuanBookActivity" />
+        <activity android:name=".activity.GetYajinActivity" />
+        <activity android:name=".activity.SendYajinActivity" />
+        <activity android:name=".activity.ContactCustomerActivity" />
+        <activity android:name=".activity.JifenDuihuanDjqActivity" />
+        <activity android:name=".activity.JifenDuihuanToyActivity" />
+        <activity android:name=".view.find.VideoDialog" />
+        <activity android:name=".activity.CollectionActivity" />
+        <activity android:name=".activity.SettleSuccessActivity" />
+        <activity android:name=".activity.LunboDetailActivity" />
+        <activity android:name=".activity.HotTalkingDetailActivity" />
+        <activity android:name=".activity.ReturndepositActivity"></activity>
+        <activity android:name=".activity.JoinActivity"/>
+        <activity android:name=".activity.ToyActivity"/>
+
+        <!--支付宝相关-->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <activity android:name=".activity.ToyActivity" />
+        <activity android:name=".activity.MoreBenefitActivity"/>
+        <activity android:name=".activity.BenefitActivity"/>
+        <service android:name=".util.UpdateService"    android:enabled="true"/>
+        <!--支付宝相关-->
+    </application>
+
+</manifest>

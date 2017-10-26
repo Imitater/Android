@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?><FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ryh="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Panda_BG">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:id="@+id/rl_title"
+            style="@style/title_style">
+            <ImageButton
+                style="@style/back_style" />
+            <TextView
+                style="@style/title_textview_style"
+                android:text="活动"
+                />
+        </RelativeLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_line" />
+        <com.ruiyihong.toyshop.view.MyScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:background="@mipmap/event_pic"/>
+                <ImageView
+                    style="@style/event_rl"
+                    android:id="@+id/rl_benefit"
+                    android:src="@mipmap/event_benefit_pic"/>
+
+                <LinearLayout
+                    style="@style/event_ll"
+                    android:id="@+id/ll_benefit">
+                    <LinearLayout
+                        style="@style/event_ll_title">
+                        <TextView
+                            style="@style/event_textview_left"
+                            android:text="近期公益"/>
+                        <TextView
+                            android:id="@+id/tv_more_benefit"
+                            style="@style/event_textview_right"
+                            android:text="查看更多 >"/>
+                    </LinearLayout>
+                    <android.support.v7.widget.RecyclerView
+                        style="@style/event_recycler"
+                        android:id="@+id/rv_frag_event_benefit">
+
+                    </android.support.v7.widget.RecyclerView>
+                </LinearLayout>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divider_rv_line"
+                    android:layout_marginBottom="10dp" />
+                <ImageView
+                    style="@style/event_rl"
+                    android:src="@mipmap/event_youhui_pic"/>
+                <LinearLayout
+                    style="@style/event_ll"
+                    android:id="@+id/ll_mise">
+                    <LinearLayout
+                        style="@style/event_ll_title">
+                        <TextView
+                            android:id="@+id/tv_youhui_time"
+                            style="@style/event_textview_left"
+                            android:text="剩余0天 00:00"
+                            android:textColor="@color/red_light"/>
+                        <TextView
+                            android:id="@+id/tv_more_youhui"
+                            style="@style/event_textview_right"
+                            android:text="更多优惠 >"/>
+                    </LinearLayout>
+                    <ImageView
+                        android:layout_marginTop="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@mipmap/event_bg_juxing"/>
+                    <android.support.v7.widget.RecyclerView
+                        android:layout_centerInParent="true"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/rv_frag_event_youhui"  >
+
+                    </android.support.v7.widget.RecyclerView>
+                </LinearLayout>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/divider_rv_line"/>
+
+                <ImageView
+                    style="@style/event_rl"
+                    android:id="@+id/rl_out"
+                    android:src="@mipmap/event_out_pic">
+                </ImageView>
+                <LinearLayout
+                    style="@style/event_ll"
+                    android:id="@+id/ll_out">
+                    <LinearLayout
+                        style="@style/event_ll_title">
+                        <TextView
+                            style="@style/event_textview_left"
+                            android:text="户外活动"/>
+                        <TextView
+                            android:id="@+id/tv_more_out"
+                            style="@style/event_textview_right"
+                            android:text="查看更多 >"/>
+                    </LinearLayout>
+                    <android.support.v7.widget.RecyclerView
+                        style="@style/event_recycler"
+                        android:id="@+id/rv_frag_event_out">
+
+                    </android.support.v7.widget.RecyclerView>
+                </LinearLayout>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/divider_rv_line"/>
+                <ImageView
+                    style="@style/event_rl"
+                    android:id="@+id/rl_qinzi"
+                    android:src="@mipmap/event_qinzi_pic">
+                </ImageView>
+                <LinearLayout
+                    style="@style/event_ll"
+                    android:id="@+id/ll_qinzi">
+                    <LinearLayout
+                        style="@style/event_ll_title">
+                        <TextView
+                            style="@style/event_textview_left"
+                            android:text="近期亲子"/>
+                        <TextView
+                            android:id="@+id/tv_more_qinzi"
+                            style="@style/event_textview_right"
+                            android:text="查看更多 >"/>
+                    </LinearLayout>
+                    <android.support.v7.widget.RecyclerView
+                        style="@style/event_recycler"
+                        android:id="@+id/rv_frag_event_qinzi">
+
+                    </android.support.v7.widget.RecyclerView>
+                </LinearLayout>
+
+                <View
+                    style="@style/event_view"
+                    android:layout_height="30dp"/>
+
+            </LinearLayout>
+        </com.ruiyihong.toyshop.view.MyScrollView>
+
+
+    </LinearLayout>
+
+    <!--Loading动画-->
+    <com.ruiyihong.toyshop.view.CommonLoadingView
+        android:id="@+id/common_LoadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:visibility="gone"/>
+</FrameLayout>

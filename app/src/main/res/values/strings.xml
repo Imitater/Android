@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">TB 玩图汇</string>
+
+
+    <string name="shop_name">TB 玩图汇</string>
+
+    <string name="count_money">合计：￥0/天</string>
+
+    <string name="count_goods">结算(0)</string>
+
+
+</resources>

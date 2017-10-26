@@ -1,0 +1,154 @@
+/*
+ * 2017.
+ * Huida.Burt
+ * CopyRight
+ *
+ *
+ *
+ */
+
+package com.ruiyihong.toyshop.bean;
+
+import java.util.List;
+
+/**
+ * Created by Burt on 2017/8/10 0010.
+ */
+
+public class ShppingCarHttpBean {
+
+    /**
+     * status : 1
+     * wjlist : [{"id":13,"isbw":0,"name":"小小玩具-4","shopimg":"20170809\\0611518a3fd059e0c23d4766a9d13736.png","suitage":"2岁-3岁","shopprice":4512,"dpj":1,"kcl":345,"wshu":1},{"id":10,"isbw":0,"name":"小小玩具-1","shopimg":"20170809\\f3e5121d320d097ca087fb89814fd4c0.png","suitage":"2岁-3岁","shopprice":4512,"dpj":120111,"kcl":89,"wshu":1},{"id":9,"isbw":0,"name":"有个性的羊","shopimg":"20170809\\9cd2d7b033fab27b2c97b7d61f23dae4.png","suitage":"6-12个月","shopprice":4512,"dpj":120111,"kcl":67,"wshu":1},{"id":8,"isbw":1,"name":"1222221sd","shopimg":"20170708\\4aace76a87fdb1f45524d31e684c5153.png","suitage":"3-6个月","shopprice":23,"dpj":6660,"kcl":345,"wshu":1},{"id":7,"isbw":1,"name":"大大泡泡堂","shopimg":"20170723\\60cc4aabf6e36c7ed4fa6dfccbd821df.png","suitage":"6-12个月","shopprice":120,"dpj":6660,"kcl":3454,"wshu":1}]
+     */
+
+    private int status;
+    private List<WjlistBean> wjlist;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public List<WjlistBean> getWjlist() {
+        return wjlist;
+    }
+
+    public void setWjlist(List<WjlistBean> wjlist) {
+        this.wjlist = wjlist;
+    }
+
+    public static class WjlistBean {
+        /**
+         * id : 13
+         * isbw : 0
+         * name : 小小玩具-4
+         * shopimg : 20170809\0611518a3fd059e0c23d4766a9d13736.png
+         * suitage : 2岁-3岁
+         * shopprice : 4512
+         * dpj : 1
+         * kcl : 345
+         * wshu : 1
+         */
+
+        private int id;
+        private int isbw;
+        private String name;
+        private String shopimg;
+        private String suitage;
+        private int shopprice;
+        private int dpj;
+        private int kcl;
+        private int wshu;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public int getIsbw() {
+            return isbw;
+        }
+
+        public void setIsbw(int isbw) {
+            this.isbw = isbw;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getShopimg() {
+            return shopimg;
+        }
+
+        public void setShopimg(String shopimg) {
+            this.shopimg = shopimg;
+        }
+
+        public String getSuitage() {
+            return suitage;
+        }
+
+        public void setSuitage(String suitage) {
+            this.suitage = suitage;
+        }
+
+        public int getShopprice() {
+            return shopprice;
+        }
+
+        public void setShopprice(int shopprice) {
+            this.shopprice = shopprice;
+        }
+
+        public int getDpj() {
+            return dpj;
+        }
+
+        public void setDpj(int dpj) {
+            this.dpj = dpj;
+        }
+
+        public int getKcl() {
+            return kcl;
+        }
+
+        public void setKcl(int kcl) {
+            this.kcl = kcl;
+        }
+
+        public int getWshu() {
+            return wshu;
+        }
+
+        public void setWshu(int wshu) {
+            this.wshu = wshu;
+        }
+
+        @Override
+        public String toString() {
+            return "WjlistBean{" +
+                    "id=" + id +
+                    ", isbw=" + isbw +
+                    ", name='" + name + '\'' +
+                    ", shopimg='" + shopimg + '\'' +
+                    ", suitage='" + suitage + '\'' +
+                    ", shopprice=" + shopprice +
+                    ", dpj=" + dpj +
+                    ", kcl=" + kcl +
+                    ", wshu=" + wshu +
+                    '}';
+        }
+    }
+}

@@ -1,0 +1,96 @@
+package com.ruiyihong.toyshop.activity;
+
+import android.animation.Animator;
+import android.animation.ValueAnimator;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.animation.LinearInterpolator;
+import android.widget.ImageView;
+
+import com.ruiyihong.toyshop.R;
+import com.ruiyihong.toyshop.util.AppConstants;
+import com.ruiyihong.toyshop.util.SPUtil;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
+
+/**
+ * Created by hegeyang on 2017/7/7 0007 .
+ */
+
+public class WelcomeActivity extends BaseActivity {
+	@InjectView(R.id.iv_welcome)
+	ImageView ivWelcome;
+
+	@Override
+	protected int getLayoutId() {
+		return R.layout.activity_welcome;
+	}
+
+	@Override
+	protected void initView() {
+
+	}
+
+	@Override
+	protected void initData() {
+		final Window window = getWindow();
+		ValueAnimator valueAnimator = ValueAnimator.ofFloat(0.2f, 1f);
+		valueAnimator.setDuration(3500);
+		valueAnimator.setInterpolator(new LinearInterpolator());
+		valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+			@Override
+			public void onAnimationUpdate(ValueAnimator animation) {
+				WindowManager.LayoutParams params = window.getAttributes();
+				params.alpha= (float) animation.getAnimatedValue();
+				window.setAttributes(params);
+			}
+		});
+		valueAnimator.start();
+		valueAnimator.addListener(new Animator.AnimatorListener() {
+			@Override
+			public void onAnimationStart(Animator animation) {
+
+			}
+
+			@Override
+			public void onAnimationEnd(Animator animation) {
+				boolean aBoolean = SPUtil.getBoolean(AppConstants.IS_OPENMAIN, WelcomeActivity.this);
+				Intent intent;
+				if(aBoolean){
+					intent = new Intent(WelcomeActivity.this,MainActivity.class);
+				}else{
+					intent = new Intent(WelcomeActivity.this,SplashActivity.class);
+				}
+				startActivity(intent);
+				finish();
+				overridePendingTransition(0,0);
+			}
+
+			@Override
+			public void onAnimationCancel(Animator animation) {
+
+			}
+
+			@Override
+			public void onAnimationRepeat(Animator animation) {
+
+			}
+		});
+	}
+
+	@Override
+	protected void initEvent() {
+
+	}
+
+	@Override
+	protected void processClick(View v) {
+
+	}
+
+}

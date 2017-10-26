@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ryh="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Panda_BG">
+    <RelativeLayout
+        android:id="@+id/rl_parent"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:id="@+id/rl_title"
+            style="@style/title_style">
+            <ImageButton
+                style="@style/back_style" />
+            <TextView
+                style="@style/title_textview_style"
+                android:text="限时优惠"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_below="@id/rl_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                android:id="@+id/smartRefreshLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <include layout="@layout/refresh_header"/>
+                <com.ruiyihong.toyshop.view.MyScrollView
+                    android:scrollbars="none"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/iv_pic"
+                            android:scaleType="fitStart"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/xianshi_pic"/>
+                        <LinearLayout
+                            android:gravity="center"
+                            android:paddingLeft="10dp"
+                            android:orientation="horizontal"
+                            android:paddingRight="20dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@mipmap/bg_textview"
+                            android:layout_centerHorizontal="true"
+                            android:layout_alignBottom="@id/iv_pic"
+                            android:layout_marginBottom="15dp">
+
+                            <TextView
+                                android:text="倒计时"
+                                android:textColor="@color/red"
+                                android:textSize="@dimen/item_size"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                            <TextView
+                                android:id="@+id/tv_dd"
+                                android:layout_margin="3dp"
+                                android:text="1"
+                                android:textColor="@color/blue"
+                                android:textSize="@dimen/big_size"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                            <TextView
+                                android:text="天"
+                                android:textColor="@color/blue"
+                                android:textSize="@dimen/item_size"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                            <TextView
+                                android:id="@+id/tv_hh"
+                                android:layout_margin="3dp"
+                                android:text="6"
+                                android:textColor="@color/blue"
+                                android:textSize="@dimen/big_size"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                            <TextView
+                                android:id="@+id/tv_mmss"
+                                android:text="小时30:20"
+                                android:textColor="@color/blue"
+                                android:textSize="@dimen/item_size"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rv_xsyh"
+                            android:layout_margin="5dp"
+                            android:layout_below="@id/iv_pic"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        </android.support.v7.widget.RecyclerView>
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_below="@id/rv_xsyh"/>
+                    </RelativeLayout>
+                </com.ruiyihong.toyshop.view.MyScrollView>
+                <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        </RelativeLayout>
+        <ImageView
+            android:id="@+id/iv_shop_cart"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/shop_car_pic"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="40dp"
+            android:layout_alignParentBottom="true"/>
+        <!--购物车数量-->
+        <TextView
+            android:id="@+id/tv_pop_shopping_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@id/iv_shop_cart"
+            android:layout_alignTop="@+id/iv_shop_cart"
+            android:layout_gravity="center"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/pop_tips_circle"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@android:color/white"
+            android:textSize="10dip"
+            android:textStyle="bold"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <!--Loading动画-->
+    <com.ruiyihong.toyshop.view.CommonLoadingView
+        android:id="@+id/common_LoadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"/>
+</FrameLayout>

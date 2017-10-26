@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="280dp"
+              android:layout_height="160dp"
+              android:background="#ffffffff"
+              android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7.0dip"
+        android:layout_marginTop="10.0dip"
+        android:text="设置头像"
+        android:textColor="@color/tab_selected"
+        android:textSize="21.0sp"
+        android:textStyle="bold"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.0dip"
+        android:layout_marginTop="15.0dip"
+        android:background="@color/blue_dark"/>
+
+    <TextView
+        android:id="@+id/tv_select_tack"
+        android:layout_width="match_parent"
+        android:layout_height="50.0dip"
+        android:layout_marginLeft="7.0dip"
+        android:gravity="center_vertical"
+        android:text="拍照"
+        android:textColor="#ff797979"
+        android:textSize="18.0sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.0dip"
+        android:background="@color/hor_line"/>
+
+    <TextView
+        android:id="@+id/tv_select_photo"
+        android:layout_width="fill_parent"
+        android:layout_height="50.0dip"
+        android:layout_marginLeft="7.0dip"
+        android:gravity="center_vertical"
+        android:text="从相册选取"
+        android:textColor="#ff797979"
+        android:textSize="18.0sp"/>
+</LinearLayout>

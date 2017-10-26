@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?><!--首页  fragemnt-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ryh="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Panda_BG">
+
+    <LinearLayout
+        android:id="@+id/ln_home_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/Panda_BG">
+
+        <!--顶部搜索栏-->
+        <LinearLayout
+            android:id="@+id/TopTitleBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_hetght"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center_vertical"
+            android:background="@color/Panda_BG_Transparent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="10dp">
+
+            <LinearLayout
+                android:background="@color/Panda_BG_Transparent"
+                android:id="@+id/ll_choose_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_home_local_city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:drawablePadding="4dp"
+                    android:drawableRight="@mipmap/down_arr"
+                    android:gravity="center_vertical"
+                    android:text="北京"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <include
+                layout="@layout/searchview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical" />
+
+            <ImageButton
+                android:id="@+id/ib_erweima"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:background="@mipmap/ma" />
+        </LinearLayout>
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/smartRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <include layout="@layout/refresh_header" />
+
+        <!--ViewPager-->
+        <com.ruiyihong.toyshop.view.MyScrollView
+            android:id="@+id/MyScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical">
+
+
+                <!--轮播图-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp">
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/vp_home"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:background="#fff">
+                    </android.support.v4.view.ViewPager>
+
+                    <LinearLayout
+                        android:id="@+id/ll_home_vp_point"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <!--模块-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_module"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/Panda_BG"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="8dp">
+                </android.support.v7.widget.RecyclerView>
+
+                <!--最新玩具-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/Panda_BG"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:drawableLeft="@mipmap/home_leftpoint"
+                        android:drawablePadding="10dp"
+                        android:text="最新玩具"
+                        android:textColor="@color/halfblack"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_home_moretoy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:drawablePadding="5dp"
+                        android:drawableRight="@mipmap/right_arr"
+                        android:text="更多新品" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.4dp"
+                    android:background="@color/divider">
+                </View>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_newest_toy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff">
+                </android.support.v7.widget.RecyclerView>
+                <!--最新图书-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/Panda_BG"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:drawableLeft="@mipmap/home_leftpoint"
+                        android:drawablePadding="10dp"
+                        android:text="最新图书"
+                        android:textColor="@color/halfblack"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_home_morebook"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:drawablePadding="5dp"
+                        android:drawableRight="@mipmap/right_arr"
+                        android:text="更多新品" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.4dp"
+                    android:background="@color/divider">
+                </View>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_newest_book"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/Panda_BG">
+                </android.support.v7.widget.RecyclerView>
+                <!--精选套餐-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:drawableLeft="@mipmap/home_leftpoint"
+                        android:drawablePadding="10dp"
+                        android:text="强力推荐"
+                        android:textColor="@color/halfblack"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_home_set"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:drawablePadding="5dp"
+                        android:drawableRight="@mipmap/right_arr"
+                        android:text="更多推荐" />
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.ruiyihong.toyshop.view.MyImageView
+                        android:id="@+id/iv_home_jxtc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="centerCrop"
+                        ryh:ir="@mipmap/jstc" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_jxtc"
+                        android:layout_width="200dp"
+                        android:layout_height="80dp"
+                        android:layout_centerInParent="true"
+                        android:background="#99ffffff"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_home_set_pay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="10dp"
+                            android:text="30/天"
+                            android:textColor="@color/colorAccent" />
+
+                        <TextView
+                            android:id="@+id/tv_home_set_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="10dp"
+                            android:text="图形认知套餐"
+                            android:textColor="@color/tab_selected" />
+
+                        <TextView
+                            android:id="@+id/tv_home_set_age"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="10dp"
+                            android:background="@color/tab_selected"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:text="1-3岁"
+                            android:textColor="@android:color/white"
+                            />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_jxtc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"/>
+
+
+                <!--全部玩具-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+                    <com.ruiyihong.toyshop.view.MyImageView
+                        android:id="@+id/iv_home_alltoy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        ryh:ir="@mipmap/bann2" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_alltoy"
+                        android:layout_width="200dp"
+                        android:layout_height="80dp"
+                        android:layout_centerInParent="true"
+                        android:background="#99ffffff"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="10dp"
+                            android:background="#f14e89"
+                            android:padding="5dp"
+                            android:text="0-3岁宝宝专享活动"
+                            android:textColor="#fff" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+                <!--全部图书-->
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp">
+
+                    <com.ruiyihong.toyshop.view.MyImageView
+                        android:id="@+id/iv_home_allbook"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/holo_red_dark"
+                        ryh:ir="@mipmap/bann3" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_allbook"
+                        android:layout_width="200dp"
+                        android:layout_height="80dp"
+                        android:layout_centerInParent="true"
+                        android:background="#99ffffff"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="10dp"
+                            android:background="#fdcb01"
+                            android:padding="5dp"
+                            android:text="全场低至每天2.5元"
+                            android:textColor="#fff" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+        </com.ruiyihong.toyshop.view.MyScrollView>
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    </LinearLayout>
+
+
+    <!--Loading动画-->
+    <com.ruiyihong.toyshop.view.CommonLoadingView
+        android:id="@+id/common_LoadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/title_hetght"/>
+
+
+
+</FrameLayout>

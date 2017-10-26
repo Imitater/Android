@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ryh="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Panda_BG">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:ryh="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!--标题栏 -->
+        <RelativeLayout style="@style/title_style">
+
+            <ImageButton style="@style/back_style" />
+
+            <TextView
+                style="@style/title_textview_style"
+                android:text="套餐详情" />
+
+            <ImageButton
+                android:id="@+id/ib_detail_share"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:background="@mipmap/share" />
+
+
+        </RelativeLayout>
+        <!--产品介绍 -->
+        <com.ruiyihong.toyshop.view.MyScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <!--产品 -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_detail_product"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:scaleType="fitXY" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@mipmap/blue_arr"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="15dp"
+                        android:paddingTop="5dp"
+                        android:text="库存充足"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/item_size" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_detail_product_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="彩虹不倒塔 美国进口木质玩具"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/title_size" />
+
+                <TextView
+                    android:id="@+id/tv_detail_product_rent_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="10.9元/天"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/title_size" />
+
+                <TextView
+                    android:id="@+id/tv_detail_product_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="吊牌价：500元"
+                    android:textColor="@color/grad"
+                    android:textSize="@dimen/item_size" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="适合年龄"
+                        android:textColor="@color/loginwjmm"
+                        android:textSize="@dimen/item_size" />
+
+                    <TextView
+                        android:id="@+id/tv_detail_baby_age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="0-36个月"
+                        android:textColor="@color/loginwjmm"
+                        android:textSize="@dimen/item_size" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_detail_shoppingcar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@mipmap/bg_add_shop"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:text="加入购物车"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/item_size" />
+
+                <!--套餐简介 -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/grad_light"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:text="套餐简介"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/item_size" />
+
+                <TextView
+                    android:id="@+id/tv_suit_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/item_size" />
+
+                <!-- 更多套餐 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@mipmap/bg_more_suit"
+                    android:gravity="center"
+                    android:text="更多套餐"
+
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/title_size" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_detail_more_suit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+        </com.ruiyihong.toyshop.view.MyScrollView>
+    </LinearLayout>
+
+
+    <!--Loading动画-->
+    <com.ruiyihong.toyshop.view.CommonLoadingView
+        android:id="@+id/common_LoadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</FrameLayout>

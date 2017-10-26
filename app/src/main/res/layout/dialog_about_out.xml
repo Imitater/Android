@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:ryh="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        style="@style/title_style">
+        <ImageButton
+            style="@style/back_style"/>
+        <TextView
+            style="@style/title_textview_style"
+            android:text="关于我们"/>
+        <ImageButton
+            android:id="@+id/ib_shared"
+            android:layout_centerVertical="true"
+            android:padding="7dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/share"/>
+    </RelativeLayout>
+    <WebView
+        android:layout_below="@id/rl_title"
+        android:id="@+id/wv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </WebView>
+</RelativeLayout>

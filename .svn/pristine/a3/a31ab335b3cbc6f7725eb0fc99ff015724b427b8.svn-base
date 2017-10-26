@@ -1,0 +1,59 @@
+// Generated code from Butter Knife. Do not modify!
+package com.ruiyihong.toyshop.fragment;
+
+import android.view.View;
+import butterknife.ButterKnife.Finder;
+
+public class HomeFragment$$ViewInjector {
+  public static void inject(Finder finder, final com.ruiyihong.toyshop.fragment.HomeFragment target, Object source) {
+    View view;
+    view = finder.findRequiredView(source, 2131427431, "field 'mTvHomeLocalCity'");
+    target.mTvHomeLocalCity = (android.widget.TextView) view;
+    view = finder.findRequiredView(source, 2131427432, "field 'mIbChooseCity'");
+    target.mIbChooseCity = (android.widget.ImageButton) view;
+    view = finder.findRequiredView(source, 2131427478, "field 'mEtHomeSearch'");
+    target.mEtHomeSearch = (android.widget.EditText) view;
+    view = finder.findRequiredView(source, 2131427433, "field 'mIbErweima'");
+    target.mIbErweima = (android.widget.ImageButton) view;
+    view = finder.findRequiredView(source, 2131427434, "field 'mVpHome'");
+    target.mVpHome = (android.support.v4.view.ViewPager) view;
+    view = finder.findRequiredView(source, 2131427435, "field 'mRvModule'");
+    target.mRvModule = (android.support.v7.widget.RecyclerView) view;
+    view = finder.findRequiredView(source, 2131427436, "field 'mTvHomeMoretoy'");
+    target.mTvHomeMoretoy = (android.widget.TextView) view;
+    view = finder.findRequiredView(source, 2131427437, "field 'mRvNewestToy'");
+    target.mRvNewestToy = (android.support.v7.widget.RecyclerView) view;
+    view = finder.findRequiredView(source, 2131427438, "field 'mTvHomeMorebook'");
+    target.mTvHomeMorebook = (android.widget.TextView) view;
+    view = finder.findRequiredView(source, 2131427439, "field 'mRvNewestBook'");
+    target.mRvNewestBook = (android.support.v7.widget.RecyclerView) view;
+    view = finder.findRequiredView(source, 2131427440, "field 'mTvHomeSet'");
+    target.mTvHomeSet = (android.widget.TextView) view;
+    view = finder.findRequiredView(source, 2131427441, "field 'mIvHomeJxtc'");
+    target.mIvHomeJxtc = (com.ruiyihong.toyshop.view.MyImageView) view;
+    view = finder.findRequiredView(source, 2131427445, "field 'mRvJxtc'");
+    target.mRvJxtc = (android.support.v7.widget.RecyclerView) view;
+    view = finder.findRequiredView(source, 2131427446, "field 'mIvHomeAlltoy'");
+    target.mIvHomeAlltoy = (com.ruiyihong.toyshop.view.MyImageView) view;
+    view = finder.findRequiredView(source, 2131427447, "field 'mIvHomeAllbook'");
+    target.mIvHomeAllbook = (com.ruiyihong.toyshop.view.MyImageView) view;
+  }
+
+  public static void reset(com.ruiyihong.toyshop.fragment.HomeFragment target) {
+    target.mTvHomeLocalCity = null;
+    target.mIbChooseCity = null;
+    target.mEtHomeSearch = null;
+    target.mIbErweima = null;
+    target.mVpHome = null;
+    target.mRvModule = null;
+    target.mTvHomeMoretoy = null;
+    target.mRvNewestToy = null;
+    target.mTvHomeMorebook = null;
+    target.mRvNewestBook = null;
+    target.mTvHomeSet = null;
+    target.mIvHomeJxtc = null;
+    target.mRvJxtc = null;
+    target.mIvHomeAlltoy = null;
+    target.mIvHomeAllbook = null;
+  }
+}

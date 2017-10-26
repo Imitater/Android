@@ -1,0 +1,128 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/Panda_BG"
+    android:fitsSystemWindows="true">
+
+
+    <RelativeLayout
+
+        style="@style/title_style">
+
+        <EditText
+            android:id="@+id/tv_input_address"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="26dp"
+            android:background="@mipmap/search_background"
+           android:hint="搜索小区，大厦等"/>
+        <TextView
+            android:id="@+id/text_notuse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            />
+
+
+        <ImageButton
+            android:id="@+id/iv_back"
+            style="@style/back_style"/>
+        <ImageView
+            android:id="@+id/tv_add_save"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@mipmap/search_fdj"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/container_map"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ListView
+            android:id="@+id/lv_searchResult"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </ListView>
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="286dp">
+
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/mapview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_mapmarker"
+            android:id="@+id/imageView3"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="76dp"
+             />
+
+        <RelativeLayout
+            android:id="@+id/rl_locating_point"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@color/white"
+            android:layout_marginRight="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="14dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/main_icon_follow" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+   <ScrollView
+       android:scrollbars="none"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="400dp">
+
+           <TextView
+               android:id="@+id/tts"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="28dp"
+               android:layout_marginTop="20dp"
+               android:layout_marginBottom="10dp"
+               android:layout_weight="1"
+               android:drawableLeft="@mipmap/tj_content"
+               android:drawablePadding="6dp"
+               android:text="推荐位置"
+               android:textColor="@color/tab_selected" />
+
+           <ListView
+               android:id="@+id/location_address"
+               android:layout_width="match_parent"
+               android:layout_height="368dp"
+               android:layout_below="@id/tts"
+               android:scrollbars="none"
+               android:layout_marginLeft="20dp"
+               android:layout_marginRight="20dp" />
+       </RelativeLayout>
+   </ScrollView>
+
+</LinearLayout>
+

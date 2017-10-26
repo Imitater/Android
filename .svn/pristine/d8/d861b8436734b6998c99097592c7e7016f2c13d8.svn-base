@@ -1,0 +1,55 @@
+package com.ruiyihong.toyshop.activity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+
+import com.ruiyihong.toyshop.R;
+
+import java.io.IOException;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
+/**
+ * Created by hegeyang on 2017/8/10 0010 .
+ */
+
+public class SendYajinActivity extends BaseActivity {
+	@InjectView(R.id.tv_send_yajin_money)
+	TextView tvSendYajinMoney;
+	@InjectView(R.id.tv_send_yajin_submit)
+	TextView tvSendYajinSubmit;
+
+	@Override
+	protected int getLayoutId() {
+		return R.layout.activity_send_yajin;
+	}
+
+	@Override
+	protected void initView() {
+
+	}
+
+	@Override
+	protected void initData() {
+
+	}
+
+	@Override
+	protected void initEvent() {
+
+	}
+
+	@Override
+	protected void processClick(View v) throws IOException {
+
+	}
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		// TODO: add setContentView(...) invocation
+		ButterKnife.inject(this);
+	}
+}

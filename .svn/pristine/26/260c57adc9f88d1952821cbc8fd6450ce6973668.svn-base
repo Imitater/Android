@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ryh="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Panda_BG">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--标题栏 -->
+        <RelativeLayout
+            style="@style/title_style">
+            <ImageButton
+                style="@style/back_style"/>
+            <TextView
+                style="@style/title_textview_style"
+                android:id="@+id/tv_title_detail"
+                android:text="玩具详情"/>
+
+            <ImageButton
+                android:layout_centerVertical="true"
+                android:id="@+id/ib_detail_share"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:background="@mipmap/share"
+                />
+
+        </RelativeLayout>
+        <!--产品介绍 -->
+        <com.ruiyihong.toyshop.view.MyScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <!--产品 -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/iv_detail_product"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:scaleType="fitXY"/>
+                    <TextView
+                        android:id="@+id/tv_kcl"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="库存充足"
+                        android:textSize="@dimen/item_size"
+                        android:textColor="@color/white"
+                        android:background="@mipmap/blue_arr"/>
+                </RelativeLayout>
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/tv_detail_product_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/title_size"
+                    android:text="彩虹不倒塔 美国进口木质玩具"/>
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/tv_detail_product_rent_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/title_size"
+                    android:text="10.9元/天"/>
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/tv_detail_product_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/grad"
+                    android:textSize="@dimen/item_size"
+                    android:text="吊牌价：500元"/>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/grad"
+                        android:textSize="@dimen/item_size"
+                        android:text="适合年龄"/>
+                    <TextView
+                        android:id="@+id/tv_detail_baby_age"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/loginwjmm"
+                        android:textSize="@dimen/item_size"
+                        android:text="0-36个月"/>
+
+                </LinearLayout>
+
+                <!--玩具参数 -->
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/item_size"
+                    android:background="@color/grad_light"
+                    android:text="宝贝评价"/>
+                <!--子条目在 item_pinglun_detail-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_pinglun"
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+                <TextView
+                    android:id="@+id/tv_more_pinglun"
+                    android:padding="7dp"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/blue_dark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="查看更多"
+                    android:background="@drawable/bg_ring"/>
+
+                <!--玩具参数 -->
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/item_size"
+                    android:background="@color/grad_light"
+                    android:text="玩具参数"/>
+                <include layout="@layout/product_info_item"/>
+
+                <!--锻炼能力 -->
+                <TextView
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/item_size"
+                    android:text="锻炼能力"
+                    android:background="@mipmap/product_info1"/>
+                <include layout="@layout/detail_info1_rv_item"/>
+
+                <!--            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/rv_detail_product_info1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                            </android.support.v7.widget.RecyclerView>-->
+                <!--玩具特色 -->
+                <TextView
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/item_size"
+                    android:text="玩具特色"
+                    android:background="@mipmap/product_info2"/>
+                <include layout="@layout/detail_info2_rv_item"/>
+                <!--            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/rv_detail_product_info2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                            </android.support.v7.widget.RecyclerView>-->
+
+                <!--玩具展示 -->
+                <TextView
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/item_size"
+                    android:layout_marginBottom="8dp"
+                    android:text="玩具展示"
+                    android:background="@mipmap/product_info3"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_detail_product_info3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </android.support.v7.widget.RecyclerView>
+
+                <!-- 猜你喜欢 -->
+                <TextView
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/title_size"
+                    android:text="猜你喜欢"
+                    android:drawableLeft="@mipmap/product_love"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_detail_product_love"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+        </com.ruiyihong.toyshop.view.MyScrollView>
+        <RelativeLayout
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <include layout="@layout/pop_shopping_number"/>
+            <Button
+                android:layout_alignParentRight="true"
+                android:id="@+id/bt_detail_shopping"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="加入购物车"
+                android:textSize="@dimen/title_size"
+                android:background="@color/tab_selected"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <!--Loading动画-->
+    <com.ruiyihong.toyshop.view.CommonLoadingView
+        android:id="@+id/common_LoadingView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"/>
+</FrameLayout>

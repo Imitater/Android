@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorAccent">#FF4081</color>
+    <color name="black">#2c2c2c</color>
+    <color name="white">#fff</color>
+    <color name="red">#f00</color>
+    <color name="grad">#a7a6a6</color>
+    <color name="grad_dark">#898989</color>
+    <color name="blue_light">#fdd636</color>
+    <color name="blue">#00aefb</color>
+    <color name="red_light">#f65c18</color>
+    <color name="transparent_background">#9d000000</color>
+
+    <color name="loginwjmm">#FFFDA18F</color>
+
+    <color name="Panda_BG">#FFFEFEFE</color>
+    <color name="Panda_BG_Transparent">#FFFEFEFE</color>
+    <color name="mine_item">#FFFAFAFA</color>
+
+    <color name="tab_selected">#ffcc00</color>
+    <color name="unclick_button">#a08102</color>
+    <color name="halfblack">#5d5d5d</color>
+    <color name="blue_dark">#ec7b01</color>
+    <color name="blue_price">#56b0f5</color>
+    <color name="grad_light">#d9d6d6</color>
+    <color name="bg_vip_detail">#f5f5f5</color>
+    <color name="location_bg">#f6f6f6</color>
+    <color name="divider_line">#d2d2d2</color>
+    <color name="green">#d0f980</color>
+    <color name="grad_selec">#e9e8e8</color>
+
+    <color name="divider">#ffd2d2d2</color>
+    <color name="divider_rv_line">#e1e0e0</color>
+    <color name="hor_line">#f4f4f4</color>
+    <color name="event_tv_color">#4f4e4e</color>
+    <color name="cyan">#42da9e</color>
+    <color name="green_dark">#02cd22</color>
+    <color name="pink">#fbbccd</color>
+    <color name="divider_line_tran">#0000</color>
+    <color name="transparent">#00000000</color>
+    <color name="vipmember_text_color">#fdb235</color>
+    <color name="vipmember_xieyi_color">#5e5e5e</color>
+    <color name="video_gray">#aadddddd</color>
+    <color name="text_color">#5e5e5e</color>
+    <color name="bg_grad">#f7f6f6</color>
+    <color name="bg_tv_youhui">#fd517a</color>
+    <color name="bg_grad_light">#f8f6f7</color>
+    <color name="bg_order_finishi">#f6f8f7</color>
+    <color name="red_tv">#fe2f06</color>
+    <color name="red_flag">#fc3702</color>
+    <color name="black_title">#0e0e0e</color>
+    <color name="bg_submit">#fcae05</color>
+</resources>
+<!-- <color name="text_color">#2c2c2c</color>-->

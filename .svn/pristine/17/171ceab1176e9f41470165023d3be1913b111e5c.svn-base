@@ -1,0 +1,123 @@
+package com.ruiyihong.toyshop.activity;
+
+import android.os.Bundle;
+import android.support.annotation.IdRes;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+
+import com.ruiyihong.toyshop.R;
+import com.ruiyihong.toyshop.adapter.DetailInfo3RvAdapter;
+import com.ruiyihong.toyshop.adapter.YouhuiRvAdapter;
+import com.ruiyihong.toyshop.view.FullyLinearLayoutManager;
+
+import java.util.ArrayList;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
+/**
+ * Created by 李晓曼 on 2017/7/14.
+ */
+
+public class MinePreferentialActivity extends BaseActivity {
+    @InjectView(R.id.tv_mine_prefer_amount)
+    TextView mTvMinePreferAmount;
+    @InjectView(R.id.rv_youhui)
+    RecyclerView mRvYouhui;
+    @InjectView(R.id.ll_youhui)
+    LinearLayout mLlYouhui;
+    @InjectView(R.id.tv_youhui_more)
+    TextView mTvYouhuiMore;
+    @InjectView(R.id.iv_youhui_more)
+    ImageView mIvYouhuiMore;
+    @InjectView(R.id.rb_youhui_used)
+    RadioButton mRbYouhuiUsed;
+    @InjectView(R.id.rb_youhui_history)
+    RadioButton mRbYouhuiHistory;
+    @InjectView(R.id.rg_youhui)
+    RadioGroup mRgYouhui;
+    @InjectView(R.id.iv_youhui_line_used)
+    ImageView mIvYouhuiLine_used;
+    @InjectView(R.id.iv_youhui_line_history)
+    ImageView mIvYouhuiLine_history;
+    @InjectView(R.id.et_youhui_accode)
+    EditText et_youhui_accode;
+    private int mWindowWidth;
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_mine_preferential;
+    }
+
+    @Override
+    protected void initView() {
+        mIvYouhuiLine_used.setFocusableInTouchMode(true);
+        mIvYouhuiLine_used.setFocusable(true);
+        mIvYouhuiLine_used.requestFocus();
+    }
+
+    @Override
+    protected void initData() {
+        //初始化状态
+        mRgYouhui.check(R.id.rb_youhui_used);
+        mIvYouhuiLine_used.setVisibility(View.VISIBLE);
+        mIvYouhuiLine_history.setVisibility(View.INVISIBLE);
+
+        //获取数据
+
+        //rv适配
+        RvYouhui();
+    }
+
+    @Override
+    protected void initEvent() {
+        mRgYouhui.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
+                switch (i) {
+                    case R.id.rb_youhui_used://可用优惠劵
+                        mLlYouhui.setVisibility(View.GONE);
+                        mRvYouhui.setVisibility(View.VISIBLE);
+                        mIvYouhuiLine_used.setVisibility(View.VISIBLE);
+                        mIvYouhuiLine_history.setVisibility(View.INVISIBLE);
+                        RvYouhui();
+
+                        break;
+                    case R.id.rb_youhui_history://历史优惠劵
+                        mLlYouhui.setVisibility(View.VISIBLE);
+                        mRvYouhui.setVisibility(View.GONE);
+                        mIvYouhuiLine_used.setVisibility(View.INVISIBLE);
+                        mIvYouhuiLine_history.setVisibility(View.VISIBLE);
+                        break;
+                }
+
+            }
+        });
+    }
+
+    private void RvYouhui() {
+        mRvYouhui.setLayoutManager(new FullyLinearLayoutManager(this));
+        ArrayList<Object> list = new ArrayList<>();
+        list.add("1");
+        mRvYouhui.setAdapter(new YouhuiRvAdapter(this, list));
+    }
+
+    @Override
+    protected void processClick(View v) {
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.inject(this);
+    }
+}

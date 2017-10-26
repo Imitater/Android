@@ -1,0 +1,140 @@
+/*
+ * 2017.
+ * Huida.Burt
+ * CopyRight
+ *
+ *
+ *
+ */
+
+package com.ruiyihong.toyshop.adapter;
+
+import android.app.Activity;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.ruiyihong.toyshop.R;
+import com.ruiyihong.toyshop.bean.SearchResult;
+import com.ruiyihong.toyshop.util.AppConstants;
+import com.ruiyihong.toyshop.util.LogUtil;
+import com.ruiyihong.toyshop.util.ToastHelper;
+import com.squareup.picasso.Picasso;
+
+import java.util.List;
+
+/**
+ * Created by Burt on 2017/7/23 0023.
+ */
+
+public class Search_wj_resultAdapter extends RecyclerView.Adapter<Search_wj_resultAdapter.Holder> {
+
+
+    private final Activity context;
+    private final List<SearchResult.WjlistBean> GoodList;
+    private ToyShopAdapter.onRecyclerViewItemClickListener itemClickListener;
+    private ToyShopAdapter.onShoppingcartClickListener shoppingcartClickListener;
+
+    public Search_wj_resultAdapter(Activity context, List<SearchResult.WjlistBean> GoodList) {
+        this.context = context;
+        this.GoodList = GoodList;
+    }
+
+    @Override
+    public Search_wj_resultAdapter.Holder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.toyshop_rv_item, null);
+        return new Holder(view) ;
+    }
+
+    @Override
+    public void onBindViewHolder(Holder holder, final int position) {
+        SearchResult.WjlistBean dataBean = GoodList.get(position);
+        //名称
+        String name = dataBean.getName();
+        holder.tv_name.setText(name);
+        //每天单价
+        holder.tv_daypay.setText(dataBean.getShopprice()+"元/天");
+        //吊牌价
+         holder.tv_price.setText(dataBean.getDpj()+"元");
+        //图片
+        String imgUrl = AppConstants.IMG_BASE_URL+dataBean.getShopimg();
+        Picasso.with(context).load(imgUrl).fit().placeholder(R.mipmap.good_default).error(R.mipmap.good_default).into(holder.iv_image);
+
+        //条目点击事件的监听
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (itemClickListener!=null) {
+                    itemClickListener.onItemClick(view, position);
+                }
+            }
+        });
+        //购物车按钮的点击事件
+        holder.ib_shopping_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (shoppingcartClickListener!=null){
+                    shoppingcartClickListener.onShoppingcartClick(view,position);
+                    ToastHelper.getInstance().displayToastShort("加入购物车成功");
+                }
+            }
+        });
+    }
+
+
+
+    @Override
+    public int getItemCount() {
+        return GoodList.size();
+    }
+
+    class Holder extends RecyclerView.ViewHolder {
+
+        private final ImageView iv_image;
+        private final TextView tv_name;
+        private final TextView tv_daypay;
+        private final TextView tv_price;
+        private final TextView tv_hot;
+        private final TextView tv_canpost;
+        private final ImageButton ib_shopping_cart;
+
+        public Holder(View itemView) {
+            super(itemView);
+            iv_image = itemView.findViewById(R.id.iv_toyshop_image);
+            tv_name = itemView.findViewById(R.id.tv_toyshop_name);
+            tv_daypay = itemView.findViewById(R.id.tv_toyshop_daypay);
+            tv_price = itemView.findViewById(R.id.tv_toyshop_price);
+            tv_hot = itemView.findViewById(R.id.tv_toyshop_hot);
+            tv_canpost = itemView.findViewById(R.id.tv_toyshop_canpost);
+            ib_shopping_cart = itemView.findViewById(R.id.ib_shopping_cart);
+
+        }
+    }
+    public void setOnItemClickListener(ToyShopAdapter.onRecyclerViewItemClickListener listener) {
+        this.itemClickListener =  listener;
+
+    }
+    /**条目点击事件的监听器*/
+    public  interface onRecyclerViewItemClickListener {
+
+        void onItemClick(View v,int position);
+    }
+
+    /**
+     * 设置购物车按钮点击 监听器
+     * @param listener
+     */
+    public void setOnShoppingcartClickListener(ToyShopAdapter.onShoppingcartClickListener listener) {
+        this.shoppingcartClickListener =  listener;
+
+    }
+    /**购物车按钮点击的监听器*/
+    public  interface onShoppingcartClickListener {
+        void onShoppingcartClick(View v,int position);
+    }
+}

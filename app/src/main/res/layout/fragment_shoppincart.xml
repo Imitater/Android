@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Panda_BG">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!--标题栏-->
+        <RelativeLayout
+            android:id="@+id/rl_title"
+            style="@style/title_style">
+
+            <ImageButton
+                android:id="@+id/ib_back"
+                style="@style/back_style" />
+
+            <TextView
+                android:id="@+id/tv_car_title"
+                style="@style/title_textview_style"
+                android:text="购物车(2)" />
+
+            <CheckBox
+                android:id="@+id/tv_car_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:button="@null"
+                android:paddingLeft="10dp"
+                android:paddingRight="15dp"
+                android:text="编辑"
+                android:textSize="@dimen/item_size" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/grad_selec" />
+
+        <!--数据展示区-->
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/smartRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/title_hetght">
+
+            <include layout="@layout/refresh_header" />
+
+            <com.ruiyihong.toyshop.view.swipemenu.SwipeMenuListView
+                android:id="@+id/ShppingCar_listView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/rlBottomBar"
+                android:orientation="vertical"
+                android:overScrollMode="never"
+                android:scrollbars="none" />
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    </LinearLayout>
+
+
+    <!--底部栏-->
+    <RelativeLayout
+        android:id="@+id/rlBottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_hetght"
+        android:layout_gravity="bottom"
+        android:background="@color/Panda_BG">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/hor_line" />
+
+        <CheckBox
+            android:id="@+id/ckSelectAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:button="@null"
+            android:drawableLeft="@drawable/shopingcar_item_selector"
+            android:drawablePadding="5dp"
+            android:text="全选"
+            android:textSize="13sp" />
+
+
+        <TextView
+            android:id="@+id/tvCountMoney"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:text="@string/count_money"
+            android:textColor="#fc5a5a"
+            android:textSize="@dimen/title_size" />
+
+
+        <TextView
+            android:id="@+id/btnSettle"
+            android:layout_width="98dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@color/tab_selected"
+            android:gravity="center"
+            android:text="@string/count_goods"
+            android:textColor="#FFF"
+            android:textSize="@dimen/sub_title_size" />
+
+        <TextView
+            android:id="@+id/btnDEl"
+            android:layout_width="98dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@color/red_light"
+            android:gravity="center"
+            android:text="删除"
+            android:textColor="#FFF"
+            android:textSize="@dimen/sub_title_size"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <!--购物车为空界面-->
+    <LinearLayout
+        android:id="@+id/rlShoppingCartEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/ic_shopping_cart_empty" />
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="购物车里还没有玩具哦\n快去给宝宝选玩具吧！" />
+
+        <Button
+            android:id="@+id/btn_shoppingcar_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="33dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/radiu_empty_shopping"
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:text="去逛逛"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+
+</FrameLayout>

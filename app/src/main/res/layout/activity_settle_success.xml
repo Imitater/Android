@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ryh="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_order_finishi"
+    android:orientation="vertical">
+
+    <RelativeLayout style="@style/title_style">
+
+        <ImageButton style="@style/back_style" />
+
+        <TextView
+            style="@style/title_textview_style"
+            android:text="订单详情" />
+    </RelativeLayout>
+
+    <com.ruiyihong.toyshop.view.MyScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/order_finish_top" />
+
+                <TextView
+                    android:id="@+id/tv_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="85dp"
+                    android:text="交易成功"
+                    android:textColor="@color/red_light"
+                    android:textSize="20sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@color/Panda_BG"
+                android:paddingBottom="15dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="15dp">
+
+                <ImageView
+                    android:id="@+id/iv_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/address_location" />
+
+                <TextView
+                    android:id="@+id/tv_orderfinish_shouhuoren"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toRightOf="@id/iv_location"
+                    android:text="收货人："
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/sub_title_size" />
+
+                <TextView
+                    android:id="@+id/tv_orderfinish_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@id/tv_orderfinish_shouhuoren"
+                    android:layout_below="@id/tv_orderfinish_shouhuoren"
+                    android:layout_marginTop="8dp"
+                    android:text="收货地址："
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/sub_title_size" />
+
+                <TextView
+                    android:id="@+id/tv_orderfinish_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="123123"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/sub_title_size" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="20dp"
+                android:drawableRight="@mipmap/right_arr"
+                android:padding="5dp"
+                android:text="TB玩图汇"
+                android:textSize="@dimen/sub_title_size" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_order_finish"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/tv_order_finishi_yunfei"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="10dp"
+                    android:text="(含运费10元)"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/sub_title_size" />
+
+                <TextView
+                    android:id="@+id/tv_order_finishi_total_pay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toLeftOf="@id/tv_order_finishi_yunfei"
+                    android:text="合计：￥ 元"
+                    android:textSize="@dimen/sub_title_size" />
+
+                <TextView
+                    android:id="@+id/tv_order_finishi_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/tv_order_finishi_total_pay"
+                    android:text="共 件商品"
+                    android:textSize="@dimen/sub_title_size" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_order_item_take1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/seares_normal"
+                android:paddingBottom="7dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="7dp"
+                android:text="现在付款"
+                android:layout_gravity="right"
+                android:visibility="gone"/>
+        </LinearLayout>
+    </com.ruiyihong.toyshop.view.MyScrollView>
+</LinearLayout>

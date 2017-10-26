@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+    <!--标题-->
+    <RelativeLayout
+        android:id="@+id/rl_choosecity_title"
+        style="@style/title_style"
+        >
+        <ImageButton
+            android:id="@id/back"
+            style="@style/back_style"
+            />
+        <TextView
+            style="@style/title_textview_style"
+            android:text="选择城市"
+            />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider_line"
+        android:layout_alignBottom="@id/rl_choosecity_title"/>
+    <!--搜索框-->
+    <EditText
+        android:id="@+id/et_home_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        android:background="@drawable/search_frame"
+        android:paddingLeft="32dp"
+        android:textSize="16sp"
+        android:layout_below="@id/rl_choosecity_title"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:hint="请输入城市名"
+        android:textCursorDrawable="@null"
+        android:textColorHint="@android:color/darker_gray"
+        />
+<!--城市列表-->
+    <ScrollView
+        android:id="@+id/sv_choosecity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/et_home_search">
+
+        <include layout="@layout/city_top" />
+
+    </ScrollView>
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignTop="@id/sv_choosecity"
+        android:background="@color/divider_line" />
+    <!--右侧字母索引-->
+    <com.ruiyihong.toyshop.view.SideBar
+        android:id="@+id/sidrbar"
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/et_home_search"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"/>
+</RelativeLayout>
+
+

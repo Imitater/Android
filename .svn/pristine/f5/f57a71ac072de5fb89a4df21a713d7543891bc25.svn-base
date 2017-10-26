@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/video_bottom"
+    android:gravity="center">
+
+    <ImageView
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:id="@+id/iv_play_bottom"
+        android:src="@mipmap/enter_video_stop"
+        android:layout_width="30dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="7dp" />
+
+    <TextView
+        android:id="@+id/mediacontroller_time_current"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00"
+        android:textColor="@color/colorAccent"
+        android:textSize="16sp" />
+
+    <SeekBar
+        android:id="@+id/mediacontroller_progress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:maxHeight="6dp"
+        android:minHeight="6dp"
+        android:progressDrawable="@drawable/enter_progress"
+        android:thumb="@mipmap/thumb"
+        android:thumbOffset="0dp" />
+
+    <TextView
+        android:layout_margin="5dp"
+        android:id="@+id/mediacontroller_time_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00"
+        android:textColor="@color/colorAccent"
+        android:textSize="16sp" />
+</LinearLayout>

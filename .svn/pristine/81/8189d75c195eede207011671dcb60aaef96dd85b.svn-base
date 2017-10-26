@@ -1,0 +1,404 @@
+package com.ruiyihong.toyshop.test;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.ruiyihong.toyshop.R;
+import com.ruiyihong.toyshop.activity.AudioActivity;
+import com.ruiyihong.toyshop.activity.BaseActivity;
+import com.ruiyihong.toyshop.activity.DaiJQActivity;
+import com.ruiyihong.toyshop.activity.DetailActivity;
+import com.ruiyihong.toyshop.activity.DetailSuitActivity;
+import com.ruiyihong.toyshop.activity.LoginActivity;
+import com.ruiyihong.toyshop.activity.PersonInfoActivity;
+import com.ruiyihong.toyshop.activity.PinglunActivity;
+import com.ruiyihong.toyshop.activity.ReadContactActivity;
+import com.ruiyihong.toyshop.activity.ShoppingCarActivity;
+import com.ruiyihong.toyshop.activity.VideoActivity;
+import com.ruiyihong.toyshop.activity.VipActivity;
+import com.ruiyihong.toyshop.activity.VitamioActivity;
+import com.ruiyihong.toyshop.bean.OrderBean;
+import com.ruiyihong.toyshop.location.Location;
+import com.ruiyihong.toyshop.mApplication;
+import com.ruiyihong.toyshop.shoppingcar.ShoppingCartBiz;
+import com.ruiyihong.toyshop.shoppingcar.ShoppingCartHttpBiz;
+import com.ruiyihong.toyshop.util.AppConstants;
+import com.ruiyihong.toyshop.util.LogUtil;
+import com.ruiyihong.toyshop.util.OkHttpUtil;
+import com.ruiyihong.toyshop.util.SPUtil;
+import com.ruiyihong.toyshop.util.ShareUtils;
+import com.ruiyihong.toyshop.util.ToastHelper;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+public class TestActivity extends BaseActivity {
+
+	private TextView erweima;
+    private TextView tv_data;
+    private String uid;
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_member;
+    }
+
+    @Override
+    protected void initView() {
+	    erweima = findViewById(R.id.tv_erweima);
+        tv_data = findViewById(R.id.tv_data);
+
+        /*************************购物车**********************/
+        uid= SPUtil.getUid(TestActivity.this)[0];
+
+	    findViewById(R.id.car_add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShoppingCartHttpBiz.addGood("8",uid,"3");
+            }
+        });
+        findViewById(R.id.car_del).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShoppingCartHttpBiz.delGood("8",uid);
+            }
+        });
+        findViewById(R.id.car_query).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               /*ShoppingCartHttpBiz.setOnResultCallBackListener(new ShoppingCartHttpBiz.OnResultCallbackListener() {
+                   @Override
+                   public void OnResultCallback(String result) {
+                       LogUtil.e("购物车接口回调结果： "+result);
+                   }
+               });
+                ShoppingCartHttpBiz.getAll(uid);*/
+               ShoppingCartBiz.ParityGood(TestActivity.this);
+
+            }
+        });
+        findViewById(R.id.car_update).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShoppingCartHttpBiz.pdateGoodsNumber("8",uid,"6");
+            }
+        });
+        /*************************购物车**********************/
+        findViewById(R.id.bt_wxfx).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShareUtils.shareUrl(TestActivity.this,"www.baidu.com","这个是百度",null,"这是一个神奇的搜索引擎",1);
+            }
+        });
+
+        findViewById(R.id.bt_toast).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ToastHelper.getInstance().init(TestActivity.this);
+                ToastHelper.getInstance()._toast("哈哈哈哈");
+            }
+        });
+        findViewById(R.id.bt_djq).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TestActivity.this, DaiJQActivity.class);
+                startActivity(intent);
+            }
+        });
+        findViewById(R.id.car_Activity).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TestActivity.this, ShoppingCarActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.wx_sq).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ConsoleWx();
+            }
+        });
+        findViewById(R.id.qq_sq).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        findViewById(R.id.loin_activiy).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TestActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.add_vitamio).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TestActivity.this, VitamioActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.add_shoppingcar).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                /*
+                商品插入购物车说明
+                id, type, count, name, age, img, price, dpj, num
+                */
+
+                ShoppingCartBiz.addGood(TestActivity.this,"1","1","10","测试商品1","适合0-20岁儿童","img","1","400","4");
+                ShoppingCartBiz.addGood(TestActivity.this,"1","2","12","测试商品2","适合10-20岁儿童","img","1","400","6");
+                ShoppingCartBiz.addGood(TestActivity.this,"1","3","12","测试商品3","适合12-20岁儿童","img","1","400","8");
+                ShoppingCartBiz.addGood(TestActivity.this,"1","4","12","测试商品4","适合10-20岁儿童","img","1","400","10");
+                ShoppingCartBiz.addGood(TestActivity.this,"1","5","12","测试商品5","适合12-20岁儿童","img","1","400","11");
+
+                ShoppingCartBiz.addGood(TestActivity.this,"1","6","10","测试商品6","适合0-20岁儿童","img","1","400","4");
+                ShoppingCartBiz.addGood(TestActivity.this,"1","7","12","测试商品7","适合10-20岁儿童","img","1","400","6");
+                ShoppingCartBiz.addGood(TestActivity.this,"1","8","12","测试商品8","适合12-20岁儿童","img","1","400","8");
+                ShoppingCartBiz.addGood(TestActivity.this,"1","9","12","测试商品9","适合10-20岁儿童","img","1","400","10");
+                ShoppingCartBiz.addGood(TestActivity.this,"1","10","12","测试商品10","适合12-20岁儿童","img","1","400","11");
+
+            }
+        });
+
+        findViewById(R.id.add_personinfo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TestActivity.this, PersonInfoActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        findViewById(R.id.Map_get).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TestActivity.this, Location.class);
+                startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.Contact_get).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TestActivity.this, ReadContactActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        findViewById(R.id.video).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TestActivity.this, VideoActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        findViewById(R.id.audio).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TestActivity.this, AudioActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        findViewById(R.id.vip).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TestActivity.this, VipActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        findViewById(R.id.toy_suit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TestActivity.this, DetailSuitActivity.class);
+                intent.putExtra("id",1);
+                startActivity(intent);
+
+            }
+        });
+
+        findViewById(R.id.toy_detail).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TestActivity.this, DetailActivity.class);
+                intent.putExtra("type",DetailActivity.TOY_TYPE);
+                intent.putExtra("id",12);
+                startActivity(intent);
+
+            }
+        });
+        findViewById(R.id.test_network).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url="http://api.xingkongxueyuan.cn/index/gou/selgou";
+                Map<String, String> para = new HashMap<>();
+                para.put("uid","1");
+
+                try {
+                    OkHttpUtil.postString(url, para, new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            LogUtil.e(OkHttpUtil.getResult(response));
+
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        findViewById(R.id.bt_dingdan).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String testUri = AppConstants.SERVE_URL+"index/order/shengcheng";
+                HashMap<String, String> params = new HashMap<>();
+                OrderBean a1 = new OrderBean();
+                a1.danjia = 10.5f;
+                a1.sid="001";
+                a1.shuliang = "4";
+
+                OrderBean a2= new OrderBean();
+                a2.danjia = 10.0f;
+                a2.sid="002";
+                a2.shuliang = "2";
+                Gson gson = new Gson();
+                Type type = new TypeToken<ArrayList<String>>() {
+                }.getType();
+                ArrayList<OrderBean> list = new ArrayList<>();
+                list.add(a1);
+                list.add(a2);
+	            String s="";
+                String s1="";
+                String s2="";
+	            for(int i = 0;i<list.size();i++){
+		            s+= list.get(i).sid+",";
+                    s1+=list.get(i).shuliang+",";
+                    s2+=list.get(i).danjia+",";
+	            }
+                //String s = list.toString();
+                //LogUtil.e("准备的Array数据"+s);
+                /*ArrayList<String> strings = new ArrayList<>();
+                strings.add("001");
+                strings.add("002");
+                String s = gson.toJson(strings,type);
+                ArrayList<String> strings1 = new ArrayList<>();
+                strings1.add("100");
+                strings1.add("200");
+                String s1 = gson.toJson(strings1,type);
+
+                ArrayList<String> strings2 = new ArrayList<>();
+                strings2.add("1");
+                strings2.add("2");
+                String s2 = gson.toJson(strings2,type);
+                //String s  = list.toString();
+                params.put("uid","10");
+                params.put("wid",s);
+                params.put("wsl",s1);
+                params.put("wjg",s2);
+                params.put("zong","6");
+                */
+                LogUtil.e("准备的Array数据"+s.substring(0,s.length()-1));
+                params.put("uid","10");
+                params.put("wid",s.substring(0,s.length()-1));
+                params.put("wsl",s1.substring(0,s1.length()-1));
+                params.put("wjg",s2.substring(0,s2.length()-1));
+                params.put("zong","6");
+                try {
+                    OkHttpUtil.postString(testUri, params, new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            LogUtil.e("测试一下错误");
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            final String result = OkHttpUtil.getResult(response);
+                            LogUtil.e("测试一下"+result);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    tv_data.setText(result);
+                                }
+                            });
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+    }
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == RESULT_OK) {
+			Bundle bundle = data.getExtras();
+			if (bundle != null) {
+				String result = bundle.getString("result");
+				erweima.setText(erweima.getText() + result);
+			}
+		}
+	}
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void initEvent() {
+        findViewById(R.id.bt_pinglun).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TestActivity.this, PinglunActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    protected void processClick(View v) {
+
+    }
+
+
+    private void ConsoleWx() {
+        if (!mApplication.wxapi.isWXAppInstalled()) {
+            ToastHelper.getInstance()._toast("您还未安装微信客户端");
+            return;
+        }
+        SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "diandi_wx_login";
+        mApplication.wxapi.sendReq(req);
+        LogUtil.e("微信客户端");
+    }
+}

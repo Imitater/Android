@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+    android:background="@color/Panda_BG">
+    <LinearLayout
+        android:background="@color/Panda_BG"
+        android:paddingBottom="20dp"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:paddingTop="20dp"
+            android:paddingLeft="15dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_add_item_name"
+                android:text="小兔兔"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:id="@+id/tv_add_item_sex"
+                android:layout_width="wrap_content"
+                android:text="先生"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginLeft="20dp"
+                android:id="@+id/tv_add_item_phone"
+                android:layout_width="wrap_content"
+                android:text="17190175362"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:paddingTop="15dp"
+            android:paddingLeft="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_add_item_moren"
+                android:visibility="visible"
+                android:textColor="@color/blue_dark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="[默认]"/>
+            <TextView
+                android:paddingRight="50dp"
+                android:id="@+id/tv_add_item_content"
+                android:text="这是一堆地址"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+
+        <ImageButton
+            android:layout_marginRight="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:background="@mipmap/change_address"
+            android:id="@+id/ib_add_item_change"
+            android:layout_width="25dp"
+            android:layout_height="25dp"/>
+
+</RelativeLayout>

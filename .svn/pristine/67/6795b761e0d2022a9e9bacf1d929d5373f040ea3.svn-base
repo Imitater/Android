@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ruiyihong.toyshop.activity.MainActivity">
+
+    <FrameLayout
+        android:id="@+id/fl_main"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"></FrameLayout>
+
+
+    <RadioGroup
+        android:id="@+id/rg_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#fff"
+        android:padding="3dp">
+        <RadioButton
+            android:id="@+id/rb_home"
+            style="@style/MainRadioButtonStyle"
+            android:drawableTop="@drawable/selector_tab_home"
+            android:text="首页"/>
+        <RadioButton
+            android:id="@+id/rb_toyshop"
+            style="@style/MainRadioButtonStyle"
+            android:drawableTop="@drawable/selector_tab_toyshop"
+            android:text="玩具城"/>
+        <RadioButton
+            android:id="@+id/rb_member"
+            style="@style/MainRadioButtonStyle"
+            android:drawableTop="@drawable/selector_tab_member"
+            android:text="会员"/>
+        <RadioButton
+            android:id="@+id/rb_shopping_cart"
+            style="@style/MainRadioButtonStyle"
+            android:drawableTop="@drawable/selector_tab_shoppingchart"
+            android:text="购物车"/>
+        <RadioButton
+            android:id="@+id/rb_mine"
+            style="@style/MainRadioButtonStyle"
+            android:drawableTop="@drawable/selector_tab_mine"
+            android:text="我的"/>
+
+    </RadioGroup>
+
+
+
+
+</LinearLayout>

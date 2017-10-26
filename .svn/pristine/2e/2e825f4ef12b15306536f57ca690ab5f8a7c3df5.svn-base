@@ -1,0 +1,782 @@
+package com.ruiyihong.toyshop.activity;
+
+import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.ruiyihong.toyshop.R;
+import com.ruiyihong.toyshop.adapter.ToyShopVpAdapter;
+import com.ruiyihong.toyshop.adapter.ToyshopPopAgeAdapter;
+import com.ruiyihong.toyshop.adapter.ToyshopPopBrandAdapter;
+import com.ruiyihong.toyshop.adapter.ToyshopPopPayAdapter;
+import com.ruiyihong.toyshop.bean.PopAgeBean;
+import com.ruiyihong.toyshop.bean.PopBrandBean;
+import com.ruiyihong.toyshop.bean.ToyShopToyListBean;
+import com.ruiyihong.toyshop.fragment.ToyShopBookFragment;
+import com.ruiyihong.toyshop.fragment.ToyShopToyFragment;
+import com.ruiyihong.toyshop.util.AppConstants;
+import com.ruiyihong.toyshop.util.GsonUtil;
+import com.ruiyihong.toyshop.util.NetUtli;
+import com.ruiyihong.toyshop.util.NetWorkUtil;
+import com.ruiyihong.toyshop.util.OkHttpUtil;
+import com.ruiyihong.toyshop.util.SPUtil;
+import com.ruiyihong.toyshop.view.CommonLoadingView;
+import com.ruiyihong.toyshop.view.DividerItemDecoration;
+import com.ruiyihong.toyshop.view.NoScrollViewPager;
+import com.ruiyihong.toyshop.view.SupportPopupWindow;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+/**
+ * Created by 81521 on 2017/7/14.
+ */
+
+public class ToyShopActivity extends BaseActivity {
+    private static final String AGEBUFFER_KEY = "age";
+    private static final String GN_JXFL_BUFFER_KEY = "brand";
+    private static final String PAYBUFFER_KEY = "pay";
+    private static final String FILTER_ALL_AGE_BUFFER_KEY = "filter_all_age_buffer_key";
+    private static final String FILTER_ALL_BRAND_BUFFER_KEY = "filter_all_brand_buffer_key";
+    private static final String FILTER_ALL_FENLEI_BUFFER_KEY = "filter_all_feilei_buffer_key";
+    public static final int DATA_TYPE_TOY = 11;
+    public static final int DATA_TYPE_BOOK = 12;
+    private static final int NetWorkError=4;
+    private static final int CloseLoadingView=5;
+    private static final int PageLoading=6;
+    @InjectView(R.id.toyshop_search)
+    ImageButton mToyshopSearch;
+    @InjectView(R.id.tv_toyshop_filter_allage)
+    TextView mTvToyshopFilterAllage;
+    @InjectView(R.id.tv_toyshop_filter_allbrand)
+    TextView mTvToyshopFilterAllbrand;
+    @InjectView(R.id.tv_toyshop_filter_fenlei)
+    TextView mTvToyshopFilterFenlei;
+    @InjectView(R.id.tv_toyshop_filter_pay)
+    TextView mTvToyshopFilterPay;
+    @InjectView(R.id.vp_toyshop)
+    NoScrollViewPager mVpToyshop;
+    @InjectView(R.id.ll_toyshop_filter)
+    LinearLayout mLlToyshopFilter;
+    @InjectView(R.id.tv_toyShop_title)
+    TextView tv_toyShop_title;
+    @InjectView(R.id.common_LoadingView)
+    CommonLoadingView loadingView;
+
+    private ArrayList<PopAgeBean.DataBean> mAgeList;
+    private View popView_brand;
+    private List<PopBrandBean.DataBean> mBrandList;
+    private View popView_age;
+    private SupportPopupWindow popupWindow_brand;
+    private SupportPopupWindow popupWindow_age;
+    private SupportPopupWindow popupWindow_pay;
+    private List<ToyShopToyListBean.DataBeanX.DataBean> toyList;
+
+    private HashMap<String, String> ageBuffer = new HashMap<>();//缓存筛选条件--年龄
+    private ArrayList<Fragment> fragments;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case NetWorkError :    //显示网络错误页面
+                    if(loadingView!=null)
+                        loadingView.loadError();
+                    break;
+                case CloseLoadingView: //关闭Loading动画
+                    if(loadingView!=null)
+                        loadingView.loadSuccess(false);
+                    break;
+                case PageLoading:  //页面加载中动画
+                    if(loadingView!=null)
+                        loadingView.load();
+                    break;
+            }
+        }
+    };
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_toy;
+    }
+
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void initData() {
+
+        if (!NetWorkUtil.isNetWorkAvailable(this)){
+            handler.sendEmptyMessage(NetWorkError);
+            return;
+        }else{
+            handler.sendEmptyMessage(PageLoading);
+        }
+        //获取全部年龄筛选数据
+        getAllageData();
+
+        //初始化viewpager
+        initViewpager();
+
+        int type = getIntent().getIntExtra("type", -1);
+
+        switch (type) {
+            case DATA_TYPE_TOY:
+                //玩具
+                mVpToyshop.setCurrentItem(0);
+                tv_toyShop_title.setText("玩具汇");
+
+                //获取玩具功能
+                getToyGongnengData();
+
+                mTvToyshopFilterAllage.setText("年龄");
+                mTvToyshopFilterAllbrand.setText("功能");
+                mTvToyshopFilterPay.setText("排序");
+                break;
+            case DATA_TYPE_BOOK:
+                //玩具
+                mVpToyshop.setCurrentItem(1);
+                tv_toyShop_title.setText("图书汇");
+
+                //获取全部分类筛选数据
+                getBookjingxifenleiData();
+
+                mTvToyshopFilterAllage.setText("世界各地实用年龄");
+                mTvToyshopFilterAllbrand.setText("精细分类");
+                mTvToyshopFilterPay.setText("排序");
+
+                break;
+        }
+
+    }
+
+    @Override
+    protected void initEvent() {
+        //筛选点击事件（全部年龄）
+        mTvToyshopFilterAllage.setOnClickListener(this);
+        //全部品牌
+        mTvToyshopFilterAllbrand.setOnClickListener(this);
+        //所有分类
+        mTvToyshopFilterFenlei.setOnClickListener(this);
+        //筛选
+        mTvToyshopFilterPay.setOnClickListener(this);
+        //顶部 搜索单击
+        mToyshopSearch.setOnClickListener(this);
+        loadingView.setOnRefreshPagerListener(new CommonLoadingView.OnRefreshPageListener() {
+            @Override
+            public void Refresh() {
+                initData();
+            }
+        });
+    }
+
+    @Override
+    protected void processClick(View v) {
+        switch (v.getId()) {
+            case R.id.tv_toyshop_filter_allage://全部年龄
+                showDialog_age();
+                break;
+            case R.id.tv_toyshop_filter_allbrand://玩具功能/图书精细分类
+                showDialog_gn_jxfl();
+                break;
+            case R.id.tv_toyshop_filter_fenlei:// 去掉了
+                break;
+            case R.id.tv_toyshop_filter_pay://按价格排序
+                showDialog_pay();
+                break;
+            case R.id.toyshop_search:
+                Intent intent = new Intent(this, SearchActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+        }
+    }
+
+    private void initViewpager() {
+        fragments = new ArrayList<>();
+        fragments.add(new ToyShopToyFragment());
+        fragments.add(new ToyShopBookFragment());
+        mVpToyshop.setAdapter(new ToyShopVpAdapter(getSupportFragmentManager(), fragments));
+    }
+
+    /**
+     * 获取图书精细分类
+     */
+    private void getBookjingxifenleiData() {
+        //获取缓存数据
+        String buffer = SPUtil.getString(ToyShopActivity.this, FILTER_ALL_FENLEI_BUFFER_KEY, "");
+        if (NetUtli.isNetworkAvailable(ToyShopActivity.this)) {
+            //网络可用
+            if (!TextUtils.isEmpty(buffer)) {
+                CloseLoadingView();
+                //解析
+                parseBookJxflData(buffer);
+            }
+        } else {
+            //网络不可用
+            if (!TextUtils.isEmpty(buffer)) {
+                CloseLoadingView();
+                //解析
+                parseBookJxflData(buffer);
+            } else {
+                Toast.makeText(ToyShopActivity.this, "请检查网络", Toast.LENGTH_SHORT).show();
+            }
+            return;
+        }
+
+        try {
+            OkHttpUtil.get(AppConstants.BOOK_JXFL, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    handler.sendEmptyMessage(NetWorkError);
+
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String result = OkHttpUtil.getResult(response);
+                    CloseLoadingView();
+                    //LogUtil.e("精细分类=========="+result);
+                    //缓存数据
+                    SPUtil.setString(ToyShopActivity.this, result, FILTER_ALL_FENLEI_BUFFER_KEY);
+                    //todo 解析数据
+                    parseBookJxflData(result);
+                }
+            });
+        } catch (IOException e) {
+            handler.sendEmptyMessage(NetWorkError);
+            e.printStackTrace();
+        }
+    }
+    //关闭LoadingView
+    private void CloseLoadingView() {
+        handler.sendEmptyMessage(CloseLoadingView);
+    }
+    private void parseBookJxflData(String json) {
+        PopBrandBean popBrandBean = GsonUtil.parseJsonWithGson(json, PopBrandBean.class);
+        mBrandList = popBrandBean.getData();
+    }
+
+    /**
+     * 获取全部品牌筛选数据
+     */
+    private void getToyGongnengData() {
+        //获取缓存数据
+        String buffer = SPUtil.getString(ToyShopActivity.this, FILTER_ALL_BRAND_BUFFER_KEY, "");
+        if (NetUtli.isNetworkAvailable(ToyShopActivity.this)) {
+            //网络可用
+            if (!TextUtils.isEmpty(buffer)) {
+                CloseLoadingView();
+                parseBrandData(buffer);
+            }
+        } else {
+            //网络不可用
+            if (!TextUtils.isEmpty(buffer)) {
+                CloseLoadingView();
+                parseBrandData(buffer);
+            } else {
+                Toast.makeText(ToyShopActivity.this, "请检查网络", Toast.LENGTH_SHORT).show();
+            }
+            return;
+        }
+
+        try {
+            OkHttpUtil.get(AppConstants.TOY_GONGNENG, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    handler.sendEmptyMessage(NetWorkError);
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String result = OkHttpUtil.getResult(response);
+                    // LogUtil.e("玩具功能===="+result);
+                    if (result != null && result.length() > 2) {
+                        CloseLoadingView();
+                        //缓存数据
+                        SPUtil.setString(ToyShopActivity.this, FILTER_ALL_BRAND_BUFFER_KEY, result);
+                        //解析数据
+                        parseBrandData(result);
+                    }
+                }
+            });
+        } catch (IOException e) {
+            handler.sendEmptyMessage(NetWorkError);
+            e.printStackTrace();
+        }
+    }
+
+    private void parseBrandData(String json) {
+
+        PopBrandBean popBrandBean = GsonUtil.parseJsonWithGson(json, PopBrandBean.class);
+        mBrandList = popBrandBean.getData();
+    }
+
+    /**
+     * 获取全部年龄筛选数据
+     */
+    private void getAllageData() {
+        //先获取缓存数据
+        String buffer = SPUtil.getString(ToyShopActivity.this, FILTER_ALL_AGE_BUFFER_KEY, "");
+        if (NetUtli.isNetworkAvailable(ToyShopActivity.this)) {
+            //网络可用
+            if (!TextUtils.isEmpty(buffer)) {
+                //有缓存数据，先解析缓存数据
+                CloseLoadingView();
+                parseAgeData(buffer);
+            }
+        } else {
+            //网络不可用
+            if (!TextUtils.isEmpty(buffer)) {
+                //有缓存数据，先解析缓存数据
+                CloseLoadingView();
+                parseAgeData(buffer);
+            } else {
+                Toast.makeText(ToyShopActivity.this, "请检查网络", Toast.LENGTH_SHORT).show();
+            }
+            return;
+        }
+
+        try {
+            OkHttpUtil.get(AppConstants.ALLAGE_URL, new Callback() {
+
+                @Override
+                public void onFailure(Call call, IOException e) {
+
+                    handler.sendEmptyMessage(NetWorkError);
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String result = OkHttpUtil.getResult(response);
+                    // LogUtil.e("全部年龄====="+result);
+                    if (result != null && result.length() > 2) {
+                        CloseLoadingView();
+                        // 缓存数据
+                        SPUtil.setString(ToyShopActivity.this, FILTER_ALL_AGE_BUFFER_KEY, result);
+                        //解析数据
+                        parseAgeData(result);
+                    }
+                }
+            });
+        } catch (IOException e) {
+            handler.sendEmptyMessage(NetWorkError);
+            e.printStackTrace();
+        }
+    }
+
+    private void parseAgeData(String json) {
+        PopAgeBean popAgeBean = GsonUtil.parseJsonWithGson(json, PopAgeBean.class);
+        mAgeList = (ArrayList<PopAgeBean.DataBean>) popAgeBean.getData();
+        // List<PopAgeBean.DataBean> data = popAgeBean.getData();
+//        mAgeList = (ArrayList<PopAgeBean>) GsonUtil.parseJsonToList(json, new TypeToken<ArrayList<PopAgeBean>>() {
+//        }.getType());
+    }
+
+    /**
+     * 弹出排序对话框
+     */
+    private void showDialog_pay() {
+        final String[] strs = {"综合排序", "人气最高", "最新上架", "价格最高", "价格最低"};
+
+        if (popupWindow_age != null && popupWindow_age.isShowing()) {
+            popupWindow_age.dismiss();
+            popupWindow_age = null;
+        }
+        if (popupWindow_brand != null && popupWindow_brand.isShowing()) {
+            popupWindow_brand.dismiss();
+            popupWindow_brand = null;
+        }
+        if (popupWindow_pay != null && popupWindow_pay.isShowing()) {
+
+            popupWindow_pay.dismiss();
+            popupWindow_pay = null;
+
+        } else {
+
+            final View popView_pay = LayoutInflater.from(ToyShopActivity.this).inflate(R.layout.toyshop_popwindow, null);
+            //隐藏确定按钮
+            TextView insure = popView_pay.findViewById(R.id.tv_pop_insure);
+            insure.setVisibility(View.GONE);
+            RelativeLayout rl_root = popView_pay.findViewById(R.id.rl_root);
+            RecyclerView rvToyShop = popView_pay.findViewById(R.id.rv_toyshop_pop);
+            rvToyShop.setLayoutManager(new GridLayoutManager(ToyShopActivity.this, 1));
+            ToyshopPopPayAdapter adapter = new ToyshopPopPayAdapter(ToyShopActivity.this, strs);
+            rvToyShop.setAdapter(adapter);
+            rvToyShop.addItemDecoration(new DividerItemDecoration(
+                    ToyShopActivity.this, DividerItemDecoration.HORIZONTAL_LIST, 1, getResources().getColor(R.color.divider)));
+
+            popupWindow_pay = new SupportPopupWindow(popView_pay, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            popupWindow_pay.setOutsideTouchable(true);
+            popupWindow_pay.setBackgroundDrawable(new BitmapDrawable());
+            // popupWindow_pay.showAsDropDown(mTvToyshopFilterAllage);
+            if (Build.VERSION.SDK_INT < 24) {
+                popupWindow_pay.showAsDropDown(mTvToyshopFilterAllage, 0, 0);
+            } else {
+                int[] location = new int[2];
+                // 获取控件在屏幕的位置
+                mTvToyshopFilterAllage.getLocationOnScreen(location);
+                popupWindow_pay.showAtLocation(mTvToyshopFilterAllage, Gravity.NO_GRAVITY, 0, location[1] + mTvToyshopFilterAllage.getHeight() + 0);
+
+            }
+            //修改文字颜色
+            mTvToyshopFilterPay.setSelected(true);
+
+            rl_root.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (popupWindow_pay != null && popupWindow_pay.isShowing()) {
+                        popupWindow_pay.dismiss();
+                    }
+                }
+            });
+
+            //popupWindow消失监听
+            setPopupWindowDismissListener(popupWindow_pay);
+            //popupWindow外部点击监听
+            setPopupWindowOutsideListener(popupWindow_pay);
+
+            //rv条目点击事件
+            if (adapter != null) {
+                final ToyshopPopPayAdapter finalAdapter = adapter;
+                adapter.setOnItemClickListener(new ToyshopPopPayAdapter.onRecyclerViewItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int position) {
+                        //选中的条目
+                        String pay = strs[position];
+                        //缓存选中的数据
+                        String selectedpay = pay + "," + position;
+
+                        ageBuffer.put(PAYBUFFER_KEY, selectedpay);
+                        //按选中的条件排序
+                        sortting(pay, strs);
+                        //悬浮窗消失
+                        popupWindow_pay.dismiss();
+                        mTvToyshopFilterPay.setText(pay);
+                    }
+                });
+            }
+        }
+    }
+
+    private void sortting(String selectedpay, String[] strs) {
+        int currentItem = mVpToyshop.getCurrentItem();
+        if (currentItem == 0) {
+            //玩具
+            ToyShopToyFragment fragment = (ToyShopToyFragment) fragments.get(0);
+            fragment.sort(selectedpay, strs, ageBuffer.get(AGEBUFFER_KEY), ageBuffer.get(GN_JXFL_BUFFER_KEY), false);
+        } else {
+            // 图书
+            ToyShopBookFragment fragment = (ToyShopBookFragment) fragments.get(1);
+            fragment.sort(selectedpay, strs, ageBuffer.get(AGEBUFFER_KEY), ageBuffer.get(GN_JXFL_BUFFER_KEY), false);
+        }
+    }
+
+    /**
+     * 弹出全部品牌对话框
+     */
+    private void showDialog_gn_jxfl() {
+        if (popupWindow_pay != null && popupWindow_pay.isShowing()) {
+            popupWindow_pay.dismiss();
+            popupWindow_pay = null;
+        }
+        if (popupWindow_age != null && popupWindow_age.isShowing()) {
+            popupWindow_age.dismiss();
+            popupWindow_age = null;
+
+        }
+        if (popupWindow_brand != null && popupWindow_brand.isShowing()) {
+
+            popupWindow_brand.dismiss();
+            popupWindow_brand = null;
+        } else {
+            popView_brand = LayoutInflater.from(ToyShopActivity.this).inflate(R.layout.toyshop_popwindow, null);
+            RelativeLayout rl_root = popView_brand.findViewById(R.id.rl_root);
+            RecyclerView rvToyShop = popView_brand.findViewById(R.id.rv_toyshop_pop);
+            TextView insure = popView_brand.findViewById(R.id.tv_pop_insure);
+            rvToyShop.setLayoutManager(new GridLayoutManager(ToyShopActivity.this, 3));
+            ToyshopPopBrandAdapter adapter = null;
+
+            if (mBrandList != null) {
+                int currentPosition = -1;
+                String s = ageBuffer.get(GN_JXFL_BUFFER_KEY);
+                if (!TextUtils.isEmpty(s)) {
+                    String[] split = s.split(",");
+                    currentPosition = Integer.parseInt(split[1]);
+                }
+
+                adapter = new ToyshopPopBrandAdapter(ToyShopActivity.this, mBrandList, currentPosition);
+                rvToyShop.setAdapter(adapter);
+            }
+            popupWindow_brand = new SupportPopupWindow(popView_brand, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            popupWindow_brand.setOutsideTouchable(true);
+            popupWindow_brand.setBackgroundDrawable(new BitmapDrawable());
+            popupWindow_brand.showAsDropDown(mTvToyshopFilterAllage);
+
+            //修改颜色
+            mTvToyshopFilterAllbrand.setSelected(true);
+
+            rl_root.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (popupWindow_brand != null && popupWindow_brand.isShowing()) {
+                        popupWindow_brand.dismiss();
+                    }
+                }
+            });
+
+            //popupWindow消失监听
+            setPopupWindowDismissListener(popupWindow_brand);
+            //popupWindow外部点击监听
+            setPopupWindowOutsideListener(popupWindow_brand);
+
+            //rv条目点击事件
+            if (adapter != null) {
+                final ToyshopPopBrandAdapter finalAdapter = adapter;
+                adapter.setOnItemClickListener(new ToyshopPopBrandAdapter.onRecyclerViewItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int position) {
+                        //选中的条目
+                        PopBrandBean.DataBean popBrandBean = mBrandList.get(position);
+                        String fname = popBrandBean.getFname();
+                        //缓存选中的数据
+                        String selectedFname = fname + "," + position;
+                        ageBuffer.put(GN_JXFL_BUFFER_KEY, selectedFname);
+                        finalAdapter.setCurrentPosition(position);
+                        finalAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+
+            //确定按钮的点击事件
+            insure.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // 点击确定按钮 请求相关的数据
+                    getFilterData();
+                    //页签文字
+                    //修改筛选框文字
+                    String s = ageBuffer.get(GN_JXFL_BUFFER_KEY);
+                    if (!TextUtils.isEmpty(s)) {
+                        String[] split = s.split(",");
+                        if (split != null) {
+                            mTvToyshopFilterAllbrand.setText(split[0]);
+                        }
+                    }
+                    if (popupWindow_brand != null && popupWindow_brand.isShowing()) {
+                        popupWindow_brand.dismiss();
+                    }
+                }
+            });
+        }
+    }
+
+    /**
+     * 弹出全部年龄对话框
+     */
+    private void showDialog_age() {
+
+        if (popupWindow_brand != null && popupWindow_brand.isShowing()) {
+            popupWindow_brand.dismiss();
+            popupWindow_brand = null;
+        }
+        if (popupWindow_pay != null && popupWindow_pay.isShowing()) {
+
+            popupWindow_pay.dismiss();
+            popupWindow_pay = null;
+
+        }
+        if (popupWindow_age != null && popupWindow_age.isShowing()) {
+            popupWindow_age.dismiss();
+            popupWindow_age = null;
+
+        } else {
+
+            popView_age = LayoutInflater.from(ToyShopActivity.this).inflate(R.layout.toyshop_popwindow, null);//popupwindow显示的布局
+            //布局中rv的数据填充
+            RecyclerView rvToyShop = popView_age.findViewById(R.id.rv_toyshop_pop);
+            TextView insure = popView_age.findViewById(R.id.tv_pop_insure);
+            RelativeLayout rl_root = popView_age.findViewById(R.id.rl_root);//灰色背景
+            rvToyShop.setLayoutManager(new GridLayoutManager(ToyShopActivity.this, 3));
+            ToyshopPopAgeAdapter adapter = null;
+            if (mAgeList != null) {
+                //去出缓存的选中条目
+                int currentPosition = -1;
+                String s = ageBuffer.get(AGEBUFFER_KEY);
+                if (!TextUtils.isEmpty(s)) {
+                    String[] split = s.split(",");
+                    currentPosition = Integer.parseInt(split[1]);
+                }
+                adapter = new ToyshopPopAgeAdapter(ToyShopActivity.this, mAgeList, currentPosition);
+                rvToyShop.setAdapter(adapter);
+            }
+
+            popupWindow_age = new SupportPopupWindow(popView_age, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            popupWindow_age.setOutsideTouchable(true);
+            popupWindow_age.setBackgroundDrawable(new BitmapDrawable());
+            popupWindow_age.showAsDropDown(mTvToyshopFilterAllage);
+            rl_root.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (popupWindow_age != null && popupWindow_age.isShowing()) {
+                        popupWindow_age.dismiss();
+                    }
+                }
+            });
+            //修改文字样式
+            mTvToyshopFilterAllage.setSelected(true);
+
+            //popupWindow消失监听
+            setPopupWindowDismissListener(popupWindow_age);
+            //popupWindow外部点击监听
+            setPopupWindowOutsideListener(popupWindow_age);
+
+            //rv条目点击事件
+            if (adapter != null) {
+                final ToyshopPopAgeAdapter finalAdapter = adapter;
+                adapter.setOnItemClickListener(new ToyshopPopAgeAdapter.onRecyclerViewItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int position) {
+                        //选中的条目
+                        PopAgeBean.DataBean popAgeBean = mAgeList.get(position);
+                        String age = popAgeBean.getAge();
+
+                        //缓存选中的数据
+                        String selectedAge = age + "," + position;
+                        ageBuffer.put(AGEBUFFER_KEY, selectedAge);
+
+                        finalAdapter.setCurrentPosition(position);
+                        finalAdapter.notifyDataSetChanged();
+
+                    }
+                });
+            }
+
+            //确定按钮的点击事件
+            insure.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //TODO 点击确定按钮 请求相关的数据
+                    getFilterData();
+                    popupWindow_age.dismiss();
+
+                    //修改筛选框文字
+                    if (!TextUtils.isEmpty(ageBuffer.get(AGEBUFFER_KEY))) {
+                        String s = ageBuffer.get(AGEBUFFER_KEY);
+                        String[] split = s.split(",");
+                        if (split != null) {
+                            mTvToyshopFilterAllage.setText(split[0]);
+                        }
+
+                    }
+                }
+            });
+
+        }
+
+    }
+
+    /**
+     * 获取筛选之后的数据
+     */
+    private void getFilterData() {
+        try {
+            if (mVpToyshop.getCurrentItem() == 0) {
+                //玩具
+                ToyShopToyFragment fragment = (ToyShopToyFragment) fragments.get(0);
+
+                fragment.getFilterData(ageBuffer.get(AGEBUFFER_KEY), ageBuffer.get(GN_JXFL_BUFFER_KEY), false);
+
+            } else {
+                //图书
+                ToyShopBookFragment fragment = (ToyShopBookFragment) fragments.get(1);
+                fragment.getFilterData(ageBuffer.get(AGEBUFFER_KEY), ageBuffer.get(GN_JXFL_BUFFER_KEY), false);
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 悬浮窗消失的监听
+     *
+     * @param popupWindow
+     */
+    private void setPopupWindowDismissListener(PopupWindow popupWindow) {
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+
+                mTvToyshopFilterAllage.setSelected(false);
+                mTvToyshopFilterAllbrand.setSelected(false);
+                mTvToyshopFilterFenlei.setSelected(false);
+                mTvToyshopFilterPay.setSelected(false);
+            }
+        });
+    }
+
+    /**
+     * popupWindow外部点击的监听  解决和筛选框原有点击事件的冲突问题
+     *
+     * @param popupWindow
+     */
+    private void setPopupWindowOutsideListener(final PopupWindow popupWindow) {
+        popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
+                    //筛选框的位置
+                    int top = mLlToyshopFilter.getTop();
+                    int bottom = mLlToyshopFilter.getBottom();
+                    int offset = bottom - top;
+                    int downY = (int) event.getY();
+                    if (downY < 0 && downY > -offset) {
+                        //在筛选框范围内，不消失
+                    } else {
+                        // Toast.makeText(mActivity, "outside listener", Toast.LENGTH_SHORT).show();
+                        if (popupWindow != null && popupWindow.isShowing()) {
+                            popupWindow.dismiss();
+                        }
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.inject(this);
+    }
+}

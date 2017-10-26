@@ -1,0 +1,53 @@
+package com.ruiyihong.toyshop.test;
+
+/**
+ * Created by 李晓曼 on 2017/7/17.
+ * eventFragment测试数据
+ */
+
+public class EventTestData {
+    private String shopprice;
+    private String shopimg;
+    private String eventName;
+
+    public EventTestData(){}
+
+    public EventTestData(String shopimg){
+        this.shopimg = shopimg;
+    }
+
+    public EventTestData(String shopprice, String shopimg, String eventName) {
+        this.shopprice = shopprice;
+        this.shopimg = shopimg;
+        this.eventName = eventName;
+    }
+
+    public EventTestData(String shopimg, String eventName) {
+        this.shopimg = shopimg;
+        this.eventName = eventName;
+    }
+
+    public String getShopprice() {
+        return shopprice;
+    }
+
+    public void setShopprice(String shopprice) {
+        this.shopprice = shopprice;
+    }
+
+    public String getShopimg() {
+        return shopimg;
+    }
+
+    public void setShopimg(String shopimg) {
+        this.shopimg = shopimg;
+    }
+
+    public String getEventName() {
+        return eventName;
+    }
+
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
+    }
+}

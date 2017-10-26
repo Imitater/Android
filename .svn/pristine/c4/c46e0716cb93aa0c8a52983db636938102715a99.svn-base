@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <RelativeLayout
+        style="@style/title_style">
+        <ImageButton
+            android:id="@+id/back"
+            style="@style/back_style"/>
+        <TextView
+            android:text="设置"
+            style="@style/title_textview_style"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_marginTop="2dp"
+        android:id="@+id/rl_setting_clear"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textSize="@dimen/title_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="清理缓存"/>
+        <TextView
+            android:id="@+id/tv_setting_cache_size"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10.33MB"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_marginTop="2dp"
+        android:id="@+id/rl_setting_update"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textSize="@dimen/title_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="检查更新"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_marginTop="2dp"
+        android:id="@+id/rl_setting_about"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textSize="@dimen/title_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关于我们"/>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:background="@android:color/transparent"
+        android:layout_marginTop="50dp"
+        android:padding="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/bt_setting_checkout"
+            android:padding="10dp"
+            android:textColor="#e84134"
+            android:background="@drawable/setting_button_checkout"
+            android:textSize="@dimen/title_size"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_hetght"
+            android:text="退出登录"/>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/bt_setting_test"
+        android:padding="10dp"
+        android:textColor="@color/red_light"
+        android:background="@drawable/setting_button_checkout"
+        android:textSize="@dimen/title_size"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_hetght"
+        android:text="内部测试"/>
+</LinearLayout>

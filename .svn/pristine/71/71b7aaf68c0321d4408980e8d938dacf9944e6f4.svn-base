@@ -1,0 +1,53 @@
+package com.ruiyihong.toyshop.activity;
+
+import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+
+import com.ruiyihong.toyshop.R;
+
+import java.io.IOException;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
+/**
+ * Created by hegeyang on 2017/8/10 0010 .
+ */
+
+public class ContactCustomerActivity extends BaseActivity {
+	@InjectView(R.id.rc_contact_customer)
+	RecyclerView rcContactCustomer;
+
+	@Override
+	protected int getLayoutId() {
+		return R.layout.activity_contact_customer;
+	}
+
+	@Override
+	protected void initView() {
+
+	}
+
+	@Override
+	protected void initData() {
+
+	}
+
+	@Override
+	protected void initEvent() {
+
+	}
+
+	@Override
+	protected void processClick(View v) throws IOException {
+
+	}
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		// TODO: add setContentView(...) invocation
+		ButterKnife.inject(this);
+	}
+}

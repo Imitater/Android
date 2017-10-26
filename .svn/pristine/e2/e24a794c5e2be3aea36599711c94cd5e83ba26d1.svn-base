@@ -1,0 +1,131 @@
+package com.ruiyihong.toyshop.bean;
+
+import java.util.List;
+
+/**
+ * Created by 李晓曼 on 2017/8/10.
+ */
+
+public class JifenHotBean {
+
+    private List<Data1Bean> data1;
+    private List<Data2Bean> data2;
+
+    public List<Data1Bean> getData1() {
+        return data1;
+    }
+
+    public void setData1(List<Data1Bean> data1) {
+        this.data1 = data1;
+    }
+
+    public List<Data2Bean> getData2() {
+        return data2;
+    }
+
+    public void setData2(List<Data2Bean> data2) {
+        this.data2 = data2;
+    }
+
+    public static class Data1Bean {
+        /**
+         * id : 5
+         * dmian : 5
+         * duse : 99
+         * dluo : 500
+         * dimg : 20170806\81ed3944bd5d4fc404d82d02be5634b7.png
+         */
+
+        private int id;
+        private int dmian;
+        private int duse;
+        private int dluo;
+        private String dimg;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public int getDmian() {
+            return dmian;
+        }
+
+        public void setDmian(int dmian) {
+            this.dmian = dmian;
+        }
+
+        public int getDuse() {
+            return duse;
+        }
+
+        public void setDuse(int duse) {
+            this.duse = duse;
+        }
+
+        public int getDluo() {
+            return dluo;
+        }
+
+        public void setDluo(int dluo) {
+            this.dluo = dluo;
+        }
+
+        public String getDimg() {
+            return dimg;
+        }
+
+        public void setDimg(String dimg) {
+            this.dimg = dimg;
+        }
+    }
+
+    public static class Data2Bean {
+        /**
+         * id : 7
+         * shopimg : 20170723\60cc4aabf6e36c7ed4fa6dfccbd821df.png
+         * lbb : 1000
+         * longtime : 1天
+         */
+
+        private int id;
+        private String shopimg;
+        private int lbb;
+        private String longtime;
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getShopimg() {
+            return shopimg;
+        }
+
+        public void setShopimg(String shopimg) {
+            this.shopimg = shopimg;
+        }
+
+        public int getLbb() {
+            return lbb;
+        }
+
+        public void setLbb(int lbb) {
+            this.lbb = lbb;
+        }
+
+        public String getLongtime() {
+            return longtime;
+        }
+
+        public void setLongtime(String longtime) {
+            this.longtime = longtime;
+        }
+    }
+}

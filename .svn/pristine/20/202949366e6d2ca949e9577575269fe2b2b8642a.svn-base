@@ -1,0 +1,82 @@
+/*
+ * 2017.
+ * Huida.Burt
+ * CopyRight
+ *
+ *
+ *
+ */
+
+package com.ruiyihong.toyshop.bean;
+
+/**
+ * Created by Burt on 2017/7/11 0011.
+ */
+
+public class HomeJXTC {
+
+
+    /**
+     * id : 1
+     * simg : 20170708\304cf1293ea3d6fecd3bf748c64e4960.png
+     * srent : 2
+     * sname : 图形认知套餐
+     * sage : 3-4
+     * time : 1499484574
+     */
+
+    private int id;
+    private String simg;
+    private String srent;
+    private String sname;
+    private String sage;
+    private String time;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getSimg() {
+        return simg;
+    }
+
+    public void setSimg(String simg) {
+        this.simg = simg;
+    }
+
+    public String getSrent() {
+        return srent;
+    }
+
+    public void setSrent(String srent) {
+        this.srent = srent;
+    }
+
+    public String getSname() {
+        return sname;
+    }
+
+    public void setSname(String sname) {
+        this.sname = sname;
+    }
+
+    public String getSage() {
+        return sage;
+    }
+
+    public void setSage(String sage) {
+        this.sage = sage;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+}

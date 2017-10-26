@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <com.ruiyihong.toyshop.view.CircleImageView
+                android:id="@+id/tv_find_hottuijian_item_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/find_hottuijian_icon"
+                app:civ_border_overlay="false"
+                app:civ_border_width="0dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_find_hottuijian_item_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="宝宝1234**1234567890"
+                    android:textSize="@dimen/sub_title_size" />
+
+                <TextView
+                    android:id="@+id/tv_find_hottuijian_item_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="3dp"
+                    android:text="1个小时前"
+                    android:textSize="@dimen/smaller_size" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/find_item_isguanfang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/shap_rounded_rectangle_blue"
+                android:padding="5dp"
+                android:text="官方"
+                android:textColor="#fff"
+                android:textSize="@dimen/small_size" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_item_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:lineSpacingExtra="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="30dp"
+            android:paddingTop="5dp"
+            android:text="八宝抱抱抱哦宝博爱博爱博爱博爱八宝抱抱抱哦宝博爱博爱博爱博爱八宝抱抱抱哦宝博爱博爱博爱博爱" />
+
+        <com.w4lle.library.NineGridlayout
+            android:id="@+id/gv_find_hottuijian_item"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="3dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="30dp"
+            android:paddingTop="5dp"
+            />
+
+        <RelativeLayout
+            android:id="@+id/rl_video"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            >
+            <ImageView
+                android:id="@+id/video_find_hottuijian_item"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:src="@mipmap/item_image_bg"
+                android:scaleType="centerCrop"
+                />
+            <ImageView
+                android:id="@+id/iv_find_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/play"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_rv_line"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"/>
+    </LinearLayout>
+
+</RelativeLayout>

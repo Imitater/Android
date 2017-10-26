@@ -1,0 +1,101 @@
+/*
+ * 2017.
+ * Huida.Burt
+ * CopyRight
+ *
+ *
+ *
+ */
+
+package com.ruiyihong.toyshop.fragment;
+
+import android.content.Intent;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
+
+import com.ruiyihong.toyshop.R;
+import com.ruiyihong.toyshop.activity.DetailActivity;
+import com.ruiyihong.toyshop.activity.MoreToyActivity;
+import com.ruiyihong.toyshop.adapter.Search_wj_resultAdapter;
+import com.ruiyihong.toyshop.adapter.ToyShopAdapter;
+import com.ruiyihong.toyshop.bean.SearchResult;
+import com.ruiyihong.toyshop.shoppingcar.ShoppingCartBiz;
+import com.ruiyihong.toyshop.util.LogUtil;
+import com.ruiyihong.toyshop.util.ToastHelper;
+import com.ruiyihong.toyshop.view.FullyGridLayoutManager;
+
+import java.util.List;
+
+/**
+ * Created by Burt on 2017/7/22 0022.
+ */
+
+public class SearchToyFragment extends BaseFragment {
+    private List<SearchResult.WjlistBean> wjList;
+    private Search_wj_resultAdapter mAdapter;
+
+    public SearchToyFragment(List<SearchResult.WjlistBean> wjlist) {
+        this.wjList=wjlist;
+        Log.i("radish","wjlist------------------"+wjList );
+    }
+
+    @Override
+    protected View initView() {
+        View v = LayoutInflater.from(mActivity).inflate(R.layout.search_fragment_layout, null);
+        RecyclerView rv_result = v.findViewById(R.id.rv_search_result);
+        rv_result.setLayoutManager(new FullyGridLayoutManager(mActivity, 2));
+        mAdapter = new Search_wj_resultAdapter(mActivity, wjList);
+        rv_result.setAdapter(mAdapter);
+        rv_result.setItemAnimator(new DefaultItemAnimator());
+        if(wjList.size()==0){
+            ToastHelper.getInstance()._toast("搜索结果为空");
+        }
+        return v;
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void initEvent() {
+        //条目点击事件
+        mAdapter.setOnItemClickListener(new ToyShopAdapter.onRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                SearchResult.WjlistBean bean = wjList.get(position);
+                Intent intent = new Intent(mActivity, DetailActivity.class);
+                if (bean.getIsbw() == 0){
+                    //图书
+                    intent.putExtra("type",DetailActivity.BOOK_TYPE);
+                }else {
+                    //玩具
+                    intent.putExtra("type",DetailActivity.TOY_TYPE);
+                }
+                intent.putExtra("id",bean.getId());
+                startActivity(intent);
+
+            }
+        });
+        //购物车点击事件
+        mAdapter.setOnShoppingcartClickListener(new ToyShopAdapter.onShoppingcartClickListener() {
+            @Override
+            public void onShoppingcartClick(View v, int position) {
+                SearchResult.WjlistBean bean = wjList.get(position);
+                ShoppingCartBiz.addGood(mActivity,bean.getId()+"","1",bean.getKcl()+"",bean.getName(),null,bean.getShopimg(),bean.getShopprice()+"",bean.getDpj()+"","1");
+
+            }
+        });
+    }
+
+    @Override
+    public void onClick(View view) {
+
+    }
+}

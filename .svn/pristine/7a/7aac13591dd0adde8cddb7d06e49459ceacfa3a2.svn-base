@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="black">#2c2c2c</color>
+    <color name="white">#fff</color>
+    <color name="red">#f00</color>
+    <color name="grad">#a7a6a6</color>
+    <color name="grad_dark">#898989</color>
+    <color name="blue_light">#fdd636</color>
+    <color name="bg_blue_light">#c3ffe3</color>
+    <color name="blue">#00aefb</color>
+    <color name="red_light">#f65c18</color>
+    <color name="transparent_background">#9d000000</color>
+
+    <color name="loginwjmm">#FFFDA18F</color>
+
+    <color name="Panda_BG">#FFFEFEFE</color>
+    <color name="Panda_BG_Transparent">#FFFEFEFE</color>
+    <color name="mine_item">#FFFAFAFA</color>
+
+    <color name="tab_selected">#ffcc00</color>
+    <color name="main_light">#33fdcb02</color>
+    <color name="tab_normal">#000000</color>
+    <color name="halfblack">#aa000000</color>
+    <color name="blue_dark">#ec7b01</color>
+    <color name="blue_price">#56b0f5</color>
+    <color name="grad_light">#d9d6d6</color>
+    <color name="bg_vip_detail">#f5f5f5</color>
+    <color name="location_bg">#f6f6f6</color>
+    <color name="divider_line">#d2d2d2</color>
+    <color name="green">#d0f980</color>
+    <color name="purple_light">#f5b5fe</color>
+    <color name="grad_selec">#e9e8e8</color>
+
+    <color name="divider">#ffd2d2d2</color>
+    <color name="divider_rv_line">#e1e0e0</color>
+    <color name="hor_line">#f4f4f4</color>
+    <color name="event_tv_color">#4f4e4e</color>
+    <color name="blue_bg">#14b4fa</color>
+    <color name="bg_cream">#fcfadb</color>
+    <color name="bg_purple_light">#fde0fc</color>
+    <color name="bg_cyan_light">#f0fce9</color>
+    <color name="bg_pink_light">#f9e4e6</color>
+    <color name="purple">#e480de</color>
+    <color name="cyan">#42da9e</color>
+    <color name="green_dark">#02cd22</color>
+    <color name="pink">#fbbccd</color>
+    <color name="purple_tran">#66e480de</color>
+    <color name="divider_line_tran">#0000</color>
+    <color name="transparent">#00000000</color>
+    <color name="vipmember_text_color">#fdb235</color>
+    <color name="vipmember_xieyi_color">#5e5e5e</color>
+    <color name="video_gray">#aadddddd</color>
+    <color name="text_color">#2c2c2c</color>
+    <color name="bg_grad">#f7f6f6</color>
+    <color name="bg_tv_youhui">#fd517a</color>
+    <color name="bg_grad_light">#f8f6f7</color>
+</resources>

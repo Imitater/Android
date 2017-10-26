@@ -1,0 +1,198 @@
+package com.ruiyihong.toyshop.activity;
+
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.ruiyihong.toyshop.R;
+import com.ruiyihong.toyshop.adapter.LessionPager;
+import com.ruiyihong.toyshop.util.ScreenUtil;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
+/**
+ * Created by 李晓曼 on 2017/7/28.
+ */
+
+public class LessonActivity extends BaseActivity {
+    @InjectView(R.id.rb_lession_audio)
+    TextView rbLessionAudio;
+    @InjectView(R.id.rb_lession_video)
+    TextView rbLessionVideo;
+    @InjectView(R.id.rg_lession)
+    LinearLayout rgLession;
+    @InjectView(R.id.iv_lession_line_audio)
+    ImageView ivLessionLineAudio;
+    @InjectView(R.id.iv_lession_line_video)
+    ImageView ivLessionLineVideo;
+    @InjectView(R.id.vp_lession)
+    ViewPager vpLession;
+    @InjectView(R.id.rb_lession_baca)
+    TextView rbLessionBaca;
+    @InjectView(R.id.rb_lession_toy)
+    TextView rbLessionToy;
+    @InjectView(R.id.iv_lession_line_baca)
+    ImageView ivLessionLineBaca;
+    @InjectView(R.id.iv_lession_line_toy)
+    ImageView ivLessionLineToy;
+    private ArrayList<LessionPager> pagers;
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_lession;
+    }
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void initData() {
+     //   initDrawable();
+        pagers = new ArrayList<>();
+        pagers.add(new LessionPager(this, 0));
+        pagers.add(new LessionPager(this, 1));
+        pagers.add(new LessionPager(this, 2));
+        pagers.add(new LessionPager(this, 3));
+        vpLession.setAdapter(new LessionAdapter());
+        pagers.get(0).initData();
+        switchTab(0);
+
+    }
+
+    class LessionAdapter extends PagerAdapter {
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            container.addView(pagers.get(position).rootView);
+            pagers.get(position).initData();
+            return pagers.get(position).rootView;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+        }
+
+        @Override
+        public int getCount() {
+            return pagers.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object o) {
+            return view == o;
+        }
+    }
+
+    private void initDrawable() {
+        Drawable drawable = rbLessionAudio.getCompoundDrawables()[0];
+        int i = ScreenUtil.dp2px(this, 20);
+        int j = ScreenUtil.dp2px(this, 25);
+        drawable.setBounds(0, 0, j, i);
+        rbLessionAudio.setCompoundDrawables(drawable, null, null, null);
+        Drawable drawable1 = rbLessionBaca.getCompoundDrawables()[0];
+        drawable1.setBounds(0, 0, j, i);
+        rbLessionVideo.setCompoundDrawables(drawable1, null, null, null);
+        Drawable drawable2 = rbLessionToy.getCompoundDrawables()[0];
+        drawable2.setBounds(0, 0, j, i);
+        rbLessionVideo.setCompoundDrawables(drawable2, null, null, null);
+        Drawable drawable3 = rbLessionVideo.getCompoundDrawables()[0];
+        drawable3.setBounds(0, 0, j, i);
+        rbLessionVideo.setCompoundDrawables(drawable3, null, null, null);
+    }
+
+    @Override
+    protected void initEvent() {
+        rbLessionAudio.setOnClickListener(this);
+        rbLessionBaca.setOnClickListener(this);
+        rbLessionToy.setOnClickListener(this);
+        rbLessionVideo.setOnClickListener(this);
+        vpLession.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switchTab(position);
+               // pagers.get(position).initData();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
+    }
+
+    private void switchTab(int position) {
+        switch (position) {
+            case 0:
+                switchInfo(rbLessionAudio,ivLessionLineAudio);
+                break;
+            case 1:
+                switchInfo(rbLessionBaca,ivLessionLineBaca);
+                break;
+            case 2:
+                switchInfo(rbLessionToy,ivLessionLineToy);
+                break;
+            case 3:
+                switchInfo(rbLessionVideo,ivLessionLineVideo);
+                break;
+        }
+    }
+
+    private void switchInfo(TextView tv, ImageView iv) {
+        rbLessionAudio.setSelected(false);
+        rbLessionBaca.setSelected(false);
+        rbLessionToy.setSelected(false);
+        rbLessionVideo.setSelected(false);
+        ivLessionLineAudio.setVisibility(View.INVISIBLE);
+        ivLessionLineBaca.setVisibility(View.INVISIBLE);
+        ivLessionLineToy.setVisibility(View.INVISIBLE);
+        ivLessionLineVideo.setVisibility(View.INVISIBLE);
+        tv.setSelected(true);
+        iv.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void processClick(View v) throws IOException {
+        switch (v.getId()) {
+            case R.id.rb_lession_audio:
+                switchTab(0);
+                vpLession.setCurrentItem(0);
+                break;
+            case R.id.rb_lession_baca:
+                switchTab(1);
+                vpLession.setCurrentItem(1);
+                break;
+            case R.id.rb_lession_toy:
+                switchTab(2);
+                vpLession.setCurrentItem(2);
+                break;
+            case R.id.rb_lession_video:
+                switchTab(3);
+                vpLession.setCurrentItem(3);
+                break;
+        }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.inject(this);
+    }
+}

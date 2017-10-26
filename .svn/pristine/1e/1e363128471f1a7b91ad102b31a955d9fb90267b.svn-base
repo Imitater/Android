@@ -1,0 +1,77 @@
+/*
+ * 2017.
+ * Huida.Burt
+ * CopyRight
+ *
+ *
+ *
+ */
+
+package com.ruiyihong.toyshop.test;
+
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+
+import com.ruiyihong.toyshop.R;
+
+/**
+ * Created by Burt on 2017/7/17 0017.
+ */
+
+public class TestAlll {
+
+    public void TestDialog(Context context){
+
+        View v = LayoutInflater.from(context).inflate(R.layout.test_layout, null);
+        AlertDialog dialog = new AlertDialog.
+                Builder(context).create();
+
+        Window win = dialog.getWindow();
+
+        WindowManager.LayoutParams lp = win.getAttributes();
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.dimAmount = 0.2f;
+
+        win.setAttributes(lp);
+        //win.addContentView(v,lp);
+        dialog.setView(v);
+        dialog.show();
+
+
+
+    }
+    private void showDialog(Context context){
+        android.support.v7.app.AlertDialog.Builder builder=new android.support.v7.app.AlertDialog.Builder(context);  //先得到构造器
+        builder.setTitle("提示"); //设置标题
+        builder.setMessage("是否确认退出?"); //设置内容
+        builder.setIcon(R.mipmap.rabbit);//设置图标，图片id即可
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() { //设置确定按钮
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss(); //关闭dialog
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() { //设置取消按钮
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNeutralButton("忽略", new DialogInterface.OnClickListener() {//设置忽略按钮
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        //参数都设置完成了，创建并显示出来
+        builder.create().show();
+    }
+
+}

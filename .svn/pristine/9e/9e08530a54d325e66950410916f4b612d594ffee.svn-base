@@ -1,0 +1,544 @@
+package com.ruiyihong.toyshop.fragment;
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
+import android.util.TypedValue;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.ruiyihong.toyshop.R;
+import com.ruiyihong.toyshop.activity.DetailActivity;
+import com.ruiyihong.toyshop.activity.SettleActivity;
+import com.ruiyihong.toyshop.activity.ToyShopActivity;
+import com.ruiyihong.toyshop.bean.ShoppingCarBean;
+import com.ruiyihong.toyshop.db.DBContentObserver;
+import com.ruiyihong.toyshop.db.DBHelper;
+import com.ruiyihong.toyshop.db.ProviderContent;
+import com.ruiyihong.toyshop.shoppingcar.ShoppingCartBiz;
+import com.ruiyihong.toyshop.shoppingcar.ShoppingCartHttpBiz;
+import com.ruiyihong.toyshop.util.AppConstants;
+import com.ruiyihong.toyshop.util.LogUtil;
+import com.ruiyihong.toyshop.util.Refresh_Listener;
+import com.ruiyihong.toyshop.util.SPUtil;
+import com.ruiyihong.toyshop.util.ScreenUtil;
+import com.ruiyihong.toyshop.util.ToastHelper;
+import com.ruiyihong.toyshop.view.swipemenu.AmountView;
+import com.ruiyihong.toyshop.view.swipemenu.BaseSwipListAdapter;
+import com.ruiyihong.toyshop.view.swipemenu.SwipeMenu;
+import com.ruiyihong.toyshop.view.swipemenu.SwipeMenuCreator;
+import com.ruiyihong.toyshop.view.swipemenu.SwipeMenuItem;
+import com.ruiyihong.toyshop.view.swipemenu.SwipeMenuListView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.squareup.picasso.Picasso;
+
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 购物车
+ */
+@SuppressLint("ValidFragment")
+public class ShoppingCartFragment extends BaseFragment  {
+
+
+    private  boolean flag=false;
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            LogUtil.e("CarHandler");
+        }
+    };
+
+    private CheckBox ivSelectAll;
+    private TextView btnSettle;
+    private TextView btnDEl;
+    private TextView tvCountMoney;
+    private TextView tvTitle;
+    private CheckBox tvEdit;
+    private LinearLayout rlShoppingCartEmpty;
+    private RelativeLayout rlBottomBar;
+
+    private CarAdapter mAdapter;
+    private SwipeMenuListView mListView;
+    private View view;
+
+
+    private ShoppingCartBiz cartBiz;
+
+
+
+    private List<ShoppingCarBean> mCarList;
+    private List<ShoppingCarBean> mCarListSelected=new ArrayList<>();
+    private ImageButton ib_back;
+    public static final String selectedList="CarSelected";
+    private SmartRefreshLayout smartRefreshLayout;
+
+
+    public ShoppingCartFragment(){
+
+    }
+
+    public ShoppingCartFragment(boolean flag){
+       this.flag=flag;
+    }
+
+    @Override
+    protected View initView() {
+        view = View.inflate(mActivity, R.layout.fragment_shoppincart , null);
+        initContent();
+        return view;
+    }
+
+
+
+    private void initContent() {
+        ivSelectAll= view.findViewById(R.id.ckSelectAll);
+        btnSettle= view.findViewById(R.id.btnSettle);
+        btnDEl= view.findViewById(R.id.btnDEl);
+        tvCountMoney= view.findViewById(R.id.tvCountMoney);
+        tvTitle=  view.findViewById(R.id.tv_car_title);
+        tvEdit=  view.findViewById(R.id.tv_car_edit);
+        rlShoppingCartEmpty= view.findViewById(R.id.rlShoppingCartEmpty);
+        rlBottomBar= view.findViewById(R.id.rlBottomBar);
+        mListView =  view.findViewById(R.id.ShppingCar_listView);
+        ib_back = view.findViewById(R.id.ib_back);
+        smartRefreshLayout = view.findViewById(R.id.smartRefreshLayout);
+        smartRefreshLayout.setEnableLoadmore(false);
+
+        smartRefreshLayout.setOnMultiPurposeListener(new Refresh_Listener(){
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                super.onRefresh(refreshlayout);
+                ShoppingCartBiz.ParityGood(mActivity);
+                initData();
+            }
+        });
+
+
+        if(flag){
+            ib_back.setVisibility(View.VISIBLE);
+        }else{
+            ib_back.setVisibility(View.GONE);
+        }
+        ib_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
+            }
+        });
+
+
+        rlShoppingCartEmpty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mActivity, ToyShopActivity.class);
+                intent.putExtra("type",ToyShopActivity.DATA_TYPE_TOY);
+                startActivity(intent);
+            }
+        });
+        Drawable drawable = ivSelectAll.getCompoundDrawables()[0];
+        int i = ScreenUtil.dp2px(mActivity, 20);
+        drawable.setBounds(0,0,i,i);
+        ivSelectAll.setCompoundDrawables(drawable,null,null,null);
+        initAdapter();
+        //注册购物车监听器
+        String uri=ProviderContent.UriStringPaser("insert", DBHelper.Table_Car);
+        Uri uri1 = Uri.parse(uri);
+        DBContentObserver observer = new DBContentObserver(handler);
+        mActivity.getContentResolver().registerContentObserver(uri1,true,observer);
+        ShoppingCartBiz.ParityGood(mActivity);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
+    }
+
+    @Override
+    public void initData() {
+        cartBiz = new ShoppingCartBiz();
+        mCarList= cartBiz.getAll(mActivity);
+        mAdapter = new CarAdapter();
+        mListView.setAdapter(mAdapter);
+        reflushTitle();
+        ShoppingCartBiz.ParityGood(mActivity);
+    }
+    //刷新购物车状态
+    private void reflushTitle() {
+        int count = mCarList.size();
+        tvTitle.setText("购物车("+(count)+")");
+        btnSettle.setText("结算("+mCarListSelected.size()+")");
+        //计算所选商品的价格
+        String selectedPrice = ShoppingCartBiz.getSelectedPrice(mCarListSelected);
+        tvCountMoney.setText("合计：￥"+selectedPrice+"/天");
+        //合计：￥0/天
+        mAdapter.notifyDataSetChanged();
+        //数据库总是会有一条空记录，所以总数下标-1就是数据总数
+        if(count<1){
+            mListView.setVisibility(View.GONE);
+            rlShoppingCartEmpty.setVisibility(View.VISIBLE);
+        }else{
+            mListView.setVisibility(View.VISIBLE);
+            rlShoppingCartEmpty.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    protected void initEvent() {
+
+
+        btnDEl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //删除已经选定的数据
+                String[] uid = SPUtil.getUid(mActivity);
+                if (uid==null){
+                    ToastHelper.getInstance()._toast("请您登陆后操作");
+                    return;
+                }
+              //  LogUtil.e(mCarList.size()+"Car"+mCarListSelected.size()+"CarSelected");
+                 for (ShoppingCarBean bean:mCarListSelected){
+                     ShoppingCartBiz.delGood(mActivity,bean.getId(),bean.getType());
+                     ShoppingCartHttpBiz.delGood(bean.getId(),uid[0]);
+                     if(mCarList.contains(bean)) {
+                         mCarList.remove(bean);
+                     }
+                 }
+                mCarListSelected.clear();
+                tvEdit.setChecked(false);
+                ivSelectAll.setChecked(false);
+                EditOrDel(false);
+                reflushTitle();
+            }
+        });
+        // 结算
+        btnSettle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(SPUtil.getUid(mActivity)==null){
+                    ToastHelper.getInstance()._toast("请您登录后使用");
+                    return;
+                }
+                //结算已经选定的数据
+                if(mCarListSelected.size()>0){
+                    Intent intent = new Intent(mActivity, SettleActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(selectedList, (Serializable) mCarListSelected);
+                    intent.putExtra(selectedList,bundle);
+                    startActivity(intent);
+                    mCarListSelected.clear();
+                    ivSelectAll.setChecked(false);
+                }else{
+                    ToastHelper.getInstance()._toast("您还木有选择商品");
+                }
+            }
+        });
+
+
+        //编辑按钮切换
+        tvEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditOrDel(tvEdit.isChecked());
+            }
+        });
+
+
+        //全选按钮切换
+        ivSelectAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(ivSelectAll.isChecked()){
+                //全选
+                    selectAll(true);
+                    mCarListSelected.clear();
+                    mCarListSelected.addAll(mCarList);
+                    reflushTitle();
+                   mAdapter.notifyDataSetChanged();
+                }else{
+                //全不选
+                    selectAll(false);
+                    mCarListSelected.clear();
+                    reflushTitle();
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+    }
+
+    private void EditOrDel(boolean check) {
+        if(check){
+            btnDEl.setVisibility(View.VISIBLE);
+            btnSettle.setVisibility(View.GONE);
+            tvEdit.setText("取消");
+        }else{
+            btnSettle.setVisibility(View.VISIBLE);
+            btnDEl.setVisibility(View.GONE);
+            tvEdit.setText("编辑");
+        }
+    }
+
+
+    @Override
+    public void onClick(View view) {
+
+    }
+
+    // 选择全部，点下全部按钮，改变所有商品选中状态
+    public void selectAll( boolean isSelectAll) {
+        for (int i = 0; i < mCarList.size(); i++) {
+            mCarList.get(i).setCheck(isSelectAll);
+            boolean check = mCarList.get(i).isCheck();
+        }
+
+    }
+
+
+
+    public void initAdapter(){
+        //初始化条目的左划删除按钮
+        SwipeMenuCreator creator = new SwipeMenuCreator() {
+            @Override
+            public void create(SwipeMenu menu) {
+                // create "delete" item
+                SwipeMenuItem deleteItem = new SwipeMenuItem(
+                        getActivity());
+                // set item background
+                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,
+                        0x3F, 0x25)));
+                // set item width
+                deleteItem.setWidth(dp2px(90));
+                deleteItem.setTitleSize(ScreenUtil.dp2sp(mActivity,16));
+                deleteItem.setTitle("删除");
+                deleteItem.setTitleColor(Color.WHITE);
+                // set a icon
+               // deleteItem.setIcon(R.mipmap.ic_delete);
+                //图片大小看怎么放到文件夹里了
+                // add to menu
+                menu.addMenuItem(deleteItem);
+            }
+        };
+
+        // step 1. create a MenuCreator
+        // set creator
+        mListView.setMenuCreator(creator);
+
+        // step 2. listener item click event
+        mListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+                switch (index) {
+                    case 0:
+                        // open
+                        //break;
+                    case 1:
+                        //删除对应数据库内容
+                        ShoppingCarBean car = mCarList.get(position);
+                        ShoppingCartBiz.delGood(mActivity,car.getId(),car.getType());
+                        mCarList.remove(position);
+                        mAdapter.notifyDataSetChanged();
+                        reflushTitle();
+                        String[] uid = SPUtil.getUid(mActivity);
+                        if(uid!=null){
+                            ShoppingCartHttpBiz.delGood(car.getId(),uid[0]);
+                        }
+                        break;
+                }
+                return false;
+            }
+        });
+    }
+
+
+
+
+    class CarAdapter extends BaseSwipListAdapter {
+
+        @Override
+        public int getCount() {
+            return mCarList.size();
+        }
+
+        @Override
+        public ShoppingCarBean getItem(int position) {
+            return mCarList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView = View.inflate(getActivity(),
+                        R.layout.item_list_shopping_car, null);
+                new ViewHolder(convertView);
+            }
+            final ViewHolder holder = (ViewHolder) convertView.getTag();
+
+            final ShoppingCarBean item = getItem(position);
+           // holder.iv_icon.setImageDrawable();
+            holder.tv_name.setText(item.getName());
+
+            if(item.isCheck()){
+                holder.iv_CheckGood.setChecked(item.isCheck());
+
+            }else{
+                holder.iv_CheckGood.setChecked(item.isCheck());
+
+            }
+            //TODO 加载商品图片
+            Picasso.with(mActivity)
+                    .load(AppConstants.IMG_BASE_URL+item.getShopimg())
+                    .placeholder(R.mipmap.good_default).error(R.mipmap.good_default).fit()
+                    .into(holder.iv_icon);
+
+
+            if(!TextUtils.isEmpty(item.getSuitage())){
+                holder.tv_info.setText("适合年龄 "+item.getSuitage());
+            }else{
+                holder.tv_info.setText("适合所有儿童");
+            }
+            holder.tv_price.setText(item.getShopprice());
+            holder.tv_old_price.setText(item.getDpj());
+
+            int number = Integer.parseInt(item.getNum());
+            int count = Integer.parseInt(item.getCount());
+            holder.mAmountView.setGoods_storage(count);
+            holder.mAmountView.setAmout(number);
+
+            holder.iv_CheckGood.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(holder.iv_CheckGood.isChecked()){
+                            //选中商品
+                       mCarListSelected.add(item);
+                        item.setCheck(true);
+                    }else{
+                            //去掉商品
+                       // mCarListSelected.remove()
+                        ivSelectAll.setChecked(false);
+                        item.setCheck(false);
+                        if(item.getId()!=null){
+                            String id = item.getId();
+                            String type = item.getType();
+                            for(int i=0;i<mCarListSelected.size();i++){
+                                ShoppingCarBean car = mCarListSelected.get(i);
+                                if (car.getId().equals(id)&&car.getType().equals(type)){
+                                    mCarListSelected.remove(i);
+                                }
+                            }
+                        }
+                    }
+                   reflushTitle();
+                }
+            });
+
+
+            holder.mAmountView.setOnAmountChangeListener(new AmountView.OnAmountChangeListener() {
+                @Override
+                public void onAmountChange(View view, int amount) {
+                    //todo 修改商品数量
+                    String type = item.getType();
+                    String id = item.getId();
+                    String kcl = item.getCount();
+                    if(Integer.parseInt(kcl)==amount){
+                        ToastHelper.getInstance()._toast("库存不足");
+                    }else{
+                        ShoppingCartBiz.updateGoodsNumber(mActivity,id,type,amount+"");
+                        item.setNum(amount+"");
+                        notifyDataSetChanged();
+                        reflushTitle();
+                    }
+                }
+            });
+
+            holder.item_container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    JumpToDetailActivity(item);
+                }
+            });
+
+
+            return convertView;
+        }
+
+
+
+        class ViewHolder {
+            CheckBox iv_CheckGood;
+            ImageView iv_icon;
+            TextView tv_name;
+            TextView tv_info;
+            TextView tv_price;
+            TextView tv_old_price;
+
+
+            RelativeLayout item_container;
+
+            AmountView mAmountView;
+
+            public ViewHolder(View view) {
+                iv_CheckGood=view.findViewById(R.id.ck_CheckGood);
+                tv_name=view.findViewById(R.id.good_name);
+                tv_info=view.findViewById(R.id.good_info);
+                iv_icon = view.findViewById(R.id.iv_good_icon);
+                tv_price=view.findViewById(R.id.tv_good_price);
+                tv_old_price=view.findViewById(R.id.tv_good_old_price);
+                mAmountView =  view.findViewById(R.id.amount_view);
+                item_container =  view.findViewById(R.id.car_item_container);
+
+                mAmountView.setGoods_storage(50);
+
+                view.setTag(this);
+            }
+        }
+
+        @Override
+        public boolean getSwipEnableByPosition(int position) {
+
+            return true;
+        }
+    }
+
+    private void JumpToDetailActivity(ShoppingCarBean item) {
+
+        Intent intent = new Intent(mActivity, DetailActivity.class);
+        intent.putExtra("id",Integer.parseInt(item.getId()));
+        String type = item.getType();
+        if(TextUtils.equals(type,DetailActivity.TOY_TYPE+"")){
+            intent.putExtra("type",DetailActivity.BOOK_TYPE);
+        }else if(TextUtils.equals(type,DetailActivity.BOOK_TYPE+"")){
+            intent.putExtra("type",DetailActivity.TOY_TYPE);
+        }
+        startActivity(intent);
+    }
+
+    private int dp2px(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                getResources().getDisplayMetrics());
+    }
+
+}

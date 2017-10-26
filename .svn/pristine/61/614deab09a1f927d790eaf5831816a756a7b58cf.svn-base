@@ -1,0 +1,415 @@
+package com.ruiyihong.toyshop.activity;
+
+import android.app.Dialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.google.gson.reflect.TypeToken;
+import com.ruiyihong.toyshop.R;
+import com.ruiyihong.toyshop.adapter.DetailInfo3RvAdapter;
+import com.ruiyihong.toyshop.adapter.ProductLoveRvAdapter;
+import com.ruiyihong.toyshop.bean.ToyBean;
+import com.ruiyihong.toyshop.shoppingcar.ShoppingCartBiz;
+import com.ruiyihong.toyshop.util.AppConstants;
+import com.ruiyihong.toyshop.util.GsonUtil;
+import com.ruiyihong.toyshop.util.NetWorkUtil;
+import com.ruiyihong.toyshop.util.OkHttpUtil;
+import com.ruiyihong.toyshop.util.ToastHelper;
+import com.ruiyihong.toyshop.view.CommonLoadingView;
+import com.ruiyihong.toyshop.view.FullyGridLayoutManager;
+import com.ruiyihong.toyshop.view.FullyLinearLayoutManager;
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+public class DetailActivity extends BaseActivity {
+    @InjectView(R.id.ib_detail_share)
+    ImageButton mIbShared;
+    @InjectView(R.id.iv_detail_product)
+    ImageView mIvProduct;
+    @InjectView(R.id.tv_detail_product_name)
+    TextView mTvProductName;
+    @InjectView(R.id.tv_detail_product_rent_price)
+    TextView mTvProductRentPrice;
+    @InjectView(R.id.tv_detail_product_price)
+    TextView mTvProductPrice;
+    @InjectView(R.id.tv_detail_baby_age)
+    TextView mTvBabyAge;
+    @InjectView(R.id.rv_detail_product_info3)
+    RecyclerView mRvProductInfo3;
+    @InjectView(R.id.rv_detail_product_love)
+    RecyclerView mRvProductLove;
+    @InjectView(R.id.tv_pop_shopping_number)
+    TextView mTvPopShoppingNumber;
+    @InjectView(R.id.bt_detail_shopping)
+    Button mBtDetailShopping;
+    @InjectView(R.id.iv_shopping_cart_icon)
+    ImageView mIvShoppingCartIcon;
+    @InjectView(R.id.product_info_rv_item_brand)
+    TextView mProductInfoItemBrand;
+    @InjectView(R.id.product_info_rv_item_brandplace)
+    TextView mProductInfoItemBrandplace;
+    @InjectView(R.id.product_info_rv_item_material)
+    TextView mProductInfoItemMaterial;
+    @InjectView(R.id.product_info_rv_item_weight)
+    TextView mProductInfoItemWeight;
+    @InjectView(R.id.product_info_rv_item_spec)
+    TextView mProductInfoItemSpec;
+    @InjectView(R.id.product_info_rv_item_disinfect)
+    TextView mProductInfoItemDisinfect;
+    @InjectView(R.id.tv_detail_info1_rv_item)
+    TextView mTvDetailInfo1RvItem;
+    @InjectView(R.id.tv_detail_info2_rv_item)
+    TextView mTvDetailInfo2RvItem;
+    @InjectView(R.id.tv_title_detail)
+    TextView mTvTitle;
+    @InjectView(R.id.rv_pinglun)
+    RecyclerView rvPinglun;
+    @InjectView(R.id.tv_more_pinglun)
+    TextView tvMorePinglun;
+    @InjectView(R.id.iv_detail_info1_rv_item)
+    ImageView ivDetailInfo1RvItem;
+    @InjectView(R.id.iv_detail_info2_rv_item)
+    ImageView ivDetailInfo2RvItem;
+    @InjectView(R.id.tv_kcl)
+    TextView mTvKcl;
+    @InjectView(R.id.fl_pop_shopping)
+    FrameLayout mFlPopShopping;
+    @InjectView(R.id.common_LoadingView)
+    CommonLoadingView loadingView;
+    private ToyBean toyBean;
+    public static int TOY_TYPE = 0;
+    public static int BOOK_TYPE = 1;
+    private static final int TOY_INFO = 2;
+    private static final int RECOMMEND_INFO = 3;
+    private static final int NetWorkError=4;
+    private static final int CloseLoadingView=5;
+    private static final int PageLoading=6;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case TOY_INFO:
+                    initDetailData((String) msg.obj);
+                    break;
+                case RECOMMEND_INFO:
+                    recommendData((String) msg.obj);
+                    break;
+                case NetWorkError :    //显示网络错误页面
+                    if(loadingView!=null)
+                        loadingView.loadError();
+                    break;
+                case CloseLoadingView:     //关闭Loading动画
+                    if(loadingView!=null)
+                        loadingView.loadSuccess(false);
+                    break;
+                case PageLoading:       //页面加载中动画
+                    if(loadingView!=null)
+                        loadingView.load();
+                    break;
+            }
+        }
+    };
+
+    private String toyUrl;
+    private String recommendUrl;
+    private int count = 0;
+    private int type;
+    private int mKcl;
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_detail;
+    }
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void initData() {
+        if (!NetWorkUtil.isNetWorkAvailable(this)){
+            handler.sendEmptyMessage(NetWorkError);
+            return;
+        }else{
+            handler.sendEmptyMessage(PageLoading);
+        }
+        //处理从上一个页面传过来的数据
+        initIntentData();
+        //玩具展示
+        initProductInfo3();
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        count = ShoppingCartBiz.getCount(this);
+        if (count > 0) {
+            mIvShoppingCartIcon.setSelected(true);
+            mTvPopShoppingNumber.setVisibility(View.VISIBLE);
+            mTvPopShoppingNumber.setText(count + "");
+        } else {
+            mIvShoppingCartIcon.setSelected(false);
+            mTvPopShoppingNumber.setVisibility(View.GONE);
+            mTvPopShoppingNumber.setText(count + "");
+
+        }
+
+    }
+
+    private void recommendData(String obj) {
+        List<ToyBean> RecommendList = (List<ToyBean>) GsonUtil.parseJsonToList(obj, new TypeToken<List<ToyBean>>() {
+        }.getType());
+
+        //猜你喜欢
+        initProductLove(RecommendList);
+    }
+
+    //12,13,14,15
+    private void initIntentData() {
+        Intent intent = getIntent();
+        type = intent.getIntExtra("type", -1);
+        int id = intent.getIntExtra("id", -1);
+        Log.i("radish","type,id------------------"+type+","+id );
+        if (type == TOY_TYPE) {
+            toyUrl = AppConstants.TOY_DETAIL;
+            recommendUrl = AppConstants.TOY_RECOMMEND_DETAIL;
+            mTvTitle.setText("玩具详情");
+        } else {
+            toyUrl = AppConstants.BOOK_DETAIL;
+            recommendUrl = AppConstants.BOOK_RECOMMEND_DETAIL;
+            mTvTitle.setText("图书详情");
+        }
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("id", id);
+        netPost(toyUrl, params);
+        params = new HashMap<>();
+        netPost(recommendUrl, params);
+    }
+
+    private void netPost(final String url, HashMap<String, Object> params) {
+        try {
+            OkHttpUtil.postJson(url, params, new Callback() {
+                @Override
+                public void onFailure(Call call, final IOException e) {
+
+                    handler.sendEmptyMessage(NetWorkError);
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    if (response != null && response.isSuccessful()) {
+                        final String body = response.body().string();
+                        Log.i("radish", "body------------------" + body);
+                        if (!TextUtils.isEmpty(body) && !body.endsWith("null")) {
+                            CloseLoadingView();
+                            //TODO
+                            Message msg = Message.obtain();
+                            if (url.equals(toyUrl)) {
+                                msg.what = TOY_INFO;
+
+                            } else {
+                                msg.what = RECOMMEND_INFO;
+                            }
+                            msg.obj = body;
+                            handler.sendMessage(msg);
+                        }
+                    }
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //关闭LoadingView
+    private void CloseLoadingView() {
+        handler.sendEmptyMessage(CloseLoadingView);
+    }
+
+    private void initDetailData(String body) {
+        //产品基本描述
+        toyBean = GsonUtil.parseJsonWithGson(body, ToyBean.class);
+
+        mKcl = toyBean.getKcl();
+        if (mKcl - count <= 0) {
+            mTvKcl.setText("库存不足");
+        } else {
+            mTvKcl.setText("库存充足");
+        }
+        Picasso.with(DetailActivity.this).load(AppConstants.IMG_BASE_URL + toyBean.getShopimg()).fit().placeholder(R.mipmap.product).into(mIvProduct);
+
+        mTvProductName.setText(toyBean.getName() + " " + toyBean.getShoptext());
+        mTvProductRentPrice.setText(toyBean.getShopprice() + "元/天");
+        mTvProductPrice.setText("吊牌价：" + toyBean.getDpj() + "元");
+        mTvBabyAge.setText(toyBean.getSuitage());
+        //玩具参数
+        mProductInfoItemBrand.setText(toyBean.getBrand());
+        mProductInfoItemBrandplace.setText(toyBean.getBrandplace());
+        mProductInfoItemMaterial.setText(toyBean.getMaterial());
+        mProductInfoItemWeight.setText(toyBean.getWeight());
+        mProductInfoItemSpec.setText(toyBean.getSpec());
+        mProductInfoItemDisinfect.setText(toyBean.getDisinfect());
+        //锻炼能力
+        mTvDetailInfo1RvItem.setText(toyBean.getAbility());
+        //玩具特色
+        mTvDetailInfo2RvItem.setText(toyBean.getFeature());
+        //玩具展示
+
+
+    }
+
+    private void initProductLove(final List<ToyBean> list) {
+        mRvProductLove.setLayoutManager(new FullyGridLayoutManager(this, 2));
+        ProductLoveRvAdapter rvAdapter = new ProductLoveRvAdapter(this, list);
+        mRvProductLove.setAdapter(rvAdapter);
+
+        rvAdapter.setOnItemClickListener(new ProductLoveRvAdapter.onRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Intent intent = new Intent(DetailActivity.this, DetailActivity.class);
+                //携带玩具id
+                intent.putExtra("id", list.get(position).getId());
+                intent.putExtra("type", type);
+                startActivity(intent);
+
+            }
+        });
+    }
+
+/*    *//**
+     * "宝宝良好的手触摸和眼睛协调能力，有利于身体一般平衡和协调。弧形底座的设计有利于宝宝抓握，也能避免不慎摔倒而造成的危险。",
+     * "不同大小的七彩圆环，能帮助宝宝认识各种各样的颜色，辨认大小，并且能辅导宝宝建立 对顺序的概念。"
+     *//*
+    private void initProductInfo1() {
+        String[] str = {toyBean.getAbility()};
+        int icon = R.mipmap.product_info1_icon;
+        mRvProductInfo1.setLayoutManager(new FullyLinearLayoutManager(this));
+
+        mRvProductInfo1.setAdapter(new DetailInfoRvAdapter(this, icon, str));
+
+    }
+
+    */
+
+    /**
+     * "宝宝通过各种方式，将圆环堆叠的过程，能辅助宝宝对计数、顺序、堆叠、体积、重量等概念的了解。按照圆环大小顺序堆叠，也以培养孩子的逻辑和分析 思维"
+     *//*
+    private void initProductInfo2() {
+        String[] str = {toyBean.getFeature()};
+        int icon = R.mipmap.product_info1_icon;//没有小蓝圆圈
+        mRvProductInfo2.setLayoutManager(new FullyLinearLayoutManager(this));
+
+        mRvProductInfo2.setAdapter(new DetailInfoRvAdapter(this, icon, str));
+    }*/
+    private void initProductInfo3() {
+        int[][] icon = {{R.mipmap.product_info3_pic1, R.mipmap.product_info3_pic2}};
+        mRvProductInfo3.setLayoutManager(new FullyLinearLayoutManager(this));
+
+        mRvProductInfo3.setAdapter(new DetailInfo3RvAdapter(this, icon));
+    }
+
+    @Override
+    protected void initEvent() {
+        mBtDetailShopping.setOnClickListener(this);
+        mFlPopShopping.setOnClickListener(this);
+        mIbShared.setOnClickListener(this);
+        loadingView.setOnRefreshPagerListener(new CommonLoadingView.OnRefreshPageListener() {
+            @Override
+            public void Refresh() {
+                initData();
+            }
+        });
+    }
+
+    private void addShoppingCar() {
+        if (toyBean != null) {
+            Log.i("radish", "mKcl------------------" + mKcl);
+            int toyCount = ShoppingCartBiz.findCountById(this, toyBean.getId());
+            Log.i("radish", "toyCount------------------" + toyCount);
+            if (mKcl - toyCount <= 0) {
+                ToastHelper.getInstance().displayToastShort("库存量不足");
+                return;
+            }
+            if (toyBean != null) {
+                ShoppingCartBiz.addGood(this, toyBean.getId() + "", type + "", toyBean.getKcl() + "", toyBean.getName(), toyBean.getSuitage(), toyBean.getShopimg(), toyBean.getShopprice() + "", toyBean.getDpj(), "1");
+                ToastHelper.getInstance().displayToastShort("加入购物车成功");
+                count = ShoppingCartBiz.getCount(this);
+                Log.i("radish", "addcount------------------" + count);
+                if (!mIvShoppingCartIcon.isSelected()) {
+                    mIvShoppingCartIcon.setSelected(true);
+                    mTvPopShoppingNumber.setVisibility(View.VISIBLE);
+                    mTvPopShoppingNumber.setText(this.count + "");
+
+                } else {
+                    mTvPopShoppingNumber.setText(this.count + "");
+                }
+                if (mKcl - toyCount - 1 <= 0) {
+                    mTvKcl.setText("库存不足");
+                }
+            }
+        } else {
+            ToastHelper.getInstance().displayToastShort("网络异常");
+        }
+
+    }
+
+    @Override
+    protected void processClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.bt_detail_shopping:
+                addShoppingCar();
+                break;
+            case R.id.fl_pop_shopping:
+                Intent intent = new Intent(this, ShoppingCarActivity.class);
+                startActivity(intent);
+
+                break;
+            case R.id.ib_detail_share:
+                showDialogShared();
+                break;
+        }
+    }
+
+    private void showDialogShared() {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_shared);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
+        dialog.getWindow().setBackgroundDrawable(null);
+        dialog.show();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.inject(this);
+    }
+}

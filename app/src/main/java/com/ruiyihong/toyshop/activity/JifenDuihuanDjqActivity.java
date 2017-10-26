@@ -1,0 +1,285 @@
+package com.ruiyihong.toyshop.activity;
+
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.widget.RelativeLayout;
+
+import com.ruiyihong.toyshop.R;
+import com.ruiyihong.toyshop.adapter.JifenDuihuanDjqRvAdapter;
+import com.ruiyihong.toyshop.bean.JifenDaijinquanBean;
+import com.ruiyihong.toyshop.fragment.DuihuanDialogFragment;
+import com.ruiyihong.toyshop.util.AppConstants;
+import com.ruiyihong.toyshop.util.GsonUtil;
+import com.ruiyihong.toyshop.util.NetWorkUtil;
+import com.ruiyihong.toyshop.util.OkHttpUtil;
+import com.ruiyihong.toyshop.util.SPUtil;
+import com.ruiyihong.toyshop.util.ToastHelper;
+import com.ruiyihong.toyshop.view.CommonLoadingView;
+import com.ruiyihong.toyshop.view.DividerItemDecoration;
+import com.ruiyihong.toyshop.view.FullyGridLayoutManager;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+/**
+ * Created by 李晓曼 on 2017/8/11.
+ */
+
+public class JifenDuihuanDjqActivity extends BaseActivity {
+    private static final int MSG_DAIJINQUAN = 0;
+    private static final int MSG_REFRESH = 1;
+    private static final int MSG_LOAD_MORE = 2;
+    private static final int MSG_FAILURE = 3;
+    private static final int MSG_DATA_NULL = 4;
+    private static final int CloseLoadingView=5;
+    private static final int PageLoading=6;
+    private static final int NetWorkError=7;
+    private static final String BUFFER_JIFEN_DUIHUAN_DAIJINQUAN = "buffer_jifen_duihuan_daijinquan";
+    @InjectView(R.id.rv_duihuan_djq)
+    RecyclerView mRvDuihuanDjq;
+    @InjectView(R.id.smartRefreshLayout)
+    SmartRefreshLayout mSmartRefreshLayout;
+    @InjectView(R.id.rl_title)
+    RelativeLayout mRlTitle;
+    @InjectView(R.id.common_LoadingView)
+    CommonLoadingView loadingView;
+    private List<JifenDaijinquanBean.DataBean> list;
+    private List<JifenDaijinquanBean.DataBean> dataList;
+    private List<JifenDaijinquanBean.DataBean> upLoadList;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MSG_DAIJINQUAN:
+                    initRvDuihuanDjq();
+                    break;
+                case MSG_REFRESH:
+                    refresh();
+                    break;
+                case MSG_LOAD_MORE:
+                    loadMore();
+                    break;
+                case MSG_FAILURE:
+                    //访问网络失败
+                    netFail((int) msg.obj);
+                    break;
+                case MSG_DATA_NULL:
+                    ToastHelper.getInstance().displayToastShort("暂无更多数据");
+                    mSmartRefreshLayout.finishRefresh(0);
+                    mSmartRefreshLayout.finishLoadmore(0);
+                    break;
+                case NetWorkError :    //显示网络错误页面
+                    if(loadingView!=null)
+                        loadingView.loadError();
+                    break;
+                case CloseLoadingView: //关闭Loading动画
+                    if(loadingView!=null)
+                        loadingView.loadSuccess(false);
+                    break;
+                case PageLoading:  //页面加载中动画
+                    if(loadingView!=null)
+                        loadingView.load();
+                    break;
+            }
+        }
+
+
+    };
+    private JifenDuihuanDjqRvAdapter rvAdapter;
+    private int page = 1;
+
+    private void refresh() {
+        list = dataList;
+        if (upLoadList != null) {
+            list.addAll(upLoadList);
+        }
+        rvAdapter.setList(list);
+        rvAdapter.notifyDataSetChanged();
+        mSmartRefreshLayout.finishRefresh(0);
+    }
+
+    private void loadMore() {
+        list.addAll(upLoadList);
+        rvAdapter.setList(list);
+        rvAdapter.notifyDataSetChanged();
+        mSmartRefreshLayout.finishLoadmore(0);
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_jifen_duihuan_djq;
+    }
+
+    @Override
+    protected void initView() {
+        mRlTitle.setFocusableInTouchMode(true);
+        mRlTitle.requestFocus();
+    }
+
+    @Override
+    protected void initData() {
+        if (!NetWorkUtil.isNetWorkAvailable(this)){
+            handler.sendEmptyMessage(NetWorkError);
+            return;
+        }else{
+            handler.sendEmptyMessage(PageLoading);
+        }
+        page = 1;
+        String buffer = SPUtil.getString(this, BUFFER_JIFEN_DUIHUAN_DAIJINQUAN, "");
+        if (!TextUtils.isEmpty(buffer)) {
+            CloseLoadingView();
+            JifenDaijinquanBean bean = GsonUtil.parseJsonWithGson(buffer, JifenDaijinquanBean.class);
+            dataList = bean.getData();
+            initRvDuihuanDjq();
+        }
+        if (NetWorkUtil.isNetWorkAvailable(this)) {
+            postNet(AppConstants.JIFEN_DUIHUAN_DAIJINQUAN, new HashMap<String, Object>(), MSG_DAIJINQUAN);
+        } else {
+            ToastHelper.getInstance().displayToastShort("请检查网络");
+        }
+    }
+
+    private void postNet(String url, Map<String, Object> map, final int type) {
+        try {
+            OkHttpUtil.postJson(url, map, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Message msg = Message.obtain();
+                    msg.what = MSG_FAILURE;
+                    msg.obj = type;
+                    handler.sendMessage(msg);
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String result = OkHttpUtil.getResult(response);
+                    if (!TextUtils.isEmpty(result)) {
+                        Log.i("radish", type + "--------jifenDjq_result------------------" + result);
+                        CloseLoadingView();
+                        JifenDaijinquanBean bean = GsonUtil.parseJsonWithGson(result, JifenDaijinquanBean.class);
+                        if (bean != null && bean.getData() != null && bean.getData().size() > 0) {
+                            if (type == MSG_LOAD_MORE) {
+                                upLoadList = bean.getData();
+                            } else {
+                                SPUtil.setString(JifenDuihuanDjqActivity.this, BUFFER_JIFEN_DUIHUAN_DAIJINQUAN, result);
+                                dataList = bean.getData();
+                            }
+                            handler.sendEmptyMessage(type);
+                        } else {
+                            handler.sendEmptyMessage(MSG_DATA_NULL);
+                        }
+                    }
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+            handler.sendEmptyMessage(NetWorkError);
+        }
+    }
+
+    //关闭LoadingView
+    private void CloseLoadingView() {
+        handler.sendEmptyMessage(CloseLoadingView);
+    }
+
+    private void initRvDuihuanDjq() {
+        list = dataList;
+        mRvDuihuanDjq.setLayoutManager(new FullyGridLayoutManager(this, 3));
+        rvAdapter = new JifenDuihuanDjqRvAdapter(this, list);
+        mRvDuihuanDjq.setAdapter(rvAdapter);
+        mRvDuihuanDjq.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL_LIST, 1, getResources().getColor(R.color.video_gray)));
+
+        rvAdapter.setOnItemClickListener(new JifenDuihuanDjqRvAdapter.OnItemClickListener() {
+            @Override
+            public void itemClickListener(View v, int position) {
+                showDuihuanDialog(position);
+            }
+        });
+    }
+
+    private void showDuihuanDialog(int position) {
+        DuihuanDialogFragment dialog = new DuihuanDialogFragment();
+        //代金券
+        int id = list.get(position).getId();
+        dialog.setData(id);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        dialog.show(fragmentManager,"DuihuanDialog");
+    }
+
+
+    @Override
+    protected void initEvent() {
+        mSmartRefreshLayout.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                Log.i("radish", "onLoadmore------------------");
+                if (NetWorkUtil.isNetWorkAvailable(JifenDuihuanDjqActivity.this)) {
+                    //上拉加载
+                    page++;
+                    Map<String, Object> map = new HashMap();
+                    map.put("page", page);
+                    postNet(AppConstants.JIFEN_DUIHUAN_DAIJINQUAN_UPLOAD, map, MSG_LOAD_MORE);
+                } else {
+                    mSmartRefreshLayout.finishLoadmore(0);
+                    ToastHelper.getInstance().displayToastShort("请检查网络");
+                }
+            }
+
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                Log.i("radish", "onRefresh------------------");
+                if (NetWorkUtil.isNetWorkAvailable(JifenDuihuanDjqActivity.this)) {
+                    //下拉刷新
+                    Map<String, Object> map = new HashMap();
+                    postNet(AppConstants.JIFEN_DUIHUAN_DAIJINQUAN, map, MSG_REFRESH);
+                } else {
+                    mSmartRefreshLayout.finishRefresh(0);
+                    ToastHelper.getInstance().displayToastShort("请检查网络");
+                }
+            }
+        });
+        loadingView.setOnRefreshPagerListener(new CommonLoadingView.OnRefreshPageListener() {
+            @Override
+            public void Refresh() {
+                initData();
+            }
+        });
+    }
+
+    private void netFail(int type) {
+        //访问网络失败
+        ToastHelper.getInstance().displayToastShort("访问网络失败");
+        if (type == MSG_LOAD_MORE || type == MSG_REFRESH) {
+            mSmartRefreshLayout.finishRefresh(0);
+        }
+    }
+
+    @Override
+    protected void processClick(View v) throws IOException {
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.inject(this);
+    }
+}

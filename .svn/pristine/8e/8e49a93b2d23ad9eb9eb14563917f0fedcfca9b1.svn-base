@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <RelativeLayout
+        style="@style/title_style">
+
+        <TextView
+            android:id="@+id/tv_add_title"
+            style="@style/title_textview_style"
+            android:text="发布"/>
+        <ImageButton
+            android:id="@+id/ib_publish_back"
+            style="@style/back_style"/>
+
+    </RelativeLayout>
+    <View
+        android:background="@color/hor_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <EditText
+        android:id="@+id/et_publish_content"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:gravity="top"
+        android:hint="记录宝宝的精彩，快来记录下来吧！"
+        android:lineSpacingExtra="5dp"
+        android:maxHeight="90dp"
+        android:maxLines="5"
+        android:paddingBottom="5dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:paddingTop="10dp"
+        android:textSize="@dimen/item_size"/>
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <GridView
+            android:background="@null"
+            android:id="@+id/gv_public_addicon"
+            android:layout_below="@id/et_pinpun_content"
+            android:layout_marginLeft="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="180dp"
+            android:layout_marginRight="25dp"
+            android:horizontalSpacing="10dp"
+            android:numColumns="3"
+            android:scrollbars="none"
+            android:verticalSpacing="5dp" >
+        </GridView>
+        <SurfaceView
+            android:id="@+id/sv_publish"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:visibility="gone"
+            android:layout_marginLeft="10dp"/>
+    </FrameLayout>
+    <TextView
+        android:id="@+id/tv_publish_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="发送"
+        android:background="@drawable/shap_rounded_rectangle_blue"
+        android:gravity="center"
+        android:layout_gravity="bottom"
+        android:padding="10dp"
+        android:layout_marginBottom="30dp"
+        />
+
+</LinearLayout>

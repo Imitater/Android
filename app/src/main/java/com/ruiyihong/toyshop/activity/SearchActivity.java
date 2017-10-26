@@ -1,0 +1,442 @@
+package com.ruiyihong.toyshop.activity;
+
+import android.graphics.Rect;
+import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.IdRes;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.text.TextUtils;
+import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+
+import com.google.gson.reflect.TypeToken;
+import com.ruiyihong.toyshop.R;
+import com.ruiyihong.toyshop.bean.SeaResBean;
+import com.ruiyihong.toyshop.bean.SearchResult;
+import com.ruiyihong.toyshop.fragment.BaseFragment;
+import com.ruiyihong.toyshop.fragment.SearchToyFragment;
+import com.ruiyihong.toyshop.util.AppConstants;
+import com.ruiyihong.toyshop.util.GsonUtil;
+import com.ruiyihong.toyshop.util.LogUtil;
+import com.ruiyihong.toyshop.util.OkHttpUtil;
+import com.ruiyihong.toyshop.util.Refresh_Listener;
+import com.ruiyihong.toyshop.util.SPUtil;
+import com.ruiyihong.toyshop.util.ScreenUtil;
+import com.ruiyihong.toyshop.util.ToastHelper;
+import com.ruiyihong.toyshop.view.FlowLayout;
+import com.ruiyihong.toyshop.view.NoScrollViewPager;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import butterknife.InjectView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+import static com.ruiyihong.toyshop.util.AppConstants.SERVE_URL;
+
+/**
+ * Created by hegeyang on 2017/7/16 0016 .
+ */
+
+public class SearchActivity extends BaseActivity {
+    @InjectView(R.id.et_search_headseach)
+    EditText etSearchHeadseach;
+    @InjectView(R.id.ll_search_activity)
+    LinearLayout llSearch;
+    @InjectView(R.id.ib_search_clear)
+    ImageButton ibSearchClear;
+    @InjectView(R.id.tv_search_submit)
+    TextView tvSearchSubmit;
+    @InjectView(R.id.fl_search_content)
+    FrameLayout flSearchContent;
+
+    @InjectView(R.id.smartRefreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
+    private View v;
+    int tag = 0;
+    private ArrayList<SeaResBean> seaResList;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 0) {
+                try {
+
+                    initShopAdapter((String) msg.obj);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            } else {
+                ToastHelper.getInstance().displayToastShort("加载失败");
+            }
+
+        }
+    };
+    private FlowLayout fl_hot_search;
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_search;
+    }
+
+    @Override
+    protected void initView() {
+        ToastHelper.getInstance().init(SearchActivity.this);
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void initEvent() {
+
+        smartRefreshLayout.setEnableLoadmore(false);
+
+        smartRefreshLayout.setOnMultiPurposeListener(new Refresh_Listener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                super.onRefresh(refreshlayout);
+                if(!etSearchHeadseach.isFocused()){
+                    searchMethod(etSearchHeadseach.getText().toString().trim());
+                }else{
+                    if(fl_hot_search!=null)
+                    getInitdataSeares(fl_hot_search);
+                }
+            }
+        });
+
+        etSearchHeadseach.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                v = null;
+                if (b) {
+                    v = LayoutInflater.from(SearchActivity.this).inflate(R.layout.search_init, null);
+                    setInitData();
+                    flSearchContent.removeAllViews();
+                    flSearchContent.addView(v, 0);
+                } else {
+                    v = LayoutInflater.from(SearchActivity.this).inflate(R.layout.search_content, null);
+                    setContentData();
+                    flSearchContent.removeAllViews();
+                    flSearchContent.addView(v, 0);
+                }
+
+            }
+        });
+
+        tvSearchSubmit.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                pullDownSrf();
+                tvSearchSubmit.setFocusable(true);
+                tvSearchSubmit.setFocusableInTouchMode(true);
+                return false;
+            }
+        });
+
+        llSearch.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Rect r = new Rect();
+                llSearch.getWindowVisibleDisplayFrame(r);
+                int screenHeight = llSearch.getRootView()
+                        .getHeight();
+                int heightDifference = screenHeight - (r.bottom);
+                if (heightDifference > 200) {
+                    tag = 1;
+                    //软键盘显示
+                    etSearchHeadseach.setFocusable(true);
+                    etSearchHeadseach.setFocusableInTouchMode(true);
+                    etSearchHeadseach.requestFocus();
+                } else {
+                    //软键盘隐藏
+                    if (tag == 1) {
+                        tvSearchSubmit.setFocusable(true);
+                        tvSearchSubmit.setFocusableInTouchMode(true);
+                        tvSearchSubmit.requestFocus();
+                        tag = 0;
+                    }
+                }
+            }
+        });
+        ibSearchClear.setOnClickListener(this);
+    }
+
+    private void setContentData() {
+        String searchCondition = etSearchHeadseach.getText().toString().trim();
+
+        if (searchCondition != null) {
+            tvSearchSubmit.setFocusable(true);
+            tvSearchSubmit.setFocusableInTouchMode(true);
+            tvSearchSubmit.requestFocus();
+
+            searchMethod(searchCondition);
+        } else {
+            LogUtil.e("搜索结果为空");
+            ToastHelper.getInstance()._toast("搜索结果为空");
+        }
+    }
+
+    private void pullDownSrf() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(llSearch.getContext().INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
+        //点击搜索按钮后需要干的事情
+    }
+
+    private void searchMethod(String condition) {
+        LogUtil.e("condition=====" + condition);
+        String keyworld = SPUtil.getString(this, AppConstants.SP_KEYWORD, "");
+        if (keyworld != null && keyworld.contains(condition)) {
+            if (keyworld.length() > 120) {
+                SPUtil.setString(this, AppConstants.SP_KEYWORD, "");
+            }
+        } else {
+            SPUtil.setString(this, AppConstants.SP_KEYWORD, condition + "," + keyworld);
+        }
+        String url = SERVE_URL + "index/index/search";
+        Map<String, Object> para = new HashMap<>();
+        para.put("searchName", condition);
+        try {
+            OkHttpUtil.postJson(url, para, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    handler.sendEmptyMessage(1);
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    final String result = OkHttpUtil.getResult(response);
+                    if (result != null && result.length() > 2) {
+                        Message obtain = Message.obtain();
+                        obtain.what = 0;
+                        obtain.obj = result;
+                        handler.sendMessage(obtain);
+                    } else {
+                        handler.sendEmptyMessage(1);
+                        LogUtil.e("搜索结果为空 || 网络有问题");
+                    }
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initShopAdapter(String result) {
+        LogUtil.e(result + "获取数据");
+        SearchResult searchResult = GsonUtil.parseJsonWithGson(result, SearchResult.class);
+        int status = searchResult.getStatus();
+        if (status == 1) {
+            List<SearchResult.WjlistBean> wjlist = searchResult.getWjlist();
+            /*fragmentList = new ArrayList<>();
+            fragmentList.add(new SearchToyFragment(wjlist));
+            vp.removeAllViews();
+            vp.setAdapter(new BookToyFragmentAdapter(fragmentList));*/
+            if (!etSearchHeadseach.hasFocus()) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl_search_content_1, new SearchToyFragment(wjlist)).commit();
+                LogUtil.e("搜索数据加载");
+            }
+        } else {
+            LogUtil.e("[网络状态码错误!!!!]");
+        }
+    }
+
+
+    private void setInitData() {
+        final ListView lv_searchHistory = v.findViewById(R.id.lv_search_history);
+        final String keyworld = SPUtil.getString(this, AppConstants.SP_KEYWORD, "");
+        final String[] keyList = keyworld.split(",");
+        KeyListAdapter keyListAdapter = new KeyListAdapter(keyList);
+        //清除记录按钮
+        TextView tv = v.findViewById(R.id.tv_search_history_delete);
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SPUtil.setString(SearchActivity.this, AppConstants.SP_KEYWORD, "");
+                lv_searchHistory.setAdapter(null);
+            }
+        });
+        lv_searchHistory.setAdapter(keyListAdapter);
+        lv_searchHistory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                view.setFocusable(false);
+                String sname = keyList[i];
+                etSearchHeadseach.setText(sname);
+                etSearchHeadseach.setSelection(sname.length());
+                /*tag = 1;
+                InputMethodManager imm = (InputMethodManager) getSystemService(llSearch.getContext().INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);*/
+                if (tag == 1) {
+                    //tag=0;
+                    InputMethodManager imm = (InputMethodManager) getSystemService(llSearch.getContext().INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
+                    /*tvSearchSubmit.setFocusable(true);
+                    tvSearchSubmit.setFocusableInTouchMode(true);
+                    tvSearchSubmit.requestFocus();*/
+                } else {
+                    tvSearchSubmit.setFocusable(true);
+                    tvSearchSubmit.setFocusableInTouchMode(true);
+                    tvSearchSubmit.requestFocus();
+                }
+                //searchMethod(sname);
+            }
+        });
+
+
+        fl_hot_search = v.findViewById(R.id.fl_hot_search);
+        getInitdataSeares(fl_hot_search);
+
+    }
+
+    private void getInitdataSeares(final FlowLayout fl_hot_search) {
+        try {
+            if (seaResList == null) {
+                OkHttpUtil.get(SERVE_URL + "index/index/seaRes", new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        String result = OkHttpUtil.getResult(response);
+                        if (!TextUtils.isEmpty(result)) {
+                            try {
+
+                                if (result.length() > 2) {
+                                    Type type = new TypeToken<ArrayList<SeaResBean>>() {
+                                    }.getType();
+                                    seaResList = GsonUtil.getGson().fromJson(result, type);
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            addFlow(fl_hot_search);
+                                        }
+                                    });
+                                }
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+            } else {
+                addFlow(fl_hot_search);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addFlow(FlowLayout fl_hot_search) {
+        fl_hot_search.removeAllViews();
+        for (int i = 0; i < seaResList.size(); i++) {
+            fl_hot_search.setFocusable(false);
+            final TextView tv = new TextView(SearchActivity.this);
+
+            ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            lp.setMargins(ScreenUtil.dp2px(SearchActivity.this, 10), 0, ScreenUtil.dp2px(SearchActivity.this, 10), 0);
+            tv.setPadding(ScreenUtil.dp2px(SearchActivity.this, 7), ScreenUtil.dp2px(SearchActivity.this, 5), ScreenUtil.dp2px(SearchActivity.this, 7), ScreenUtil.dp2px(SearchActivity.this, 5));
+            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+            tv.setGravity(Gravity.CENTER_VERTICAL);
+            //tv.setTextColor(0xff000000);
+            tv.setLines(1);
+            tv.setBackground(getDrawable(R.drawable.seares_normal));
+            tv.setText(seaResList.get(i).sname);
+            final int finalI = i;
+            tv.setFocusable(false);
+            tv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String sname = seaResList.get(finalI).sname;
+                    etSearchHeadseach.setText(sname);
+                    if (tag == 1) {
+                        InputMethodManager imm = (InputMethodManager) getSystemService(llSearch.getContext().INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
+                    } else {
+                        tvSearchSubmit.setFocusable(true);
+                        tvSearchSubmit.setFocusableInTouchMode(true);
+                        tvSearchSubmit.requestFocus();
+                    }
+
+                }
+            });
+            fl_hot_search.addView(tv, lp);
+        }
+    }
+
+    @Override
+    protected void processClick(View v) {
+        switch (v.getId()) {
+            case R.id.ib_search_clear:
+                etSearchHeadseach.setText("");
+                etSearchHeadseach.requestFocus();
+                break;
+        }
+    }
+
+    private class KeyListAdapter extends BaseAdapter {
+        private final String[] keyList;
+
+        public KeyListAdapter(String[] keyList) {
+            this.keyList = keyList;
+        }
+
+        @Override
+        public int getCount() {
+            return keyList.length;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return keyList[i];
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            TextView v = new TextView(SearchActivity.this);
+            ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            int i1 = ScreenUtil.dp2px(SearchActivity.this, 10);
+            lp.setMargins(i1, 0, i1, 0);
+            v.setLayoutParams(lp);
+            v.setPadding(i1, i1, i1, i1);
+            v.setText(keyList[i]);
+            v.setTextSize(ScreenUtil.dp2sp(SearchActivity.this, 16));
+            return v;
+        }
+    }
+
+
+}

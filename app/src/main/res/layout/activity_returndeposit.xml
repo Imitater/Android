@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.ruiyihong.toyshop.activity.ReturndepositActivity">
+    <!--标题栏 -->
+    <RelativeLayout
+        android:id="@+id/settle_title"
+        style="@style/title_style"
+        android:background="@color/Panda_BG"
+        >
+        <ImageButton style="@style/back_style"/>
+
+        <TextView
+            style="@style/title_textview_style"
+            android:text="退押金" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#f6f4f5"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/retrun_yajin_top" />
+
+            <TextView
+                android:id="@+id/tv_yajin_money"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/Panda_BG"
+                android:padding="10dp"
+                android:paddingLeft="15dp"
+                android:text="已交押金：300"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/sub_title_size" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@color/Panda_BG"
+                android:padding="15dp"
+                android:text="退押金规则："
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/item_size" />
+
+            <TextView
+                android:id="@+id/tv_guize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/Panda_BG"
+                android:lineSpacingExtra="8dp"
+                android:paddingBottom="35dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="5dp"
+                android:text="1，玩具图书租借归还不出现任何损坏，即可全额退款。\n2，押金退款申请系统将在24小时内处理，方便快捷。\n3，没有未缴清费用"
+                android:textColor="@color/text_color"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@color/Panda_BG"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:text="退款方式"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/sub_title_size" />
+
+            <LinearLayout
+                android:id="@+id/ll_bangding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@color/Panda_BG"
+                android:paddingLeft="5dp">
+
+                <TextView
+                    android:id="@+id/tv_account"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableLeft="@mipmap/zhifubao1"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:paddingLeft="15dp"
+                    android:text="未绑定账号"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/item_size" />
+
+                <TextView
+                    android:id="@+id/tv_qubangding"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="12dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="12dp"
+                    android:text="去绑定  >"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/item_size" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_tui"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:background="#fbe604"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="申请退款" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

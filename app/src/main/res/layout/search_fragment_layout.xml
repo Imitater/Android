@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ 2017.
+  ~ Huida.Burt
+  ~ CopyRight
+  ~
+  ~
+  ~
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_search_result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v7.widget.RecyclerView>
+
+    <ImageView
+        android:id="@+id/iv_shop_cart"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/shop_car_pic"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="40dp"
+        android:layout_alignParentBottom="true"/>
+
+    <!--购物车数量-->
+    <TextView
+        android:id="@+id/tv_pop_shopping_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/iv_shop_cart"
+        android:layout_alignTop="@+id/iv_shop_cart"
+        android:layout_gravity="center"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/pop_tips_circle"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@android:color/white"
+        android:textSize="10dip"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+</RelativeLayout>
